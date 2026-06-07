@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kaironInnova | Gemelo Digital Refinería El Palito</title>
+    <meta name="description" content="kaironInnova transforma infraestructura civil e industrial con gemelos digitales inteligentes y automatización avanzada. Monitoreo en tiempo real, mantenimiento predictivo y análisis estructural.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Impeccable typography: Space Grotesk for Headings, Plus Jakarta Sans for Body -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- AOS Animate on Scroll CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+    <!-- ============ 3D WebGL WARP BACKGROUND ============ -->
+    <canvas id="warp-canvas"></canvas>
+
+    <!-- ============ GLOWING BACKGROUND BLOBS & LASER SCANNER ============ -->
+    <div class="blur-blobs-container">
+        <div class="blur-blob cyan-blob"></div>
+        <div class="blur-blob purple-blob"></div>
+    </div>
+    <div class="scanner-line"></div>
+
+
+    <!-- ============ NAVIGATION ============ -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo" id="nav-logo">
+                <svg viewBox="0 0 36 36" width="32" height="32" class="logo-icon">
+                    <path d="M6 4h7v28H6z" fill="var(--color-accent-primary)"/>
+                    <path d="M13 18L27 4h6L19 18l14 14h-6L13 18z" fill="var(--color-accent-secondary)"/>
+                </svg>
+                <span>kairon<strong>Innova</strong></span>
+            </a>
+
+            <div class="nav-links" id="nav-links">
+                <a href="#hero" class="nav-link active">Refinería</a>
+                <a href="#services" class="nav-link">Procesos</a>
+                <a href="#civil-twin-section" class="nav-link">Gemelos 3D</a>
+                <a href="#how-it-works" class="nav-link">Implementación</a>
+                <div class="mobile-actions">
+                    <a href="#contact" class="nav-login">Log In</a>
+                    <a href="#contact" class="btn-nav-demo">Solicitar Demo</a>
+                </div>
+            </div>
+
+            <div class="nav-actions">
+                <a href="#contact" class="nav-login">Log In</a>
+                <a href="#contact" class="btn-nav-demo" id="btn-nav-cta">Solicitar Demo</a>
+            </div>
+
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <!-- ============ HERO SECTION ============ -->
+        <section id="hero" class="hero">
+            <div class="hero-container">
+                <div class="hero-grid" data-aos="fade-up" data-aos-duration="1200">
+                    <div class="hero-content">
+                        <div class="hero-badge">
+                            <span class="badge-dot"></span>
+                            Automatización e IA Industrial
+                        </div>
+                        <h1>kaironInnova:<br><span class="white-text">Automatización &</span><br><span class="gradient-text">Gemelos Digitales</span></h1>
+                        
+                        <!-- Figma-style collaborative cursor on subtitle -->
+                        <div class="subtitle-wrapper">
+                            <p class="hero-subtitle">Soluciones de vanguardia para la industria moderna</p>
+                            <div class="figma-cursor cursor-blue">
+                                <svg viewBox="0 0 24 24" width="14" height="14" class="cursor-arrow">
+                                    <path d="M4 3l16 8-8 3-3 8z" fill="#00f2fe"/>
+                                </svg>
+                                <span class="figma-tag bg-blue">Civil-Eng</span>
+                            </div>
+                        </div>
+
+                        <div class="hero-cta">
+                            <a href="#digital-twins-showroom" class="btn-neon-cyan" id="hero-cta-explore">Explorar Soluciones</a>
+                            <a href="#contact" class="btn-neon-purple" id="hero-cta-demo">Solicitar Demo</a>
+                        </div>
+                    </div>
+                    <div class="hero-visual-empty"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ SERVICES SECTION ============ -->
+        <section id="services" class="services">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Procesos <span class="gradient-text">Petroquímicos</span></h2>
+                <p>Simulación y control en tiempo real para las unidades de la refinería.</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-card-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                    <h3>Destilación Atmosférica</h3>
+                    <p>Monitoreo de carga de crudo (140 MBD) para la separación inicial de destilados y residuales.</p>
+                </div>
+
+                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-card-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <h3>Craqueo Catalítico (FCC)</h3>
+                    <p>Optimización del procesamiento de 61.5 MBD para maximizar la producción de gasolina de alto octanaje.</p>
+                </div>
+
+                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-card-icon">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+                    </div>
+                    <h3>Planta de Alquilación</h3>
+                    <p>Control predictivo para la planta de 22 MBD, asegurando la calidad del isobutano procesado.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ AI AGENTS FLOWCHART ============ -->
+        <section id="ai-agents" class="ai-agents">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Ecosistema de <span class="gradient-text">Agentes Autónomos</span></h2>
+                <p>Monitoreo, análisis y automatización en tiempo real conectando n8n a tu gemelo digital.</p>
+            </div>
+            
+            <div class="ai-agents-container">
+                <div class="agent-workflow">
+                    
+                    <!-- Step 1: Sensor Trigger -->
+                    <div class="workflow-card glass-panel" data-aos="fade-right" data-aos-delay="100">
+                        <div class="card-glow cian"></div>
+                        <div class="workflow-icon cian">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        </div>
+                        <h4>1. Captura de Evento</h4>
+                        <p>Sensores detectan un incremento térmico anómalo en la torre de destilación.</p>
+                        <span class="workflow-badge text-cian">Sensores IoT</span>
+                    </div>
+
+                    <!-- Connector Line 1 -->
+                    <div class="workflow-connector" data-aos="fade-in" data-aos-delay="200">
+                        <svg class="connector-svg" viewBox="0 0 100 20" preserveAspectRatio="none">
+                            <line x1="0" y1="10" x2="100" y2="10" stroke="rgba(0, 242, 254, 0.3)" stroke-width="2" stroke-dasharray="6,4" />
+                            <circle cx="50" cy="10" r="4" fill="var(--color-accent-primary)" class="pulse-dot" />
+                        </svg>
+                    </div>
+
+                    <!-- Step 2: Orchestration (n8n) -->
+                    <div class="workflow-card glass-panel" data-aos="fade-up" data-aos-delay="300">
+                        <div class="card-glow purple"></div>
+                        <div class="workflow-icon purple">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                        </div>
+                        <h4>2. Orquestación n8n</h4>
+                        <p>El flujo en n8n evalúa el histórico con modelos predictivos de riesgo operativo.</p>
+                        <span class="workflow-badge text-purple">Agente IA</span>
+                    </div>
+
+                    <!-- Connector Line 2 -->
+                    <div class="workflow-connector" data-aos="fade-in" data-aos-delay="400">
+                        <svg class="connector-svg" viewBox="0 0 100 20" preserveAspectRatio="none">
+                            <line x1="0" y1="10" x2="100" y2="10" stroke="rgba(168, 85, 247, 0.3)" stroke-width="2" stroke-dasharray="6,4" />
+                            <circle cx="50" cy="10" r="4" fill="var(--color-accent-secondary)" class="pulse-dot" />
+                        </svg>
+                    </div>
+
+                    <!-- Step 3: Mitigation Action -->
+                    <div class="workflow-card glass-panel" data-aos="fade-left" data-aos-delay="500">
+                        <div class="card-glow cian"></div>
+                        <div class="workflow-icon cian">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4L12 14.01l-3-3"/></svg>
+                        </div>
+                        <h4>3. Acción Predictiva</h4>
+                        <p>Ajuste preventivo en válvulas de alivio y notificación automática vía WhatsApp a planta.</p>
+                        <span class="workflow-badge text-cian">Automatización</span>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ DIGITAL TWIN FEATURE SECTION ============ -->
+        <section id="digital-twin" class="feature-section">
+            <div class="feature-container">
+                <div class="feature-visual" data-aos="fade-right">
+                    <div class="feature-card-stack">
+                        <div class="feature-metric-card glass-panel">
+                            <div>
+                                <span class="metric-value">140</span><span class="metric-unit">MBD</span>
+                                <p class="metric-label">Capacidad Atmosférica</p>
+                            </div>
+                        </div>
+                        <div class="feature-metric-card glass-panel">
+                            <div>
+                                <span class="metric-value">99</span><span class="metric-unit">%</span>
+                                <p class="metric-label">Utilización Normal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-content" data-aos="fade-left">
+                    <div class="hero-badge">
+                        <span class="badge-dot blue"></span>
+                        Topografía Real
+                    </div>
+                    <h2>Ubicación <span class="gradient-text">Estratégica</span></h2>
+                    <p>Situada en el eje costero de Carabobo, el modelo 3D refleja fielmente la disposición de la planta junto a la Autopista y el Mar Caribe, incluyendo la Laguna de Tratamiento y las icónicas chimeneas de Planta Centro al fondo.</p>
+                    <a href="#contact" class="btn-neon-cyan inline-flex">Ver Documentación Técnica</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ 1. CIVIL TWIN SECTION ============ -->
+        <section id="civil-twin-section" class="twin-section">
+            <div class="twin-section-container">
+                <div class="twin-section-grid">
+                    <!-- Left Column: Content -->
+                    <div class="twin-content" data-aos="fade-right" data-aos-duration="1000">
+                        <div class="hero-badge">
+                            <span class="badge-dot purple"></span>
+                            Infraestructura Civil Inteligente
+                        </div>
+                        <h3>Monitoreo de <span class="gradient-text">Puentes Colgantes</span></h3>
+                        <p>kaironInnova revoluciona el monitoreo de megaestructuras. A través de sensores de tensión y vibración integrados al modelo tridimensional colgante, detectamos anomalías de flexión estructural y fatiga mucho antes de que sean visibles en inspecciones físicas tradicionales.</p>
+                        <a href="#contact" class="btn-neon-purple inline-flex">Solicitar Demo de Puentes</a>
+                    </div>
+                    <!-- Right Column: Visual Frame -->
+                    <div class="twin-visual" data-aos="fade-left" data-aos-duration="1200">
+                        <div class="visual-frame">
+                            <div class="visual-frame-header">
+                                <span class="frame-dot red"></span>
+                                <span class="frame-dot yellow"></span>
+                                <span class="frame-dot green"></span>
+                                <span class="frame-title">MonitoreoPuenteColgante.js</span>
+                            </div>
+                            
+                            <div class="telemetry-panel">
+                                <div class="telemetry-grid">
+                                    <div class="telemetry-item">
+                                        <span class="telemetry-label">ESTADO DE RED</span>
+                                        <span class="telemetry-value text-green">ONLINE</span>
+                                    </div>
+                                    <div class="telemetry-item">
+                                        <span class="telemetry-label">SENSORES ACTIVOS</span>
+                                        <span class="telemetry-value">32 / 32</span>
+                                    </div>
+                                    <div class="telemetry-item">
+                                        <span class="telemetry-label">LATENCIA</span>
+                                        <span class="telemetry-value">4.2 ms</span>
+                                    </div>
+                                    <div class="telemetry-item">
+                                        <span class="telemetry-label">INTEGRIDAD</span>
+                                        <span class="telemetry-value text-cyan">99.8%</span>
+                                    </div>
+                                </div>
+                                <div class="telemetry-chart-container">
+                                    <canvas class="telemetry-mini-chart" data-type="bridge"></canvas>
+                                </div>
+                            </div>
+                            
+                            <div class="layout-lines-overlay"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ 2. WAREHOUSE TWIN SECTION ============ -->
+        <section id="warehouse-twin-section" class="twin-section">
+            <div class="twin-section-container">
+                <div class="twin-section-grid twin-grid-reverse">
+                    <!-- Left Column: Visual Frame -->
+                    <div class="twin-visual" data-aos="fade-right" data-aos-duration="1200">
+                        <div class="visual-frame">
+                            <div class="visual-frame-header">
+                                <span class="frame-dot red"></span>
+                                <span class="frame-dot yellow"></span>
+                                <span class="frame-dot green"></span>
+                                <span class="frame-title">MonitoreoAlmacenAutonomo.js</span>
+                            </div>
+                            
+                            <div class="telemetry-panel">
+                                <div class="telemetry-grid">
+                                    <div class="telemetry-item">
+                                        <span class="telemetry-label">ESTADO AMR</span>
+                                        <span class="telemetry-value text-green">AUTOMÁTICO</span>
+                                    </div>
+                                    <div class="telemetry-item">
+                                        <span class="telemetry-label">CARGA DE TRABAJO</span>
+                                        <span class="telemetry-value">84.5%</span>
+                                    </div>
+                                    <div class="telemetry-item">
+                                        <span class="telemetry-label">BATERÍA PROMEDIO</span>
+                                        <span class="telemetry-value text-cyan">92.1%</span>
+                                    </div>
+                                    <div class="telemetry-item">
+                                        <span class="telemetry-label">RUIDO DE RED</span>
+                                        <span class="telemetry-value">1.1 dB</span>
+                                    </div>
+                                </div>
+                                <div class="telemetry-chart-container">
+                                    <canvas class="telemetry-mini-chart" data-type="warehouse"></canvas>
+                                </div>
+                            </div>
+                            
+                            <div class="layout-lines-overlay"></div>
+                        </div>
+                    </div>
+                    <!-- Right Column: Content -->
+                    <div class="twin-content" data-aos="fade-left" data-aos-duration="1000">
+                        <div class="hero-badge">
+                            <span class="badge-dot blue"></span>
+                            Logística e Inventario Inteligente
+                        </div>
+                        <h3>Simulación de <span class="gradient-text">Almacenes Autónomos</span></h3>
+                        <p>Visualiza y optimiza el flujo operativo de tus almacenes. Monitorea vehículos autónomos terrestres (AMRs) transportando mercancía y drones de picking trazando rutas de entrega. Todo integrado en un gemelo digital 3D sincronizado con tus sistemas WMS y ERP.</p>
+                        <a href="#contact" class="btn-neon-cyan inline-flex">Solicitar Demo de Logística</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ 3. SEPARATOR TWIN SECTION ============ -->
+        <section id="separator-twin-section" class="twin-section">
+            <div class="twin-section-container">
+                <div class="twin-section-grid">
+                    <!-- Left Column: Content -->
+                    <div class="twin-content" data-aos="fade-right" data-aos-duration="1000">
+                        <div class="hero-badge">
+                            <span class="badge-dot orange"></span>
+                            Instrumentación & Proceso P&ID
+                        </div>
+                        <h3>Separador de <span class="gradient-text">Tres Fases</span></h3>
+                        <p>Visualiza el comportamiento de fluidos en tiempo real con modelado esquemático P&ID. Separa mezclas de entrada en Agua, Aceite y Vapor. Monitorea transmisores de nivel (LT), válvulas reguladoras (LV) y transmisores de presión (PT) integrados.</p>
+                        <a href="#contact" class="btn-neon-orange inline-flex">Solicitar Demo P&ID</a>
+                    </div>
+                    <!-- Right Column: Visual Frame -->
+                    <div class="twin-visual" data-aos="fade-left" data-aos-duration="1200">
+                        <div class="visual-frame">
+                            <div class="visual-frame-header">
+                                <span class="frame-dot red"></span>
+                                <span class="frame-dot yellow"></span>
+                                <span class="frame-dot green"></span>
+                                <span class="frame-title">MonitoreoSeparadorFases.js</span>
+                            </div>
+                            
+                            <div class="telemetry-panel">
+                                <div class="telemetry-grid">
+                                    <div class="telemetry-item">
+                                        <span class="telemetry-label">PRESIÓN VASIJA</span>
+                                        <span class="telemetry-value">3.2 bar</span>
+                                    </div>
+                                    <div class="telemetry-item">
+                                        <span class="telemetry-label">NIVEL AGUA</span>
+                                        <span class="telemetry-value">45.2%</span>
+                                    </div>
+                                    <div class="telemetry-item">
+                                        <span class="telemetry-label">NIVEL ACEITE</span>
+                                        <span class="telemetry-value">38.7%</span>
+                                    </div>
+                                    <div class="telemetry-item">
+                                        <span class="telemetry-label">FLUJO SALIDA</span>
+                                        <span class="telemetry-value text-cyan">120 L/s</span>
+                                    </div>
+                                </div>
+                                <div class="telemetry-chart-container">
+                                    <canvas class="telemetry-mini-chart" data-type="separator"></canvas>
+                                </div>
+                            </div>
+                            
+                            <div class="layout-lines-overlay"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ 4. ENERGY TWIN SECTION ============ -->
+        <section id="energy-twin-section" class="twin-section">
+            <div class="twin-section-container">
+                <div class="twin-section-grid twin-grid-reverse">
+                    <!-- Left Column: Visual Frame -->
+                    <div class="twin-visual" data-aos="fade-right" data-aos-duration="1200">
+                        <div class="visual-frame">
+                            <div class="visual-frame-header">
+                                <span class="frame-dot red"></span>
+                                <span class="frame-dot yellow"></span>
+                                <span class="frame-dot green"></span>
+                                <span class="frame-title">MonitoreoRedElectrica.js</span>
+                            </div>
+                            
+                            <div class="telemetry-panel">
+                                <div class="telemetry-grid">
+                                    <div class="telemetry-item">
+                                        <span class="telemetry-label">GEN. EÓLICA</span>
+                                        <span class="telemetry-value">4.2 MW</span>
+                                    </div>
+                                    <div class="telemetry-item">
+                                        <span class="telemetry-label">GEN. SOLAR</span>
+                                        <span class="telemetry-value">2.8 MW</span>
+                                    </div>
+                                    <div class="telemetry-item">
+                                        <span class="telemetry-label">ALMACENADO</span>
+                                        <span class="telemetry-value text-green">94.6%</span>
+                                    </div>
+                                    <div class="telemetry-item">
+                                        <span class="telemetry-label">EFICIENCIA GRID</span>
+                                        <span class="telemetry-value text-cyan">98.1%</span>
+                                    </div>
+                                </div>
+                                <div class="telemetry-chart-container">
+                                    <canvas class="telemetry-mini-chart" data-type="energy"></canvas>
+                                </div>
+                            </div>
+                            
+                            <div class="layout-lines-overlay"></div>
+                        </div>
+                    </div>
+                    <!-- Right Column: Content -->
+                    <div class="twin-content" data-aos="fade-left" data-aos-duration="1000">
+                        <div class="hero-badge">
+                            <span class="badge-dot green"></span>
+                            Energías Renovables y Smart Grid
+                        </div>
+                        <h3>Simulación de <span class="gradient-text">Redes Eléctricas</span></h3>
+                        <p>Supervisa parques eólicos y campos solares en una malla inteligente unificada. Analiza la generación, almacenamiento en subestaciones y flujo energético de red para optimizar la eficiencia y predecir sobrecargas del sistema.</p>
+                        <a href="#contact" class="btn-neon-cyan inline-flex">Solicitar Demo de Energía</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ DIGITAL TWINS SHOWROOM ============ -->
+        <section id="digital-twins-showroom" class="showroom-section">
+            <div class="showroom-container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="hero-badge">
+                        <span class="badge-dot cyan"></span>
+                        CENTRO DE SIMULACIÓN INTERACTIVO
+                    </div>
+                    <h2>Modelos 3D de <span class="gradient-text">Gemelos Digitales</span></h2>
+                    <p>Explora y manipula las réplicas digitales exactas de las plantas y megaestructuras físicas de kaironInnova.</p>
+                </div>
+                
+                <div class="showroom-carousel-wrapper">
+                    <button class="carousel-btn prev-btn" id="carousel-prev" aria-label="Anterior">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    </button>
+                    <div class="showroom-carousel">
+                        <div class="carousel-track" id="carousel-track">
+                            <!-- Card 1: Refinery -->
+                            <div class="showroom-card glass-panel" data-aos="fade-up" data-aos-delay="100">
+                                <div class="card-visual-container">
+                                    <div id="refinery-card-canvas" class="card-canvas"></div>
+                                    <div class="card-scan-effect"></div>
+                                </div>
+                                <div class="card-details">
+                                    <div class="card-primary-info">
+                                        <h3>Refinería El Palito</h3>
+                                        <div class="card-meta">
+                                            <span class="card-status-dot pulse-green"></span>
+                                            <span class="card-status-text">Telemetría Activa</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-expanded-info">
+                                        <p>Simulación termodinámica, flujos de tuberías y control de nivel de almacenamiento en zona de tanques.</p>
+                                        <div class="card-specs-list">
+                                            <div class="spec-row">
+                                                <span class="spec-label">DESTILACIÓN</span>
+                                                <span class="spec-value">140 MBD</span>
+                                            </div>
+                                            <div class="spec-row">
+                                                <span class="spec-label">CRAQUEO (FCC)</span>
+                                                <span class="spec-value">61.5 MBD</span>
+                                            </div>
+                                            <div class="spec-row">
+                                                <span class="spec-label">ALQUILACIÓN</span>
+                                                <span class="spec-value">22 MBD</span>
+                                            </div>
+                                        </div>
+                                        <button class="btn-showroom-action w-full" onclick="openHologramModal('refinery', 'Refinería El Palito - DCS Planta 1')">Expandir Holograma 3D</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Bridge -->
+                            <div class="showroom-card glass-panel" data-aos="fade-up" data-aos-delay="200">
+                                <div class="card-visual-container">
+                                    <div id="bridge-card-canvas" class="card-canvas"></div>
+                                    <div class="card-scan-effect"></div>
+                                </div>
+                                <div class="card-details">
+                                    <div class="card-primary-info">
+                                        <h3>Puente Colgante</h3>
+                                        <div class="card-meta">
+                                            <span class="card-status-dot pulse-green"></span>
+                                            <span class="card-status-text">Telemetría Activa</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-expanded-info">
+                                        <p>Análisis de fatiga estructural en cables tensores, vibración sísmica y deformación por viento.</p>
+                                        <div class="card-specs-list">
+                                            <div class="spec-row">
+                                                <span class="spec-label">NODOS SÍSMICOS</span>
+                                                <span class="spec-value">32 LoraWAN</span>
+                                            </div>
+                                            <div class="spec-row">
+                                                <span class="spec-label">LONGITUD</span>
+                                                <span class="spec-value">1.2 Km</span>
+                                            </div>
+                                            <div class="spec-row">
+                                                <span class="spec-label">TOLERANCIA VIENTO</span>
+                                                <span class="spec-value">120 km/h</span>
+                                            </div>
+                                        </div>
+                                        <button class="btn-showroom-action w-full" onclick="openHologramModal('bridge', 'Puente Civil de Suspensión - Sensores estructurales')">Expandir Holograma 3D</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Warehouse -->
+                            <div class="showroom-card glass-panel" data-aos="fade-up" data-aos-delay="300">
+                                <div class="card-visual-container">
+                                    <div id="warehouse-card-canvas" class="card-canvas"></div>
+                                    <div class="card-scan-effect"></div>
+                                </div>
+                                <div class="card-details">
+                                    <div class="card-primary-info">
+                                        <h3>Almacén Autónomo</h3>
+                                        <div class="card-meta">
+                                            <span class="card-status-dot pulse-green"></span>
+                                            <span class="card-status-text">Telemetría Activa</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-expanded-info">
+                                        <p>Planificación de rutas de AMRs, despacho de drones y posicionamiento de inventario en tiempo real.</p>
+                                        <div class="card-specs-list">
+                                            <div class="spec-row">
+                                                <span class="spec-label">FLOTA AMR</span>
+                                                <span class="spec-value">12 unidades</span>
+                                            </div>
+                                            <div class="spec-row">
+                                                <span class="spec-label">DRONES PICKING</span>
+                                                <span class="spec-value">4 activos</span>
+                                            </div>
+                                            <div class="spec-row">
+                                                <span class="spec-label">TRÁNSITO ÓPTIMO</span>
+                                                <span class="spec-value">99.2%</span>
+                                            </div>
+                                        </div>
+                                        <button class="btn-showroom-action w-full" onclick="openHologramModal('warehouse', 'Almacén Logístico Autónomo - Optimización de Rutas')">Expandir Holograma 3D</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 4: Separator -->
+                            <div class="showroom-card glass-panel" data-aos="fade-up" data-aos-delay="400">
+                                <div class="card-visual-container">
+                                    <div id="separator-card-canvas" class="card-canvas"></div>
+                                    <div class="card-scan-effect"></div>
+                                </div>
+                                <div class="card-details">
+                                    <div class="card-primary-info">
+                                        <h3>Separador de 3 Fases</h3>
+                                        <div class="card-meta">
+                                            <span class="card-status-dot pulse-green"></span>
+                                            <span class="card-status-text">Telemetría Activa</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-expanded-info">
+                                        <p>Monitoreo P&ID de presión de vasijas y control automático de interfase Agua / Aceite / Gas.</p>
+                                        <div class="card-specs-list">
+                                            <div class="spec-row">
+                                                <span class="spec-label">PRESIÓN VASIJA</span>
+                                                <span class="spec-value">3.2 bar</span>
+                                            </div>
+                                            <div class="spec-row">
+                                                <span class="spec-label">NIVEL FLUIDOS</span>
+                                                <span class="spec-value">P&ID Auto</span>
+                                            </div>
+                                            <div class="spec-row">
+                                                <span class="spec-label">SENSORES REDUND.</span>
+                                                <span class="spec-value">8 activos</span>
+                                            </div>
+                                        </div>
+                                        <button class="btn-showroom-action w-full" onclick="openHologramModal('separator', 'Separador Químico de 3 Fases - Controles P&ID')">Expandir Holograma 3D</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 5: Energy Grid -->
+                            <div class="showroom-card glass-panel" data-aos="fade-up" data-aos-delay="500">
+                                <div class="card-visual-container">
+                                    <div id="energy-card-canvas" class="card-canvas"></div>
+                                    <div class="card-scan-effect"></div>
+                                </div>
+                                <div class="card-details">
+                                    <div class="card-primary-info">
+                                        <h3>Red Smart Grid</h3>
+                                        <div class="card-meta">
+                                            <span class="card-status-dot pulse-green"></span>
+                                            <span class="card-status-text">Telemetría Activa</span>
+                                        </div>
+                                    </div>
+                                    <div class="card-expanded-info">
+                                        <p>Gestión de parques eólicos y campos solares integrados en una red de distribución inteligente.</p>
+                                        <div class="card-specs-list">
+                                            <div class="spec-row">
+                                                <span class="spec-label">TURBINAS EÓLICAS</span>
+                                                <span class="spec-value">4.2 MW</span>
+                                            </div>
+                                            <div class="spec-row">
+                                                <span class="spec-label">CAMPOS SOLARES</span>
+                                                <span class="spec-value">2.8 MW</span>
+                                            </div>
+                                            <div class="spec-row">
+                                                <span class="spec-label">EFICIENCIA BATERÍAS</span>
+                                                <span class="spec-value">94.6%</span>
+                                            </div>
+                                        </div>
+                                        <button class="btn-showroom-action w-full" onclick="openHologramModal('energy', 'Smart Grid de Energías Renovables - Telemetría Eléctrica')">Expandir Holograma 3D</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-btn next-btn" id="carousel-next" aria-label="Siguiente">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </button>
+                </div>
+                <div class="carousel-dots" id="carousel-dots"></div>
+            </div>
+        </section>
+
+        <!-- ============ FULL-SCREEN HOLOGRAM MODAL ============ -->
+        <div id="hologram-modal" class="hologram-modal-overlay">
+            <div class="hologram-modal-content glass-panel">
+                <div class="modal-header">
+                    <div class="modal-title">
+                        <span class="modal-title-dot pulse-cyan"></span>
+                        <h2 id="modal-title-text">Gemelo Digital Expandido</h2>
+                    </div>
+                    <button class="modal-close-btn" onclick="closeHologramModal()">&times;</button>
+                </div>
+                
+                <div class="modal-body">
+                    <!-- Left HUD Panel: Telemetry Charts -->
+                    <div class="modal-hud-left">
+                        <div class="hud-box">
+                            <h4>TELEMETRÍA DE SENSORES EN TIEMPO REAL</h4>
+                            <canvas id="telemetry-chart-canvas"></canvas>
+                        </div>
+                        <div class="hud-box mt-4">
+                            <h4>INDICADORES CLAVE (DCS)</h4>
+                            <div class="hud-metrics-grid">
+                                <div class="hud-metric">
+                                    <span class="metric-label">RENDIMIENTO</span>
+                                    <span class="metric-val text-cyan">98.4%</span>
+                                </div>
+                                <div class="hud-metric">
+                                    <span class="metric-label">VIBRACIÓN</span>
+                                    <span class="metric-val text-purple">0.02 G</span>
+                                </div>
+                                <div class="hud-metric">
+                                    <span class="metric-label">TEMPERATURA</span>
+                                    <span class="metric-val text-green">41.8 °C</span>
+                                </div>
+                                <div class="hud-metric">
+                                    <span class="metric-label">ESTADO IA</span>
+                                    <span class="metric-val text-yellow">OPTIMIZANDO</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Center Panel: Massive WebGL Viewport -->
+                    <div class="modal-viewport-container">
+                        <div id="modal-webgl-container"></div>
+                        <div class="viewport-crosshairs"></div>
+                        <div class="viewport-scanline"></div>
+                    </div>
+                    
+                    <!-- Right HUD Panel: AI Diagnostic Logs -->
+                    <div class="modal-hud-right">
+                        <div class="hud-box flex-1">
+                            <h4>DIAGNÓSTICOS DEL MOTOR DE IA</h4>
+                            <div id="modal-console-logs" class="console-logs"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button class="btn-modal-control" id="btn-modal-rotate" onclick="toggleModalRotation()">Autorotación: ON</button>
+                    <button class="btn-modal-control" id="btn-modal-reset" onclick="resetModalCamera()">Restablecer Cámara</button>
+                    <button class="btn-neon-cyan" onclick="closeHologramModal()">Cerrar Simulación</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ HOW IT WORKS (PROCESO) ============ -->
+        <section id="how-it-works" class="how-it-works">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Proceso de <span class="gradient-text">Implementación</span></h2>
+                <p>Nuestra metodología para conectar infraestructuras críticas con Gemelos Inteligentes.</p>
+            </div>
+
+            <div class="how-grid">
+                <div class="how-card glass-panel" data-aos="fade-up" data-aos-delay="100">
+                    <div class="how-step-num">01</div>
+                    <h3>Modelado Geográfico 3D</h3>
+                    <p>Levantamiento en 3D de alta resolución basado en datos topográficos reales y diagramas P&ID para crear el cascarón virtual fotorrealista.</p>
+                </div>
+
+                <div class="how-card glass-panel" data-aos="fade-up" data-aos-delay="200">
+                    <div class="how-step-num">02</div>
+                    <h3>Ingesta y Mapeo de Sensores</h3>
+                    <p>Conexión e integración en tiempo real de instrumentación de campo (presión, flujos, temperatura) directo al gemelo interactivo.</p>
+                </div>
+
+                <div class="how-card glass-panel" data-aos="fade-up" data-aos-delay="300">
+                    <div class="how-step-num">03</div>
+                    <h3>Predicción IA y Control</h3>
+                    <p>Modelos de aprendizaje profundo ejecutan simulaciones continuas para anticipar fallas mecánicas y sugerir ajustes operativos.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ CONTACT / DEMO SECTION ============ -->
+        <section id="contact" class="contact">
+            <div class="contact-container">
+                <div class="contact-grid">
+                    
+                    <div class="contact-info" data-aos="fade-right">
+                        <h2>¿Listo para <span class="gradient-text">Optimizar?</span></h2>
+                        <p>Solicita una demostración en vivo de kaironInnova aplicada a tus infraestructuras civiles o industriales.</p>
+                        <div class="contact-bullets">
+                            <div class="bullet-item">
+                                <span class="bullet-icon">✓</span>
+                                <span>Monitoreo 3D interactivo en tiempo real</span>
+                            </div>
+                            <div class="bullet-item">
+                                <span class="bullet-icon">✓</span>
+                                <span>Algoritmos predictivos de fatiga de materiales</span>
+                            </div>
+                            <div class="bullet-item">
+                                <span class="bullet-icon">✓</span>
+                                <span>Integración nativa con sistemas DCS / SCADA</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-wrapper glass-panel" data-aos="fade-left">
+                        <form class="demo-form" onsubmit="event.preventDefault(); alert('Demo solicitada con éxito. Nuestro equipo te contactará.');">
+                            <div class="form-group">
+                                <label for="name">Nombre Completo</label>
+                                <input type="text" id="name" required placeholder="Ingresa tu nombre">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Correo Corporativo</label>
+                                <input type="email" id="email" required placeholder="correo@empresa.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="company">Empresa / Organización</label>
+                                <input type="text" id="company" required placeholder="Nombre de tu empresa">
+                            </div>
+                            <div class="form-group">
+                                <label for="msg">Mensaje</label>
+                                <textarea id="msg" rows="3" placeholder="Cuéntanos sobre tu proyecto..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-neon-cyan w-full text-center">Agendar Demo</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <svg viewBox="0 0 36 36" width="24" height="24" class="logo-icon">
+                    <path d="M6 4h7v28H6z" fill="var(--color-accent-primary)"/>
+                    <path d="M13 18L27 4h6L19 18l14 14h-6L13 18z" fill="var(--color-accent-secondary)"/>
+                </svg>
+                <span>kairon<strong>Innova</strong></span>
+            </div>
+            <p class="footer-copy">&copy; 2026 kaironInnova. Todos los derechos reservados. Automatización e Inteligencia Civil.</p>
+        </div>
+    </footer>
+
+    <!-- AOS Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- 3D Warp Space Background -->
+    <script src="warp-background.js?v=5.0"></script>
+    <!-- 3D Digital Twin Logic -->
+    <script src="digital-twin-3d.js"></script>
+    <!-- 3D Bridge Twin Logic -->
+    <script src="bridge-twin-3d.js"></script>
+    <!-- 3D Warehouse Twin Logic -->
+    <script src="warehouse-twin-3d.js"></script>
+    <!-- 3D Separator Twin Logic -->
+    <script src="separator-twin-3d.js"></script>
+    <!-- 3D Energy Grid Twin Logic -->
+    <script src="energy-twin-3d.js"></script>
+</body>
+</html>
