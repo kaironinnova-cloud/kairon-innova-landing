@@ -3,6 +3,10 @@
     const canvas = document.getElementById('warp-canvas');
     if (!canvas) return;
 
+    // --- RESPONSIVE MOBILE DETECTION ---
+    const isMobile = window.innerWidth < 768;
+    const particleSize = isMobile ? 5.2 : 3.5;
+
     // --- SCENE SETUP ---
     const scene = new THREE.Scene();
 
@@ -19,12 +23,20 @@
     const particlesData = [];
     let pIndex = 0;
 
-    // Helper to register a standard particle
+    // Helper to register a standard particle with volumetric vertical gradient
     function addParticle(x, y, z, worldXCenter, worldYCenter, worldZCenter, baseColorHex) {
+        // Mobile performance optimization: drop 25% of background points on mobile to maintain 60 FPS
+        if (isMobile && Math.random() > 0.75) return;
+
         const idx = pIndex;
         pIndex++;
 
-        const baseColor = new THREE.Color(baseColorHex);
+        // Y-gradient color logic: Purple (#a855f7) at the bottom to Cyan (#00f2fe) at the top
+        let t = (y + 80) / 200;
+        t = Math.max(0, Math.min(1, t));
+        const colorBase = new THREE.Color(0xa855f7); // Deep Purple
+        const colorTop = new THREE.Color(0x00f2fe);  // Neon Cyan
+        const baseColor = colorBase.clone().lerp(colorTop, t);
         
         const baseX = worldXCenter + x;
         const baseY = y;
@@ -45,20 +57,28 @@
             chaosY: chaosY,
             chaosZ: chaosZ,
             baseColor: baseColor,
-            isBlade: false
+            isBlade: false,
+            isCar: false
         });
     }
 
     // Helper to register an animated rotating blade particle (for wind turbines)
     function addBladeParticle(tx, ty, tz, worldXCenter, worldYCenter, worldZCenter, bladeLength, angleOffset, baseColorHex) {
+        if (isMobile && Math.random() > 0.75) return;
+
         const idx = pIndex;
         pIndex++;
 
-        const baseColor = new THREE.Color(baseColorHex);
-        
         const x = tx + bladeLength * Math.cos(angleOffset);
         const y = ty + bladeLength * Math.sin(angleOffset);
         const z = tz;
+
+        // Y-gradient color logic
+        let t = (y + 80) / 200;
+        t = Math.max(0, Math.min(1, t));
+        const colorBase = new THREE.Color(0xa855f7);
+        const colorTop = new THREE.Color(0x00f2fe);
+        const baseColor = colorBase.clone().lerp(colorTop, t);
         
         const baseX = worldXCenter + x;
         const baseY = y;
@@ -81,11 +101,49 @@
             baseColor: baseColor,
             
             isBlade: true,
+            isCar: false,
             hubX: worldXCenter + tx,
             hubY: worldYCenter + ty,
             hubZ: worldZCenter + tz,
             bladeLength: bladeLength,
             bladeAngleOffset: angleOffset
+        });
+    }
+
+    // Helper to register a moving vehicle particle along the bridge calzada
+    function addCarParticle(x, y, z, worldXCenter, worldYCenter, worldZCenter, carSpeed, carOffset) {
+        if (isMobile && Math.random() > 0.6) return; // Reduce car count on mobile
+
+        const idx = pIndex;
+        pIndex++;
+
+        // Y-gradient color logic
+        let t = (y + 80) / 200;
+        t = Math.max(0, Math.min(1, t));
+        const colorBase = new THREE.Color(0xa855f7);
+        const colorTop = new THREE.Color(0x00f2fe);
+        const baseColor = colorBase.clone().lerp(colorTop, t);
+        
+        const baseX = worldXCenter + x;
+        const baseY = y;
+        const baseZ = worldZCenter + z;
+        const worldY = worldYCenter + y;
+
+        particlesData.push({
+            idx: idx,
+            baseX: baseX,
+            baseY: baseY,
+            baseZ: baseZ,
+            worldY: worldY,
+            chaosX: 0,
+            chaosY: 0,
+            chaosZ: 0,
+            baseColor: baseColor,
+            isBlade: false,
+            isCar: true,
+            carSpeed: carSpeed,
+            carOffset: carOffset,
+            localXCenter: worldXCenter
         });
     }
 
@@ -183,6 +241,16 @@
         const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
         addParticle(40, 126 + k * 1.5, 40, 0, refineryYCenter, 0, color);
     }
+    // 3b. Spiraling Spiral Staircase Detail around the Column (120 points)
+    for (let k = 0; k < 120; k++) {
+        let t = k / 120;
+        let y = -80 + t * 190;
+        let theta = t * (Math.PI * 8); // 4 full turns
+        let r = 18.5; // Slightly larger radius than cylinder (r=16)
+        let x = 40 + r * Math.cos(theta);
+        let z = 40 + r * Math.sin(theta);
+        addParticle(x, y, z, 0, refineryYCenter, 0, 0x00f2fe);
+    }
 
     // 4. Spherical Gas Storage Tank (400 points)
     // Center: X = 50, Y = -10, Z = -50. Radius = 30
@@ -210,6 +278,24 @@
         let y = -26 - ptIdx * 2.16;
         addParticle(legX, y, legZ, 0, refineryYCenter, 0, color);
     }
+    // 4b. Cross Bracing (X-trusses) between Sphere Legs (80 points)
+    for (let leg = 0; leg < 4; leg++) {
+        let t1 = legAnglesRefinery[leg];
+        let t2 = legAnglesRefinery[(leg + 1) % 4];
+        let x1 = 50 + 25 * Math.cos(t1);
+        let z1 = -50 + 25 * Math.sin(t1);
+        let x2 = 50 + 25 * Math.cos(t2);
+        let z2 = -50 + 25 * Math.sin(t2);
+        for (let pt = 0; pt < 10; pt++) {
+            let frac = pt / 10;
+            let y1 = -26 - frac * 54;
+            let bx = x1 + frac * (x2 - x1);
+            let bz = z1 + frac * (z2 - z1);
+            addParticle(bx, y1, bz, 0, refineryYCenter, 0, 0xa855f7);
+            let y2 = -80 + frac * 54;
+            addParticle(bx, y2, bz, 0, refineryYCenter, 0, 0xa855f7);
+        }
+    }
 
     // 5. Connecting Pipes & Chimney (300 points)
     // Chimney stack: X = -110, Z = 60 (100 points)
@@ -223,6 +309,16 @@
         let x = -110 + r * Math.cos(theta);
         let z = 60 + r * Math.sin(theta);
         addParticle(x, y, z, 0, refineryYCenter, 0, color);
+    }
+    // 5b. Chimney Steam Flow (80 points)
+    for (let k = 0; k < 80; k++) {
+        let t = Math.random();
+        let y = 140 + t * 45;
+        let r = 8 + t * 14;
+        let theta = Math.random() * Math.PI * 2;
+        let x = -110 + r * Math.cos(theta);
+        let z = 60 + r * Math.sin(theta);
+        addParticle(x, y, z, 0, refineryYCenter, 0, 0x00f2fe);
     }
     // Pipe 1 (100 points)
     for (let k = 0; k < 100; k++) {
@@ -245,6 +341,15 @@
         let y = -30;
         let z = 40 - t * 90;
         addParticle(x, y, z, 0, refineryYCenter, 0, color);
+    }
+    // 5c. Multi-level Pipe Rack (120 points)
+    for (let h = 0; h < 3; h++) {
+        let y = -60 + h * 25;
+        for (let k = 0; k < 20; k++) {
+            let t = k / 20;
+            addParticle(-50 + t * 100, y, -20, 0, refineryYCenter, 0, 0x00f2fe);
+            addParticle(-50 + t * 100, y, 20, 0, refineryYCenter, 0, 0xa855f7);
+        }
     }
 
     // ==========================================
@@ -276,46 +381,49 @@
     const towerXs = [-120, 120];
     for (let tIdx = 0; tIdx < 2; tIdx++) {
         let x0 = towerXs[tIdx];
-        // Pillars (z = -30, z = 30)
+        // Pillars (z = -30, z = 30) - ahusados (tapered)
         for (let k = 0; k < 80; k++) {
-            const color = Math.random() > 0.5 ? 0x00f2fe : 0xa855f7;
             let y = -100 + k * 3.125;
-            addParticle(x0, y, -30, 450, bridgeYCenter, -120, color);
-        }
-        for (let k = 0; k < 80; k++) {
-            const color = Math.random() > 0.5 ? 0x00f2fe : 0xa855f7;
-            let y = -100 + k * 3.125;
-            addParticle(x0, y, 30, 450, bridgeYCenter, -120, color);
+            let factor = (y - (-100)) / 250; // 0 to 1
+            let zOffset = 30 - factor * 14;   // Narrows from 30 to 16
+            addParticle(x0, y, -zOffset, 450, bridgeYCenter, -120, 0x00f2fe);
+            addParticle(x0, y, zOffset, 450, bridgeYCenter, -120, 0x00f2fe);
         }
         // Beams (y = -20, 60, 140)
         const beamYs = [-20, 60, 140];
         for (let b = 0; b < 3; b++) {
             let by = beamYs[b];
+            let factor = (by - (-100)) / 250;
+            let zOffset = 30 - factor * 14;
             for (let k = 0; k < 20; k++) {
-                const color = Math.random() > 0.5 ? 0x00f2fe : 0xa855f7;
-                let z = -30 + k * 3.15;
-                addParticle(x0, by, z, 450, bridgeYCenter, -120, color);
+                let z = -zOffset + k * (zOffset * 2 / 20);
+                addParticle(x0, by, z, 450, bridgeYCenter, -120, 0x00f2fe);
             }
         }
         // Lower X (y from -20 to 60)
         for (let k = 0; k < 20; k++) {
-            const color = Math.random() > 0.5 ? 0x00f2fe : 0xa855f7;
             let t = k / 20;
             let y = -20 + t * 80;
-            let z1 = -30 + t * 60;
-            let z2 = 30 - t * 60;
-            addParticle(x0, y, z1, 450, bridgeYCenter, -120, color);
-            addParticle(x0, y, z2, 450, bridgeYCenter, -120, color);
+            // Interpolate zOffset based on y
+            let zOffsetStart = 30 - ((-20 - (-100)) / 250) * 14;
+            let zOffsetEnd = 30 - ((60 - (-100)) / 250) * 14;
+            let zOffsetCurrent = zOffsetStart + t * (zOffsetEnd - zOffsetStart);
+            let z1 = -zOffsetCurrent + t * (zOffsetCurrent * 2);
+            let z2 = zOffsetCurrent - t * (zOffsetCurrent * 2);
+            addParticle(x0, y, z1, 450, bridgeYCenter, -120, 0xa855f7);
+            addParticle(x0, y, z2, 450, bridgeYCenter, -120, 0xa855f7);
         }
         // Upper X (y from 60 to 140)
         for (let k = 0; k < 20; k++) {
-            const color = Math.random() > 0.5 ? 0x00f2fe : 0xa855f7;
             let t = k / 20;
             let y = 60 + t * 80;
-            let z1 = -30 + t * 60;
-            let z2 = 30 - t * 60;
-            addParticle(x0, y, z1, 450, bridgeYCenter, -120, color);
-            addParticle(x0, y, z2, 450, bridgeYCenter, -120, color);
+            let zOffsetStart = 30 - ((60 - (-100)) / 250) * 14;
+            let zOffsetEnd = 30 - ((140 - (-100)) / 250) * 14;
+            let zOffsetCurrent = zOffsetStart + t * (zOffsetEnd - zOffsetStart);
+            let z1 = -zOffsetCurrent + t * (zOffsetCurrent * 2);
+            let z2 = zOffsetCurrent - t * (zOffsetCurrent * 2);
+            addParticle(x0, y, z1, 450, bridgeYCenter, -120, 0xa855f7);
+            addParticle(x0, y, z2, 450, bridgeYCenter, -120, 0xa855f7);
         }
     }
 
@@ -373,13 +481,33 @@
         }
     }
 
-    // Fill remaining 16 particles (to hit exactly 2000 points)
-    for (let k = 0; k < 16; k++) {
-        const color = Math.random() > 0.5 ? 0x00f2fe : 0xa855f7;
-        let x = (Math.random() - 0.5) * 500;
-        let y = -100 + (Math.random() - 0.5) * 5;
-        let z = (Math.random() - 0.5) * 120;
-        addParticle(x, y, z, 450, bridgeYCenter, -120, color);
+    // 5b. Under-deck Truss Bracing Support (X-truss under deck) (160 points)
+    for (let c = 0; c < 20; c++) {
+        let x1 = -250 + c * 26.3;
+        let x2 = -250 + (c + 1) * 26.3;
+        if (x2 > 250) x2 = 250;
+        for (let pt = 0; pt < 4; pt++) {
+            let t = pt / 4;
+            let cx = x1 + t * (x2 - x1);
+            let cz1 = -35 + t * 70;
+            addParticle(cx, -24, cz1, 450, bridgeYCenter, -120, 0xa855f7);
+            let cz2 = 35 - t * 70;
+            addParticle(cx, -24, cz2, 450, bridgeYCenter, -120, 0xa855f7);
+        }
+    }
+
+    // 6. Dynamic Vehicle Flow (48 points)
+    // 3 cars moving left-to-right (Z = -10) and 3 moving right-to-left (Z = 10)
+    for (let car = 0; car < 6; car++) {
+        let z = car < 3 ? -10 : 10;
+        let speed = car < 3 ? (25 + car * 10) : -(25 + (car - 3) * 10);
+        let offset = car * 85;
+        // Each vehicle is represented by a cluster of 8 particles
+        for (let pt = 0; pt < 8; pt++) {
+            let dx = (pt % 4) * 2.5; // length
+            let dy = Math.floor(pt / 4) * 2.0; // height
+            addCarParticle(dx, -18 + dy, z, 450, bridgeYCenter, -120, speed, offset);
+        }
     }
 
     // ==========================================
@@ -555,10 +683,31 @@
         let x = -70 + ptIdx * 12.72;
         addParticle(x, -80, z, -450, warehouseYCenter, 150, color);
     }
-    // Final remaining 20 points
+    // 4b. Roof Truss Diagonal Bracings (80 points)
+    const trussZs = [-100, -50, 0, 50, 100];
+    for (let tz of trussZs) {
+        for (let k = 0; k < 8; k++) {
+            let t = k / 8;
+            let lx = -80 + t * 80;
+            let ly = 40 + t * 40;
+            addParticle(lx, ly - 4, tz, -450, warehouseYCenter, 150, 0x00f2fe);
+            let rx = 80 - t * 80;
+            let ry = 40 + t * 40;
+            addParticle(rx, ry - 4, tz, -450, warehouseYCenter, 150, 0x00f2fe);
+        }
+    }
+
+    // 4c. Forklift in Central Aisle (32 points)
     for (let k = 0; k < 20; k++) {
-        const color = Math.random() > 0.3 ? 0x00f2fe : 0xa855f7;
-        addParticle(-80 + k * 8.4, -80, -100, -450, warehouseYCenter, 150, color);
+        let dx = (k % 3) * 3 - 3;
+        let dy = Math.floor(k / 3) * 3;
+        let dz = Math.floor(k / 9) * 3 - 3;
+        addParticle(dx, -76 + dy, 20 + dz, -450, warehouseYCenter, 150, 0xa855f7);
+    }
+    for (let k = 0; k < 6; k++) {
+        let dy = k * 3;
+        addParticle(-3, -76 + dy, 25, -450, warehouseYCenter, 150, 0x00f2fe);
+        addParticle(3, -76 + dy, 25, -450, warehouseYCenter, 150, 0x00f2fe);
     }
 
     // ==========================================
@@ -685,6 +834,12 @@
         }
         addParticle(x, y, z, 400, separatorYCenter, -200, color);
     }
+    // Inlet Nozzle Flange (15 points)
+    for (let k = 0; k < 15; k++) {
+        let theta = k * (Math.PI * 2 / 15);
+        let r = 8;
+        addParticle(-120, 10 + r * Math.cos(theta), r * Math.sin(theta), 400, separatorYCenter, -200, 0x00f2fe);
+    }
     // Top outlet (75 points)
     for (let k = 0; k < 75; k++) {
         const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
@@ -697,6 +852,21 @@
             y = 100;
         }
         addParticle(x, y, z, 400, separatorYCenter, -200, color);
+    }
+    // Circular Pressure Gauge on Front Face (40 points)
+    for (let k = 0; k < 30; k++) {
+        let theta = k * (Math.PI * 2 / 30);
+        let r = 12;
+        let y = 25 + r * Math.cos(theta);
+        let z = 40 + r * Math.sin(theta);
+        addParticle(0, y, z, 400, separatorYCenter, -200, 0x00f2fe);
+    }
+    // Gauge Needle (10 points)
+    for (let k = 0; k < 10; k++) {
+        let len = k * 1.0;
+        let y = 25 + len * Math.cos(Math.PI / 4);
+        let z = 40 + len * Math.sin(Math.PI / 4);
+        addParticle(0, y, z, 400, separatorYCenter, -200, 0xa855f7);
     }
     // Bottom outlet (50 points)
     for (let k = 0; k < 50; k++) {
@@ -847,6 +1017,22 @@
         }
     }
 
+    // 3b. Substation Transformers (80 points)
+    // Transformer 1: X = -50, Z = 90
+    for (let k = 0; k < 40; k++) {
+        let dx = (k % 4) * 3 - 4.5;
+        let dy = Math.floor(k / 4) * 3 - 80;
+        let dz = Math.floor(k / 16) * 3 + 90;
+        addParticle(dx - 50, dy, dz, -400, energyYCenter, 120, 0x00f2fe);
+    }
+    // Transformer 2: X = 50, Z = 90
+    for (let k = 0; k < 40; k++) {
+        let dx = (k % 4) * 3 - 4.5;
+        let dy = Math.floor(k / 4) * 3 - 80;
+        let dz = Math.floor(k / 16) * 3 + 90;
+        addParticle(dx + 50, dy, dz, -400, energyYCenter, 120, 0x00f2fe);
+    }
+
     // 4. Solar Panels (225 points)
     const panelXs = [-90, -45, 0, 45, 90];
     for (let p = 0; p < 5; p++) {
@@ -976,13 +1162,31 @@
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
+    // Create a circular glowing particle texture in canvas
+    function createCircleTexture() {
+        const c = document.createElement('canvas');
+        c.width = 16;
+        c.height = 16;
+        const ctx = c.getContext('2d');
+        const grad = ctx.createRadialGradient(8, 8, 0, 8, 8, 8);
+        grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+        grad.addColorStop(0.3, 'rgba(255, 255, 255, 0.8)');
+        grad.addColorStop(0.6, 'rgba(255, 255, 255, 0.15)');
+        grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 16, 16);
+        return new THREE.CanvasTexture(c);
+    }
+
     const material = new THREE.PointsMaterial({
-        size: 3.2,
+        size: particleSize,
+        map: createCircleTexture(),
         vertexColors: true,
         transparent: true,
-        opacity: 0.9,
+        opacity: 0.85,
         blending: THREE.AdditiveBlending,
-        depthWrite: false
+        depthWrite: false,
+        sizeAttenuation: true
     });
 
     const pointCloud = new THREE.Points(geometry, material);
@@ -1149,7 +1353,13 @@
         currentCameraY = THREE.MathUtils.lerp(currentCameraY, pathData.y, 0.05);
         currentCameraZ = THREE.MathUtils.lerp(currentCameraZ, pathData.z, 0.05);
 
-        const zDistance = 420;
+        // Responsive camera distance based on aspect ratio (Z-zooming on mobile)
+        const aspect = window.innerWidth / window.innerHeight;
+        let zDistance = 420;
+        if (aspect < 1.0) {
+            zDistance = 420 * (1.25 / aspect); // Zoom out dynamically to fit structures
+            zDistance = Math.max(420, Math.min(800, zDistance)); // Clamp
+        }
 
         camera.position.x = currentCameraX + Math.sin(Date.now() * 0.0003) * 60;
         camera.position.y = currentCameraY;
@@ -1177,6 +1387,12 @@
                 px = p.hubX + p.bladeLength * Math.cos(angle);
                 py = p.hubY + p.bladeLength * Math.sin(angle);
                 pz = p.hubZ;
+            }
+
+            // --- Apply vehicle movement if applicable ---
+            if (p.isCar) {
+                let localX = ((p.carSpeed * time + p.carOffset) % 500) - 250;
+                px = p.localXCenter + localX;
             }
 
             // --- Mouse repulsion / manipulation ---
