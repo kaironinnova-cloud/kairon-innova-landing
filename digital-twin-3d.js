@@ -788,6 +788,10 @@ window.initRefinery3D = function(container) {
         }
         requestAnimationFrame(animate);
         
+        if (container.dataset.paused === "true") {
+            return;
+        }
+        
         // Return refinery model to scroll-linked rotation smoothly
         if (!isInteracting) {
             refineryGroup.rotation.y = THREE.MathUtils.lerp(refineryGroup.rotation.y, targetRotationY, 0.05);

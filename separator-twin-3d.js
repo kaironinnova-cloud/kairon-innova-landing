@@ -356,6 +356,10 @@ window.initSeparator3D = function(container) {
         }
         requestAnimationFrame(animate);
 
+        if (container.dataset.paused === "true") {
+            return;
+        }
+
         if (!isInteracting) {
             separatorGroup.rotation.y = THREE.MathUtils.lerp(separatorGroup.rotation.y, targetRotationY, 0.05);
         }

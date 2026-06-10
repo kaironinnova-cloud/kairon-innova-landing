@@ -151,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let activeIndex = 0;
     const showroomInstances = new Map();
+    let isShowroomVisible = false;
 
     if (track && prevBtn && nextBtn && dotsContainer && showroomCarousel) {
         // Create dots dynamically
@@ -204,6 +205,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     dot.classList.remove('active');
                 }
             });
+
+            // Update paused state of card canvases: pause if showroom is not visible or card is not active
+            cards.forEach((card, index) => {
+                const canvasContainer = card.querySelector('.card-canvas');
+                if (canvasContainer) {
+                    if (index === activeIndex && isShowroomVisible) {
+                        canvasContainer.dataset.paused = "false";
+                    } else {
+                        canvasContainer.dataset.paused = "true";
+                    }
+                }
+            });
         }
 
         function goToSlide(index) {
@@ -244,6 +257,9 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 if (modelType && initFunctions[modelType] && canvasContainer.innerHTML === '') {
                     canvasContainer.classList.add('webgl-active');
+                    // Default to paused state unless it is active and the showroom is visible
+                    canvasContainer.dataset.paused = (index === activeIndex && isShowroomVisible) ? "false" : "true";
+                    
                     const instance = initFunctions[modelType](canvasContainer);
                     
                     // Enable autoRotate inside card viewports for continuous dynamic preview
@@ -271,6 +287,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
+
+        // Intersection Observer to monitor showroom visibility
+        const showroomObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                isShowroomVisible = entry.isIntersecting;
+                updateCarousel();
+            });
+        }, { threshold: 0.1 });
+
+        const showroomSection = document.getElementById('digital-twins-showroom');
+        if (showroomSection) {
+            showroomObserver.observe(showroomSection);
+        }
 
         window.addEventListener('resize', updateCarousel);
         

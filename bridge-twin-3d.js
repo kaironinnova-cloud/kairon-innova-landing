@@ -252,6 +252,10 @@ window.initBridge3D = function(container) {
         }
         requestAnimationFrame(animate);
         
+        if (container.dataset.paused === "true") {
+            return;
+        }
+        
         // Return bridge model to scroll-linked rotation smoothly
         if (!isInteracting) {
             bridgeGroup.rotation.y = THREE.MathUtils.lerp(bridgeGroup.rotation.y, targetRotationY, 0.05);

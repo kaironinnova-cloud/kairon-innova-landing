@@ -326,6 +326,10 @@ window.initWarehouse3D = function(container) {
         }
         requestAnimationFrame(animate);
 
+        if (container.dataset.paused === "true") {
+            return;
+        }
+
         currentScrollProgress = THREE.MathUtils.lerp(currentScrollProgress, targetScrollProgress, 0.05);
 
         if (!isInteracting) {

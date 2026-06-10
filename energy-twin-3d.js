@@ -302,6 +302,10 @@ window.initEnergy3D = function(container) {
         }
         requestAnimationFrame(animate);
 
+        if (container.dataset.paused === "true") {
+            return;
+        }
+
         // Return group to scroll-linked rotation smoothly if user is not dragging
         if (!isInteracting) {
             energyGroup.rotation.y = THREE.MathUtils.lerp(energyGroup.rotation.y, targetRotationY, 0.05);
