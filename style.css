@@ -870,6 +870,31 @@ a {
     .hamburger.active span:nth-child(3) {
         transform: translateY(-8px) rotate(-45deg);
     }
+
+    /* Mobile Responsive Optimizations */
+    .hero {
+        padding-top: 100px !important;
+        min-height: calc(100vh - 40px) !important;
+    }
+
+    .twin-section, .showroom-section, .services, .contact, .how-it-works, .ai-agents {
+        padding: var(--space-10) var(--space-4) !important;
+    }
+
+    .visual-frame {
+        min-height: 300px !important;
+        height: 320px !important;
+        aspect-ratio: auto !important;
+    }
+
+    .showroom-card {
+        flex: 0 0 82vw !important;
+        padding: var(--space-4) !important;
+    }
+
+    .showroom-carousel-wrapper {
+        padding: 0 var(--space-4) !important;
+    }
 }
 
 /* ==========================================================================
@@ -1352,12 +1377,6 @@ section {
     }
 }
 
-@media (max-width: 480px) {
-    .showroom-card {
-        flex: 0 0 290px;
-        padding: var(--space-4);
-    }
-}
 
 .card-visual-container {
     position: relative;

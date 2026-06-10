@@ -1222,12 +1222,12 @@
 
     // --- SCROLL INTERPOLATION & CAMERA ---
     let currentCameraX = 0;
-    let currentCameraY = 300;
+    let currentCameraY = isMobile ? 410 : 300;
     let currentCameraZ = 0;
 
     const keyframes = [
-        { x: -160, y: 300, z: 0 },      // 0: Hero (Refinery right)
-        { x: 160, y: 300, z: 0 },       // 1: Digital Twin (Refinery left)
+        { x: -160, y: isMobile ? 410 : 300, z: 0 },      // 0: Hero (Refinery right)
+        { x: 160, y: isMobile ? 410 : 300, z: 0 },       // 1: Digital Twin (Refinery left)
         { x: 450, y: -400, z: -120 },   // 2: Civil Twin (Bridge)
         { x: -450, y: -1100, z: 150 },  // 3: Warehouse Twin (Warehouse)
         { x: 400, y: -1800, z: -200 },  // 4: Separator Twin (Separator)
