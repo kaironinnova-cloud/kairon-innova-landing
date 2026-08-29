@@ -665,7 +665,7 @@ a {
 
 .how-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: var(--space-8);
     margin-top: var(--space-12);
 }
