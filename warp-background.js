@@ -1234,39 +1234,39 @@
         { x: -400, y: -2500, z: 120 }   // 5: Energy Grid (Turbines/Pylon)
     ];
 
-    let secHero, secDigitalTwin, secCivil, secWarehouse, secSeparator, secEnergy;
+    let secHero, secTelecom, secAI, secShowroom, secHow, secContact;
 
     function cacheSectionElements() {
         secHero = document.getElementById('hero');
-        secDigitalTwin = document.getElementById('digital-twin');
-        secCivil = document.getElementById('civil-twin-section');
-        secWarehouse = document.getElementById('warehouse-twin-section');
-        secSeparator = document.getElementById('separator-twin-section');
-        secEnergy = document.getElementById('energy-twin-section');
+        secTelecom = document.getElementById('telecom-networks');
+        secAI = document.getElementById('ai-agents');
+        secShowroom = document.getElementById('digital-twins-showroom');
+        secHow = document.getElementById('how-it-works');
+        secContact = document.getElementById('contact');
     }
 
     let currentProgress = -1.0;
 
     function getInterpolatedPosition() {
-        if (!secHero || !secDigitalTwin || !secCivil || !secWarehouse || !secSeparator || !secEnergy) {
+        if (!secHero || !secTelecom || !secAI || !secShowroom || !secHow || !secContact) {
             cacheSectionElements();
         }
 
         const y0 = secHero ? secHero.offsetTop : 0;
-        const y1 = secDigitalTwin ? secDigitalTwin.offsetTop : 1800;
-        const y2 = secCivil ? secCivil.offsetTop : 3000;
-        const y3 = secWarehouse ? secWarehouse.offsetTop : 4200;
-        const y4 = secSeparator ? secSeparator.offsetTop : 5400;
-        const y5 = secEnergy ? secEnergy.offsetTop : 6600;
+        const y1 = secTelecom ? secTelecom.offsetTop : 900;
+        const y2 = secAI ? secAI.offsetTop : 1800;
+        const y3 = secShowroom ? secShowroom.offsetTop : 2800;
+        const y4 = secHow ? secHow.offsetTop : 4000;
+        const y5 = secContact ? secContact.offsetTop : 5200;
 
         const currentScroll = window.scrollY;
         let targetProgress = -1.0;
 
         if (currentScroll < y1) {
-            // Hero -> Digital Twin (linear transition from -1.0 to 0.0)
+            // Hero -> Telecom (linear transition from -1.0 to 0.0)
             targetProgress = -1.0 + Math.max(0, Math.min(1, currentScroll / (y1 || 1)));
         } else {
-            // Segment routing based on scroll position between consecutive twin sections
+            // Segment routing based on scroll position between consecutive sections
             let start = 0;
             let end = 0;
             let s = 1;
