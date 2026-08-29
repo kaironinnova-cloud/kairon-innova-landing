@@ -39,9 +39,9 @@ window.initSeparator3D = function(container) {
     sunLight.shadow.mapSize.height = 1024;
     scene.add(sunLight);
 
-    const purpleLight = new THREE.DirectionalLight(0xa855f7, 0.5); // Back purple accent
-    purpleLight.position.set(200, 300, -200);
-    scene.add(purpleLight);
+    const greenLight = new THREE.DirectionalLight(0x00e676, 0.5); // Back emerald green accent
+    greenLight.position.set(200, 300, -200);
+    scene.add(greenLight);
 
     // --- INTERCEPT ADD FOR GROUP ROTATION ---
     const separatorGroup = new THREE.Group();

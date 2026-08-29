@@ -31,10 +31,10 @@
         const idx = pIndex;
         pIndex++;
 
-        // Y-gradient color logic: Purple (#a855f7) at the bottom to Cyan (#00f2fe) at the top
+        // Y-gradient color logic: Emerald Green (#00e676) at the bottom to Cyan (#00f2fe) at the top
         let t = (y + 80) / 200;
         t = Math.max(0, Math.min(1, t));
-        const colorBase = new THREE.Color(0xa855f7); // Deep Purple
+        const colorBase = new THREE.Color(0x00e676); // Emerald Green
         const colorTop = new THREE.Color(0x00f2fe);  // Neon Cyan
         const baseColor = colorBase.clone().lerp(colorTop, t);
         
@@ -76,7 +76,7 @@
         // Y-gradient color logic
         let t = (y + 80) / 200;
         t = Math.max(0, Math.min(1, t));
-        const colorBase = new THREE.Color(0xa855f7);
+        const colorBase = new THREE.Color(0x00e676);
         const colorTop = new THREE.Color(0x00f2fe);
         const baseColor = colorBase.clone().lerp(colorTop, t);
         
@@ -120,7 +120,7 @@
         // Y-gradient color logic
         let t = (y + 80) / 200;
         t = Math.max(0, Math.min(1, t));
-        const colorBase = new THREE.Color(0xa855f7);
+        const colorBase = new THREE.Color(0x00e676);
         const colorTop = new THREE.Color(0x00f2fe);
         const baseColor = colorBase.clone().lerp(colorTop, t);
         
@@ -154,7 +154,7 @@
     
     // 1. Floor Grid (300 points)
     for (let k = 0; k < 150; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let lineIdx = Math.floor(k / 15);
         let ptIdx = k % 15;
         let x = -120 + ptIdx * 17.14;
@@ -163,7 +163,7 @@
         addParticle(x, y, z, 0, refineryYCenter, 0, color);
     }
     for (let k = 0; k < 150; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let lineIdx = Math.floor(k / 15);
         let ptIdx = k % 15;
         let x = -120 + lineIdx * 26.6;
@@ -175,7 +175,7 @@
     // 2. Hyperbolic Cooling Tower (500 points)
     // Center: X = -70, Z = -40
     for (let k = 0; k < 300; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let ringIdx = Math.floor(k / 15);
         let ptIdx = k % 15;
         let y = -80 + ringIdx * 10.5;
@@ -186,7 +186,7 @@
         addParticle(x, y, z, 0, refineryYCenter, 0, color);
     }
     for (let k = 0; k < 200; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let ribIdx = Math.floor(k / 20);
         let ptIdx = k % 20;
         let y = -80 + ptIdx * 10.5;
@@ -201,7 +201,7 @@
     // Center: X = 40, Z = 40
     // Cylinder rings: 270 points
     for (let k = 0; k < 270; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let ringIdx = Math.floor(k / 15);
         let ptIdx = k % 15;
         let y = -80 + ringIdx * 11.1;
@@ -213,7 +213,7 @@
     }
     // Vertical struts: 120 points
     for (let k = 0; k < 120; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let strutIdx = Math.floor(k / 20);
         let ptIdx = k % 20;
         let y = -80 + ptIdx * 10.0;
@@ -225,7 +225,7 @@
     }
     // Dome cap: 90 points
     for (let k = 0; k < 90; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let ringIdx = Math.floor(k / 15);
         let ptIdx = k % 15;
         let dy = ringIdx * 2.66;
@@ -238,7 +238,7 @@
     }
     // Antenna: 20 points
     for (let k = 0; k < 20; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         addParticle(40, 126 + k * 1.5, 40, 0, refineryYCenter, 0, color);
     }
     // 3b. Spiraling Spiral Staircase Detail around the Column (120 points)
@@ -255,7 +255,7 @@
     // 4. Spherical Gas Storage Tank (400 points)
     // Center: X = 50, Y = -10, Z = -50. Radius = 30
     for (let k = 0; k < 300; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let ringIdx = Math.floor(k / 25);
         let ptIdx = k % 25;
         let dy = -26 + ringIdx * 4.73;
@@ -269,7 +269,7 @@
     // 4 Legs: 100 points
     const legAnglesRefinery = [Math.PI/4, 3*Math.PI/4, 5*Math.PI/4, 7*Math.PI/4];
     for (let k = 0; k < 100; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let legIdx = Math.floor(k / 25);
         let ptIdx = k % 25;
         let theta = legAnglesRefinery[legIdx];
@@ -291,16 +291,16 @@
             let y1 = -26 - frac * 54;
             let bx = x1 + frac * (x2 - x1);
             let bz = z1 + frac * (z2 - z1);
-            addParticle(bx, y1, bz, 0, refineryYCenter, 0, 0xa855f7);
+            addParticle(bx, y1, bz, 0, refineryYCenter, 0, 0x00e676);
             let y2 = -80 + frac * 54;
-            addParticle(bx, y2, bz, 0, refineryYCenter, 0, 0xa855f7);
+            addParticle(bx, y2, bz, 0, refineryYCenter, 0, 0x00e676);
         }
     }
 
     // 5. Connecting Pipes & Chimney (300 points)
     // Chimney stack: X = -110, Z = 60 (100 points)
     for (let k = 0; k < 100; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let ringIdx = Math.floor(k / 5);
         let ptIdx = k % 5;
         let y = -80 + ringIdx * 11.0;
@@ -322,7 +322,7 @@
     }
     // Pipe 1 (100 points)
     for (let k = 0; k < 100; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let x = 0, y = 10, z = 0;
         if (k < 60) {
             x = -70 + k * (110 / 60);
@@ -335,7 +335,7 @@
     }
     // Pipe 2 (100 points)
     for (let k = 0; k < 100; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let t = k / 100;
         let x = 40 + t * 10;
         let y = -30;
@@ -348,7 +348,7 @@
         for (let k = 0; k < 20; k++) {
             let t = k / 20;
             addParticle(-50 + t * 100, y, -20, 0, refineryYCenter, 0, 0x00f2fe);
-            addParticle(-50 + t * 100, y, 20, 0, refineryYCenter, 0, 0xa855f7);
+            addParticle(-50 + t * 100, y, 20, 0, refineryYCenter, 0, 0x00e676);
         }
     }
 
@@ -359,7 +359,7 @@
 
     // 1. Water Grid (300 points)
     for (let k = 0; k < 150; k++) {
-        const color = Math.random() > 0.5 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.5 ? 0x00f2fe : 0x00e676;
         let lineIdx = Math.floor(k / 30);
         let ptIdx = k % 30;
         let x = -250 + ptIdx * 17.24;
@@ -368,7 +368,7 @@
         addParticle(x, y, z, 450, bridgeYCenter, -120, color);
     }
     for (let k = 0; k < 150; k++) {
-        const color = Math.random() > 0.5 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.5 ? 0x00f2fe : 0x00e676;
         let lineIdx = Math.floor(k / 15);
         let ptIdx = k % 15;
         let x = -250 + lineIdx * 55.5;
@@ -410,8 +410,8 @@
             let zOffsetCurrent = zOffsetStart + t * (zOffsetEnd - zOffsetStart);
             let z1 = -zOffsetCurrent + t * (zOffsetCurrent * 2);
             let z2 = zOffsetCurrent - t * (zOffsetCurrent * 2);
-            addParticle(x0, y, z1, 450, bridgeYCenter, -120, 0xa855f7);
-            addParticle(x0, y, z2, 450, bridgeYCenter, -120, 0xa855f7);
+            addParticle(x0, y, z1, 450, bridgeYCenter, -120, 0x00e676);
+            addParticle(x0, y, z2, 450, bridgeYCenter, -120, 0x00e676);
         }
         // Upper X (y from 60 to 140)
         for (let k = 0; k < 20; k++) {
@@ -422,8 +422,8 @@
             let zOffsetCurrent = zOffsetStart + t * (zOffsetEnd - zOffsetStart);
             let z1 = -zOffsetCurrent + t * (zOffsetCurrent * 2);
             let z2 = zOffsetCurrent - t * (zOffsetCurrent * 2);
-            addParticle(x0, y, z1, 450, bridgeYCenter, -120, 0xa855f7);
-            addParticle(x0, y, z2, 450, bridgeYCenter, -120, 0xa855f7);
+            addParticle(x0, y, z1, 450, bridgeYCenter, -120, 0x00e676);
+            addParticle(x0, y, z2, 450, bridgeYCenter, -120, 0x00e676);
         }
     }
 
@@ -432,7 +432,7 @@
     for (let czIdx = 0; czIdx < 2; czIdx++) {
         let cz = cableZs[czIdx];
         for (let k = 0; k < 200; k++) {
-            const color = Math.random() > 0.5 ? 0x00f2fe : 0xa855f7;
+            const color = Math.random() > 0.5 ? 0x00f2fe : 0x00e676;
             let x = -250 + k * 2.5;
             let y = 0;
             if (x < -120) {
@@ -453,7 +453,7 @@
         for (let side = 0; side < 2; side++) {
             let z = side === 0 ? -30 : 30;
             for (let pt = 0; pt < 8; pt++) {
-                const color = Math.random() > 0.5 ? 0x00f2fe : 0xa855f7;
+                const color = Math.random() > 0.5 ? 0x00f2fe : 0x00e676;
                 let y = -20 + pt * (cableY - (-20)) / 8;
                 addParticle(x, y, z, 450, bridgeYCenter, -120, color);
             }
@@ -465,7 +465,7 @@
     for (let line = 0; line < 4; line++) {
         let z = deckZs[line];
         for (let k = 0; k < 80; k++) {
-            const color = Math.random() > 0.5 ? 0x00f2fe : 0xa855f7;
+            const color = Math.random() > 0.5 ? 0x00f2fe : 0x00e676;
             let x = -250 + k * 6.33;
             let y = -20;
             addParticle(x, y, z, 450, bridgeYCenter, -120, color);
@@ -474,7 +474,7 @@
     for (let c = 0; c < 20; c++) {
         let x = -250 + c * 26.3;
         for (let k = 0; k < 3; k++) {
-            const color = Math.random() > 0.5 ? 0x00f2fe : 0xa855f7;
+            const color = Math.random() > 0.5 ? 0x00f2fe : 0x00e676;
             let z = -35 + k * 23.3;
             let y = -20;
             addParticle(x, y, z, 450, bridgeYCenter, -120, color);
@@ -490,9 +490,9 @@
             let t = pt / 4;
             let cx = x1 + t * (x2 - x1);
             let cz1 = -35 + t * 70;
-            addParticle(cx, -24, cz1, 450, bridgeYCenter, -120, 0xa855f7);
+            addParticle(cx, -24, cz1, 450, bridgeYCenter, -120, 0x00e676);
             let cz2 = 35 - t * 70;
-            addParticle(cx, -24, cz2, 450, bridgeYCenter, -120, 0xa855f7);
+            addParticle(cx, -24, cz2, 450, bridgeYCenter, -120, 0x00e676);
         }
     }
 
@@ -521,13 +521,13 @@
         let z = wallZs[w];
         // Floor line
         for (let k = 0; k < 20; k++) {
-            const color = Math.random() > 0.3 ? 0x00f2fe : 0xa855f7;
+            const color = Math.random() > 0.3 ? 0x00f2fe : 0x00e676;
             let x = -80 + k * 8.42;
             addParticle(x, -80, z, -450, warehouseYCenter, 150, color);
         }
         // Roof slopes
         for (let k = 0; k < 15; k++) {
-            const color = Math.random() > 0.3 ? 0x00f2fe : 0xa855f7;
+            const color = Math.random() > 0.3 ? 0x00f2fe : 0x00e676;
             let t = k / 15;
             let x1 = -80 + t * 80;
             let y1 = 40 + t * 40;
@@ -542,7 +542,7 @@
             let px = pillarsXs[pIdx];
             let topY = px === 0 ? 80 : (Math.abs(px) === 40 ? 60 : 40);
             for (let k = 0; k < 15; k++) {
-                const color = Math.random() > 0.3 ? 0x00f2fe : 0xa855f7;
+                const color = Math.random() > 0.3 ? 0x00f2fe : 0x00e676;
                 let y = -80 + k * (topY - (-80)) / 15;
                 addParticle(px, y, z, -450, warehouseYCenter, 150, color);
             }
@@ -553,13 +553,13 @@
         let x = wallXs[w];
         // Eaves lines
         for (let k = 0; k < 40; k++) {
-            const color = Math.random() > 0.3 ? 0x00f2fe : 0xa855f7;
+            const color = Math.random() > 0.3 ? 0x00f2fe : 0x00e676;
             let z = -100 + k * 5.12;
             addParticle(x, 40, z, -450, warehouseYCenter, 150, color);
         }
         // Floor lines
         for (let k = 0; k < 40; k++) {
-            const color = Math.random() > 0.3 ? 0x00f2fe : 0xa855f7;
+            const color = Math.random() > 0.3 ? 0x00f2fe : 0x00e676;
             let z = -100 + k * 5.12;
             addParticle(x, -80, z, -450, warehouseYCenter, 150, color);
         }
@@ -567,7 +567,7 @@
         for (let pIdx = 1; pIdx < 5; pIdx++) {
             let z = -100 + pIdx * 40;
             for (let k = 0; k < 15; k++) {
-                const color = Math.random() > 0.3 ? 0x00f2fe : 0xa855f7;
+                const color = Math.random() > 0.3 ? 0x00f2fe : 0x00e676;
                 let y = -80 + k * 8.0;
                 addParticle(x, y, z, -450, warehouseYCenter, 150, color);
             }
@@ -575,7 +575,7 @@
     }
     // Ridge line
     for (let k = 0; k < 40; k++) {
-        const color = Math.random() > 0.3 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.3 ? 0x00f2fe : 0x00e676;
         let z = -100 + k * 5.12;
         addParticle(0, 80, z, -450, warehouseYCenter, 150, color);
     }
@@ -590,7 +590,7 @@
             for (let side = 0; side < 2; side++) {
                 let rx = rxCenter + (side === 0 ? -6 : 6);
                 for (let k = 0; k < 15; k++) {
-                    const color = Math.random() > 0.3 ? 0x00f2fe : 0xa855f7;
+                    const color = Math.random() > 0.3 ? 0x00f2fe : 0x00e676;
                     let y = -80 + k * 7.85;
                     addParticle(rx, y, rz, -450, warehouseYCenter, 150, color);
                 }
@@ -602,7 +602,7 @@
             for (let side = 0; side < 2; side++) {
                 let rx = rxCenter + (side === 0 ? -6 : 6);
                 for (let k = 0; k < 30; k++) {
-                    const color = Math.random() > 0.3 ? 0x00f2fe : 0xa855f7;
+                    const color = Math.random() > 0.3 ? 0x00f2fe : 0x00e676;
                     let rz = -60 + k * 4.13;
                     addParticle(rx, ry, rz, -450, warehouseYCenter, 150, color);
                 }
@@ -619,7 +619,7 @@
         for (let dy of [-4, 4]) {
             for (let dz of [-4, 4]) {
                 for (let t = 0; t < 2; t++) {
-                    const color = Math.random() > 0.3 ? 0x00f2fe : 0xa855f7;
+                    const color = Math.random() > 0.3 ? 0x00f2fe : 0x00e676;
                     let px = bx - 2 + t * 4;
                     addParticle(px, by + dy, bz + dz, -450, warehouseYCenter, 150, color);
                 }
@@ -629,7 +629,7 @@
         for (let dx of [-4, 4]) {
             for (let dz of [-4, 4]) {
                 for (let t = 0; t < 2; t++) {
-                    const color = Math.random() > 0.3 ? 0x00f2fe : 0xa855f7;
+                    const color = Math.random() > 0.3 ? 0x00f2fe : 0x00e676;
                     let py = by - 2 + t * 4;
                     addParticle(bx + dx, py, bz + dz, -450, warehouseYCenter, 150, color);
                 }
@@ -639,7 +639,7 @@
         for (let dx of [-4, 4]) {
             for (let dy of [-4, 4]) {
                 for (let t = 0; t < 2; t++) {
-                    const color = Math.random() > 0.3 ? 0x00f2fe : 0xa855f7;
+                    const color = Math.random() > 0.3 ? 0x00f2fe : 0x00e676;
                     let pz = bz - 2 + t * 4;
                     addParticle(bx + dx, by + dy, pz, -450, warehouseYCenter, 150, color);
                 }
@@ -668,7 +668,7 @@
 
     // 4. Floor Grid Lines & Aisles (230 points)
     for (let k = 0; k < 90; k++) {
-        const color = Math.random() > 0.3 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.3 ? 0x00f2fe : 0x00e676;
         let lineIdx = Math.floor(k / 30);
         let ptIdx = k % 30;
         let x = -50 + lineIdx * 50;
@@ -676,7 +676,7 @@
         addParticle(x, -80, z, -450, warehouseYCenter, 150, color);
     }
     for (let k = 0; k < 120; k++) {
-        const color = Math.random() > 0.3 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.3 ? 0x00f2fe : 0x00e676;
         let lineIdx = Math.floor(k / 12);
         let ptIdx = k % 12;
         let z = -80 + lineIdx * 16.0;
@@ -702,7 +702,7 @@
         let dx = (k % 3) * 3 - 3;
         let dy = Math.floor(k / 3) * 3;
         let dz = Math.floor(k / 9) * 3 - 3;
-        addParticle(dx, -76 + dy, 20 + dz, -450, warehouseYCenter, 150, 0xa855f7);
+        addParticle(dx, -76 + dy, 20 + dz, -450, warehouseYCenter, 150, 0x00e676);
     }
     for (let k = 0; k < 6; k++) {
         let dy = k * 3;
@@ -717,7 +717,7 @@
 
     // 1. Floor Grid (300 points)
     for (let k = 0; k < 150; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let lineIdx = Math.floor(k / 15);
         let ptIdx = k % 15;
         let x = -120 + ptIdx * 17.14;
@@ -726,7 +726,7 @@
         addParticle(x, y, z, 400, separatorYCenter, -200, color);
     }
     for (let k = 0; k < 150; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let lineIdx = Math.floor(k / 15);
         let ptIdx = k % 15;
         let x = -120 + lineIdx * 26.6;
@@ -738,7 +738,7 @@
     // 2. Cylinder Body & Caps (960 points)
     // Cylinder rings: 600 points
     for (let k = 0; k < 600; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let ringIdx = Math.floor(k / 30);
         let ptIdx = k % 30;
         let x = -80 + ringIdx * 8.42;
@@ -750,7 +750,7 @@
     }
     // Cylinder longitudinal lines: 120 points
     for (let k = 0; k < 120; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let lineIdx = Math.floor(k / 20);
         let ptIdx = k % 20;
         let x = -80 + ptIdx * 8.42;
@@ -762,7 +762,7 @@
     }
     // Left Cap: 120 points
     for (let k = 0; k < 120; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let ringIdx = Math.floor(k / 20);
         let ptIdx = k % 20;
         let dx = ringIdx * 6.66;
@@ -775,7 +775,7 @@
     }
     // Right Cap: 120 points
     for (let k = 0; k < 120; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let ringIdx = Math.floor(k / 20);
         let ptIdx = k % 20;
         let dx = ringIdx * 6.66;
@@ -793,7 +793,7 @@
         let sx = saddleXsSeparator[s];
         // Cradle arc
         for (let k = 0; k < 30; k++) {
-            const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+            const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
             let theta = Math.PI + 0.5 + (k / 30) * (Math.PI - 1.0);
             let r = 40;
             let y = 10 + r * Math.sin(theta);
@@ -802,19 +802,19 @@
         }
         // Pillars
         for (let k = 0; k < 30; k++) {
-            const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+            const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
             let y = -20 - k * 2.0;
             addParticle(sx, y, -25, 400, separatorYCenter, -200, color);
         }
         for (let k = 0; k < 30; k++) {
-            const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+            const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
             let y = -20 - k * 2.0;
             addParticle(sx, y, 25, 400, separatorYCenter, -200, color);
         }
     }
     // Anchor beams
     for (let k = 0; k < 60; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let z = -30 + k * 1.0;
         addParticle(-50, -80, z, 400, separatorYCenter, -200, color);
         addParticle(50, -80, z, 400, separatorYCenter, -200, color);
@@ -823,7 +823,7 @@
     // 4. Piping & Valves & Gauges (440 points)
     // Inlet (75 points)
     for (let k = 0; k < 75; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let x = 0, y = 10, z = 0;
         if (k < 35) {
             x = -120 - k * 0.85;
@@ -842,7 +842,7 @@
     }
     // Top outlet (75 points)
     for (let k = 0; k < 75; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let x = 0, y = 0, z = 0;
         if (k < 35) {
             x = 0;
@@ -866,27 +866,27 @@
         let len = k * 1.0;
         let y = 25 + len * Math.cos(Math.PI / 4);
         let z = 40 + len * Math.sin(Math.PI / 4);
-        addParticle(0, y, z, 400, separatorYCenter, -200, 0xa855f7);
+        addParticle(0, y, z, 400, separatorYCenter, -200, 0x00e676);
     }
     // Bottom outlet (50 points)
     for (let k = 0; k < 50; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         addParticle(0, -30 - k * 1.0, 0, 400, separatorYCenter, -200, color);
     }
     // Level glass: nozzles (30 points) + tube (40 points) = 70 points
     for (let k = 0; k < 15; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let t = k / 15;
         addParticle(30, 30, 40 + t * 5, 400, separatorYCenter, -200, color);
         addParticle(30, -10, 40 + t * 5, 400, separatorYCenter, -200, color);
     }
     for (let k = 0; k < 40; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         addParticle(30, -10 + k * 1.0, 45, 400, separatorYCenter, -200, color);
     }
     // Safety bypass loop (170 points)
     for (let k = 0; k < 170; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let theta = (k / 170) * Math.PI;
         let r = 25;
         let x = -40 + r * Math.cos(theta);
@@ -902,7 +902,7 @@
 
     // 1. Floor Grid (300 points)
     for (let k = 0; k < 150; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let lineIdx = Math.floor(k / 15);
         let ptIdx = k % 15;
         let x = -120 + ptIdx * 17.14;
@@ -911,7 +911,7 @@
         addParticle(x, y, z, -400, energyYCenter, 120, color);
     }
     for (let k = 0; k < 150; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let lineIdx = Math.floor(k / 15);
         let ptIdx = k % 15;
         let x = -120 + lineIdx * 26.6;
@@ -929,7 +929,7 @@
         
         // Tower rings
         for (let k = 0; k < 100; k++) {
-            const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+            const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
             let ringIdx = Math.floor(k / 5);
             let ptIdx = k % 5;
             let y = -80 + ringIdx * 8.5;
@@ -941,7 +941,7 @@
         }
         // Nacelle
         for (let k = 0; k < 40; k++) {
-            const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+            const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
             let dx = (k & 1) ? 6 : -6;
             let dy = (k & 2) ? 4 : -4;
             let dz = (k & 4) ? 10 : -10;
@@ -951,7 +951,7 @@
         for (let b = 0; b < 3; b++) {
             let angleOffset = b * (Math.PI * 2 / 3);
             for (let pIdx = 0; pIdx < 40; pIdx++) {
-                const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+                const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
                 let len = 5 + pIdx * 1.25;
                 addBladeParticle(tx, 90, tz, -400, energyYCenter, 120, len, angleOffset, color);
             }
@@ -964,7 +964,7 @@
         let dxSign = (leg & 1) ? 1 : -1;
         let dzSign = (leg & 2) ? 1 : -1;
         for (let k = 0; k < 40; k++) {
-            const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+            const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
             let t = k / 40;
             let y = -80 + t * 180;
             let w = 25 + t * (5 - 25);
@@ -980,14 +980,14 @@
         let ay = armYs[a];
         let aw = armWs[a];
         for (let k = 0; k < 40; k++) {
-            const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+            const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
             let px = -aw + k * (aw * 2 / 40);
             addParticle(px, ay, 60, -400, energyYCenter, 120, color);
         }
         for (let side = 0; side < 2; side++) {
             let tipX = side === 0 ? -aw : aw;
             for (let k = 0; k < 10; k++) {
-                const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+                const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
                 addParticle(tipX, ay - k * 2.5, 60, -400, energyYCenter, 120, color);
             }
         }
@@ -1002,7 +1002,7 @@
         let wLow = 25 + tLow * (5 - 25);
         let wHigh = 25 + tHigh * (5 - 25);
         for (let k = 0; k < 16; k++) {
-            const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+            const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
             let t = k / 16;
             let y = yLow + t * (yHigh - yLow);
             let z = 60 + (wLow + t * (wHigh - wLow));
@@ -1041,7 +1041,7 @@
         // Panel grid (25 points)
         for (let r = 0; r < 5; r++) {
             for (let c = 0; c < 5; c++) {
-                const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+                const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
                 let dx = -10 + c * 5;
                 let dz = -10 + r * 5;
                 let dy = dz * 0.46;
@@ -1057,7 +1057,7 @@
                 let lz = pz + cornersZ[cz];
                 let lyStart = -50 + cornersZ[cz] * 0.46;
                 for (let k = 0; k < 5; k++) {
-                    const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+                    const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
                     let y = lyStart - k * (lyStart - (-80)) / 5;
                     addParticle(lx, y, lz, -400, energyYCenter, 120, color);
                 }
@@ -1068,7 +1068,7 @@
     // 5. Catenary Electrical Wires & Remaining Sparks (355 points)
     // Wire 1: Turbine 1 to Pylon
     for (let k = 0; k < 100; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let t = k / 100;
         let x = -100 + t * 100;
         let z = -30 + t * 90;
@@ -1077,7 +1077,7 @@
     }
     // Wire 2: Turbine 2 to Pylon
     for (let k = 0; k < 100; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let t = k / 100;
         let x = 100 - t * 100;
         let z = 30 + t * 30;
@@ -1086,7 +1086,7 @@
     }
     // Sparks to hit exactly 2000 points
     for (let k = 0; k < 159; k++) {
-        const color = Math.random() > 0.4 ? 0x00f2fe : 0xa855f7;
+        const color = Math.random() > 0.4 ? 0x00f2fe : 0x00e676;
         let x = (Math.random() - 0.5) * 250;
         let y = -80 + Math.random() * 180;
         let z = (Math.random() - 0.5) * 150;
@@ -1106,7 +1106,7 @@
 
     transitionRanges.forEach(range => {
         for (let k = 0; k < 500; k++) {
-            const colorHex = Math.random() > 0.5 ? 0x00f2fe : 0xa855f7;
+            const colorHex = Math.random() > 0.5 ? 0x00f2fe : 0x00e676;
             const x = (Math.random() - 0.5) * 400;
             const y = range.min + Math.random() * (range.max - range.min);
             const z = (Math.random() - 0.5) * 300;

@@ -39,9 +39,9 @@ window.initEnergy3D = function(container) {
     sunLight.shadow.mapSize.height = 1024;
     scene.add(sunLight);
 
-    const purpleLight = new THREE.DirectionalLight(0xa855f7, 0.6); // Purple ambient accent
-    purpleLight.position.set(300, 300, -300);
-    scene.add(purpleLight);
+    const greenLight = new THREE.DirectionalLight(0x00e676, 0.6); // Emerald Green ambient accent
+    greenLight.position.set(300, 300, -300);
+    scene.add(greenLight);
 
     // --- INTERCEPT ADD FOR GROUP ROTATION ---
     const energyGroup = new THREE.Group();

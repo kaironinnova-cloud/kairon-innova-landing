@@ -39,9 +39,9 @@ window.initBridge3D = function(container) {
     sunLight.shadow.mapSize.height = 1024;
     scene.add(sunLight);
 
-    const purpleLight = new THREE.DirectionalLight(0xa855f7, 0.8); // Purple backlight accent
-    purpleLight.position.set(300, 400, -300);
-    scene.add(purpleLight);
+    const greenLight = new THREE.DirectionalLight(0x00e676, 0.8); // Emerald Green backlight accent
+    greenLight.position.set(300, 400, -300);
+    scene.add(greenLight);
 
     // --- INTERCEPT ADD FOR GROUP ROTATION ---
     const bridgeGroup = new THREE.Group();

@@ -29,9 +29,10 @@
     --text-primary: #ffffff;
     --text-secondary: rgba(255, 255, 255, 0.6);
     
-    /* Accents (Glowing Cyan and Glowing Purple) */
+    /* Accents (Glowing Cyan and Emerald Green from Kairon Innova Logo) */
     --color-accent-primary: #00f2fe; /* Neon Cyan */
-    --color-accent-secondary: #a855f7; /* Neon Purple */
+    --color-accent-secondary: #00e676; /* Vibrant Emerald Green */
+    --color-accent-blue: #0066ff; /* Deep Electric Blue */
     
     /* SPACING */
     --space-2: 0.5rem;
@@ -203,12 +204,13 @@ a {
     font-size: var(--text-sm);
     font-weight: 600;
     transition: all 0.3s var(--ease-snappy);
-    box-shadow: 0 0 10px rgba(168, 85, 247, 0.1);
+    box-shadow: 0 0 10px rgba(0, 230, 118, 0.15);
 }
 
 .btn-nav-demo:hover {
     background: var(--color-accent-secondary);
-    box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+    color: #07080a;
+    box-shadow: 0 0 20px rgba(0, 230, 118, 0.45);
     transform: translateY(-2px);
 }
 
@@ -390,22 +392,22 @@ a {
 
 .btn-neon-purple {
     padding: 16px 32px;
-    background: transparent;
+    background: rgba(0, 230, 118, 0.05);
     border: 2px solid var(--color-accent-secondary);
     color: #ffffff;
     border-radius: 12px;
     font-weight: 600;
     font-size: var(--text-base);
     transition: all 0.3s var(--ease-snappy);
-    box-shadow: 0 0 15px rgba(168, 85, 247, 0.12);
+    box-shadow: 0 0 15px rgba(0, 230, 118, 0.15);
     display: inline-block;
     cursor: pointer;
 }
 
 .btn-neon-purple:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 25px rgba(168, 85, 247, 0.45);
-    background: rgba(168, 85, 247, 0.15);
+    box-shadow: 0 0 25px rgba(0, 230, 118, 0.5), inset 0 0 15px rgba(0, 230, 118, 0.2);
+    background: rgba(0, 230, 118, 0.18);
 }
 
 /* ==========================================================================
@@ -678,8 +680,8 @@ a {
 
 .how-card:hover {
     transform: translateY(-6px);
-    border-color: rgba(168, 85, 247, 0.2);
-    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.05);
+    border-color: rgba(0, 230, 118, 0.25);
+    box-shadow: 0 10px 30px rgba(0, 230, 118, 0.08);
 }
 
 .how-step-num {
@@ -693,7 +695,7 @@ a {
 }
 
 .how-card:hover .how-step-num {
-    color: rgba(168, 85, 247, 0.2);
+    color: rgba(0, 230, 118, 0.3);
 }
 
 .how-card h3 {
@@ -965,7 +967,7 @@ a {
 }
 
 .purple-blob {
-    background: radial-gradient(circle, var(--color-accent-secondary) 0%, rgba(168, 85, 247, 0) 70%);
+    background: radial-gradient(circle, var(--color-accent-secondary) 0%, rgba(0, 230, 118, 0) 70%);
     bottom: -10%;
     left: -10%;
     animation: float-blob-purple 26s ease-in-out infinite alternate;
@@ -995,10 +997,10 @@ a {
     background: linear-gradient(90deg, 
         rgba(0, 242, 254, 0) 0%, 
         rgba(0, 242, 254, 0.7) 20%, 
-        rgba(168, 85, 247, 0.7) 80%, 
-        rgba(168, 85, 247, 0) 100%
+        rgba(0, 230, 118, 0.7) 80%, 
+        rgba(0, 230, 118, 0) 100%
     );
-    box-shadow: 0 0 12px rgba(0, 242, 254, 0.5), 0 0 24px rgba(168, 85, 247, 0.3);
+    box-shadow: 0 0 12px rgba(0, 242, 254, 0.5), 0 0 24px rgba(0, 230, 118, 0.3);
     pointer-events: none;
     z-index: 9999;
     animation: laser-sweep 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
@@ -1092,7 +1094,7 @@ a {
 }
 
 .workflow-icon.purple {
-    background: rgba(168, 85, 247, 0.1);
+    background: rgba(0, 230, 118, 0.12);
     color: var(--color-accent-secondary);
 }
 
@@ -1387,7 +1389,7 @@ section {
     border-color: rgba(0, 242, 254, 0.4);
     box-shadow:
         0 0 15px rgba(0, 242, 254, 0.15),
-        0 0 40px rgba(168, 85, 247, 0.08),
+        0 0 40px rgba(0, 230, 118, 0.1),
         inset 0 0 20px rgba(0, 242, 254, 0.03);
 }
 
@@ -1395,7 +1397,7 @@ section {
     border-color: rgba(0, 242, 254, 0.6);
     box-shadow:
         0 0 20px rgba(0, 242, 254, 0.25),
-        0 0 60px rgba(168, 85, 247, 0.12),
+        0 0 60px rgba(0, 230, 118, 0.16),
         0 20px 50px rgba(0, 242, 254, 0.15),
         inset 0 0 30px rgba(0, 242, 254, 0.04);
 }

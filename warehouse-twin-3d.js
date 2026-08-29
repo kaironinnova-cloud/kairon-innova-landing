@@ -39,9 +39,9 @@ window.initWarehouse3D = function(container) {
     sunLight.shadow.mapSize.height = 1024;
     scene.add(sunLight);
 
-    const purpleLight = new THREE.DirectionalLight(0xa855f7, 0.7); // Purple accent light
-    purpleLight.position.set(300, 400, -300);
-    scene.add(purpleLight);
+    const greenLight = new THREE.DirectionalLight(0x00e676, 0.7); // Emerald Green accent light
+    greenLight.position.set(300, 400, -300);
+    scene.add(greenLight);
 
     // --- INTERCEPT ADD FOR GROUP ROTATION ---
     const warehouseGroup = new THREE.Group();
@@ -81,13 +81,13 @@ window.initWarehouse3D = function(container) {
     const matSensorGlow = new THREE.MeshBasicMaterial({ color: 0x00f2fe });
     const matRobotStatus = new THREE.MeshBasicMaterial({ color: 0x10b981 }); // Green online indicator
 
-    // Package colors (Figma palette)
+    // Package colors (Brand palette)
     const packageMaterials = [
-        new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.6 }), // Orange
-        new THREE.MeshStandardMaterial({ color: 0x2563eb, roughness: 0.7 }), // Blue
+        new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.6 }), // Amber
+        new THREE.MeshStandardMaterial({ color: 0x0066ff, roughness: 0.7 }), // Electric Blue
         new THREE.MeshStandardMaterial({ color: 0x4b5563, roughness: 0.8 }), // Grey
-        new THREE.MeshStandardMaterial({ color: 0xa855f7, roughness: 0.6 }), // Purple
-        new THREE.MeshStandardMaterial({ color: 0x059669, roughness: 0.7 })  // Green
+        new THREE.MeshStandardMaterial({ color: 0x00e676, roughness: 0.6 }), // Emerald Green
+        new THREE.MeshStandardMaterial({ color: 0x00f2fe, roughness: 0.7 })  // Cyan
     ];
 
     // --- PROCEDURAL WAREHOUSE BUILDER ---
@@ -250,7 +250,7 @@ window.initWarehouse3D = function(container) {
     });
 
     // Package carried by drone
-    const dronePackage = new THREE.Mesh(new THREE.BoxGeometry(12, 10, 12), packageMaterials[3]); // Purple package
+    const dronePackage = new THREE.Mesh(new THREE.BoxGeometry(12, 10, 12), packageMaterials[3]); // Emerald Green package
     dronePackage.position.y = -8;
     dronePackage.castShadow = true;
     droneGroup.add(dronePackage);

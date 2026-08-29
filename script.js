@@ -455,8 +455,8 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (item.type === 'bridge') {
                 // Bridge: high-frequency small vibrations
-                ctx.strokeStyle = '#a855f7'; // Purple
-                ctx.shadowColor = '#a855f7';
+                ctx.strokeStyle = '#00e676'; // Emerald Green
+                ctx.shadowColor = '#00e676';
                 ctx.shadowBlur = 4;
                 for (let x = 0; x < w; x++) {
                     const noise = Math.sin(x * 0.08 + time * 0.005) * 6 + Math.sin(x * 0.2 + time * 0.01) * 2;
@@ -556,11 +556,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             ctx.stroke();
 
-            // Draw Purple wave (AI model line)
+            // Draw Emerald Green wave (AI model line)
             ctx.beginPath();
-            ctx.strokeStyle = 'rgba(168, 85, 247, 0.65)';
+            ctx.strokeStyle = 'rgba(0, 230, 118, 0.75)';
             ctx.lineWidth = 1.5;
-            ctx.shadowColor = '#a855f7';
+            ctx.shadowColor = '#00e676';
             ctx.shadowBlur = 5;
             for (let x = 0; x < w; x++) {
                 const wave = Math.sin(x * 0.015 + timestamp * 0.002) * 35 * Math.cos(x * 0.002 + timestamp * 0.0005);
