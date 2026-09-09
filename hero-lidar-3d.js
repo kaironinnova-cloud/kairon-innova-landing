@@ -1,8 +1,7 @@
 // ==========================================================================
-// kaironInnova - 3D LiDAR Morphing Engine (Hero Section - Instant Load Edition)
-// 100% Recognizable Oilfield Landmarks:
-// 1. Refinería El Palito: Torre de Destilación + Gran Tanque Esférico (Hortonsphere) + Tuberías
-// 2. Balancín Petrolero "Cabeza de Caballo" + Tanque de Crudo + Árbol de Navidad
+// kaironInnova - 3D LiDAR Point Cloud Engine (High-Visibility Solid Alpha)
+// 1. Complejo de Refinación & Gran Tanque Esférico (Hortonsphere)
+// 2. Balancín Petrolero "Cabeza de Caballo" con Contrapesos & Tanque
 // 3. Taladro de Perforación & Well Testing con Mechurrio de Llama Activa
 // ==========================================================================
 
@@ -13,36 +12,46 @@ function initHeroLidar() {
     const TOTAL_POINTS = 3800;
     const container = canvas.parentElement;
 
-    // Guaranteed dimensions
-    const width = (container && container.clientWidth > 50) ? container.clientWidth : 500;
-    const height = (container && container.clientHeight > 50) ? container.clientHeight : 440;
+    // Get actual pixel dimensions with safe minimums
+    const rect = container ? container.getBoundingClientRect() : { width: 500, height: 460 };
+    const width = rect.width > 50 ? rect.width : 500;
+    const height = rect.height > 50 ? rect.height : 460;
 
     // --- THREE.JS SCENE SETUP ---
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(40, width / height, 1, 2000);
-    camera.position.set(0, 8, 300);
+    const camera = new THREE.PerspectiveCamera(42, width / height, 1, 2000);
+    camera.position.set(0, 10, 310);
 
-    const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+    const renderer = new THREE.WebGLRenderer({ 
+        canvas: canvas, 
+        antialias: true, 
+        alpha: true,
+        premultipliedAlpha: false
+    });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
     // --- ORBIT CONTROLS ---
     let controls = null;
-    if (typeof THREE.OrbitControls !== 'undefined') {
-        controls = new THREE.OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.05;
-        controls.enableZoom = false;
-        controls.enablePan = false;
-        controls.autoRotate = true;
-        controls.autoRotateSpeed = 1.1;
-        controls.maxPolarAngle = Math.PI / 2 + 0.12;
-        controls.minPolarAngle = Math.PI / 4;
-        controls.target.set(0, 0, 0);
+    try {
+        if (typeof THREE.OrbitControls !== 'undefined') {
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.enableZoom = false;
+            controls.enablePan = false;
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 1.2;
+            controls.maxPolarAngle = Math.PI / 2 + 0.12;
+            controls.minPolarAngle = Math.PI / 4;
+            controls.target.set(0, 0, 0);
+        }
+    } catch(e) {
+        console.warn("OrbitControls init note:", e);
     }
 
     // =========================================================================
-    // 1. FORMATION: REFINERÍA & GRAN TANQUE ESFÉRICO (HORTONSPHERE) - EL PALITO
+    // 1. FORMATION: COMPLEJO DE REFINACIÓN & TANQUE ESFÉRICO HORTONSPHERE
     // =========================================================================
     function generateRefinerySphereTargets() {
         const targets = new Float32Array(TOTAL_POINTS * 3);
@@ -55,14 +64,14 @@ function initHeroLidar() {
             targets[idx++] = z;
         }
 
-        // Fractionation Column (Left: X = -50, Y = -65 to +65, R = 22)
+        // Tall Fractionation Column on Left (X = -50, Y = -65 to +65, R = 22)
         const colX = -50;
         const colR = 22;
         const colH = 130;
         for (let i = 0; i < 1300; i++) {
             const y = -65 + (i / 1300) * colH;
             const angle = Math.random() * Math.PI * 2;
-            const isSurface = Math.random() > 0.25;
+            const isSurface = Math.random() > 0.2;
             const r = isSurface ? colR + (Math.random() - 0.5) * 1.5 : Math.random() * colR;
             addPoint(colX + Math.cos(angle) * r, y, Math.sin(angle) * r);
         }
@@ -78,7 +87,7 @@ function initHeroLidar() {
             addPoint(colX + (Math.random() - 0.5) * 6, vy, (Math.random() - 0.5) * 6);
         }
 
-        // Spherical Hortonsphere Tank (Right: X = +50, Y = -5, R = 42)
+        // Large Spherical Gas/LPG Hortonsphere on Right (X = +50, Y = -5, R = 42)
         const sphereX = 50;
         const sphereY = -5;
         const sphereR = 42;
@@ -109,7 +118,7 @@ function initHeroLidar() {
             }
         }
 
-        // Interconnecting Pipe Manifold Bridge
+        // 3 Pipe Manifolds connecting Column and Sphere
         for (let pipe = 0; pipe < 3; pipe++) {
             const py = -40 + pipe * 30;
             for (let p = 0; p < 80; p++) {
@@ -130,7 +139,7 @@ function initHeroLidar() {
     }
 
     // =========================================================================
-    // 2. FORMATION: BALANCÍN PETROLERO "CABEZA DE CABALLO" & TANQUE
+    // 2. FORMATION: BALANCÍN PETROLERO "CABEZA DE CABALLO"
     // =========================================================================
     function generatePumpjackTargets() {
         const targets = new Float32Array(TOTAL_POINTS * 3);
@@ -143,12 +152,14 @@ function initHeroLidar() {
             targets[idx++] = z;
         }
 
+        // Base frame on ground (Y = -65)
         for (let i = 0; i < 450; i++) {
             const gx = -80 + Math.random() * 160;
             const gz = (Math.random() - 0.5) * 55;
             addPoint(gx, -65 + (Math.random() - 0.5) * 2, gz);
         }
 
+        // Samson Post A-Frame (Y = -65 to +12)
         for (let i = 0; i < 750; i++) {
             const s = Math.random();
             const y = -65 + s * 77;
@@ -161,6 +172,7 @@ function initHeroLidar() {
             addPoint(cx + (Math.random() - 0.5) * 2, y, cz + (Math.random() - 0.5) * 2);
         }
 
+        // Walking Beam (Y = +12 to +22, X = -52 to +42)
         for (let i = 0; i < 600; i++) {
             const s = Math.random();
             const bx = -52 + s * 94;
@@ -169,6 +181,7 @@ function initHeroLidar() {
             addPoint(bx, by, bz);
         }
 
+        // Horsehead Curved Arc (X = +42 to +65, Y = +2 to +35)
         for (let i = 0; i < 550; i++) {
             const angle = -Math.PI / 2 + Math.random() * Math.PI;
             const r = 17 + Math.random() * 3;
@@ -178,17 +191,20 @@ function initHeroLidar() {
             addPoint(hx, hy, hz);
         }
 
+        // Polished Rod
         for (let i = 0; i < 350; i++) {
             const ry = -65 + Math.random() * 71;
             addPoint(62 + (Math.random() - 0.5) * 2, ry, (Math.random() - 0.5) * 2);
         }
 
+        // Wellhead Christmas Tree (X = +62, Y = -65 to -40)
         for (let i = 0; i < 280; i++) {
             const vy = -65 + Math.random() * 25;
             const vz = (Math.random() - 0.5) * 14;
             addPoint(62 + (Math.random() - 0.5) * 6, vy, vz);
         }
 
+        // Rotating Counterweights (X = -52, Y = -38 to +8)
         for (let i = 0; i < 450; i++) {
             const cAngle = Math.random() * Math.PI * 2;
             const cr = 12 + Math.random() * 11;
@@ -198,6 +214,7 @@ function initHeroLidar() {
             addPoint(cx, cy, cz);
         }
 
+        // Storage Tank (X = -75, Y = -65 to -22, R = 17)
         const tankX = -75;
         const tankR = 17;
         for (let i = 0; i < 350; i++) {
@@ -216,7 +233,7 @@ function initHeroLidar() {
     }
 
     // =========================================================================
-    // 3. FORMATION: TALADRO DE PERFORACIÓN & WELL TESTING CON MECHURRIO
+    // 3. FORMATION: TALADRO DE PERFORACIÓN & WELL TESTING
     // =========================================================================
     function generateWellTestingTargets() {
         const targets = new Float32Array(TOTAL_POINTS * 3);
@@ -229,6 +246,7 @@ function initHeroLidar() {
             targets[idx++] = z;
         }
 
+        // Substructure Base (Y = -65 to -42)
         for (let i = 0; i < 400; i++) {
             const x = (Math.random() - 0.5) * 54;
             const z = (Math.random() - 0.5) * 54;
@@ -236,6 +254,7 @@ function initHeroLidar() {
             addPoint(x, y, z);
         }
 
+        // BOP Stack
         for (let i = 0; i < 200; i++) {
             const angle = Math.random() * Math.PI * 2;
             const r = 5.5 + Math.random() * 3.5;
@@ -243,6 +262,7 @@ function initHeroLidar() {
             addPoint(Math.cos(angle) * r, y, Math.sin(angle) * r);
         }
 
+        // 4 Mast Legs (Y = -42 to +65)
         const towerBottomW = 25;
         const towerTopW = 11;
         for (let i = 0; i < 850; i++) {
@@ -278,6 +298,7 @@ function initHeroLidar() {
             addPoint(Math.cos(angle) * 3.5, y, Math.sin(angle) * 3.5);
         }
 
+        // Flare Boom
         for (let i = 0; i < 450; i++) {
             const s = Math.random();
             const bx = 25 + s * 60;
@@ -286,6 +307,7 @@ function initHeroLidar() {
             addPoint(bx, by, bz);
         }
 
+        // Gas Flare Flame at tip (X = 85 to 105, Y = 10 to 32)
         for (let i = 0; i < 280; i++) {
             const fx = 85 + Math.random() * 20;
             const fy = 10 + Math.random() * 22;
@@ -293,6 +315,7 @@ function initHeroLidar() {
             addPoint(fx, fy, fz);
         }
 
+        // Skid
         for (let i = 0; i < 350; i++) {
             const sx = -32 - Math.random() * 43;
             const sy = -65 + Math.random() * 20;
@@ -324,9 +347,9 @@ function initHeroLidar() {
         currentPositions[i] = initialTargets[i];
     }
 
-    const colorBottom = new THREE.Color(0x00e676);
-    const colorTop = new THREE.Color(0x00f2fe);
-    const colorFlame = new THREE.Color(0xffaa00);
+    const colorBottom = new THREE.Color(0x00e676); // Emerald Green
+    const colorTop = new THREE.Color(0x00f2fe);    // Vivid Cyan
+    const colorFlame = new THREE.Color(0xffb703);  // Vivid Warm Gold
     const tempColor = new THREE.Color();
 
     function updateColors(time) {
@@ -334,11 +357,11 @@ function initHeroLidar() {
             const x = currentPositions[i * 3];
             const y = currentPositions[i * 3 + 1];
             
-            const t = Math.max(0, Math.min(1, (y + 65) / 140));
+            const t = Math.max(0, Math.min(1, (y + 65) / 135));
             tempColor.copy(colorBottom).lerp(colorTop, t);
 
             if (x > 82 && y > 6 && currentFormationIndex === 2) {
-                tempColor.lerp(colorFlame, 0.75);
+                tempColor.lerp(colorFlame, 0.85);
             }
 
             const wave = Math.sin(x * 0.04 + y * 0.03 + (time || 0) * 0.003) * 0.12;
@@ -356,6 +379,7 @@ function initHeroLidar() {
     geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(currentPositions), 3));
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
+    // High-visibility crisp circular particle texture
     function createPointTexture() {
         const size = 64;
         const cv = document.createElement('canvas');
@@ -364,10 +388,10 @@ function initHeroLidar() {
         const ctx = cv.getContext('2d');
 
         const grad = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-        grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
-        grad.addColorStop(0.25, 'rgba(0, 242, 254, 0.95)');
-        grad.addColorStop(0.65, 'rgba(0, 230, 118, 0.35)');
-        grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        grad.addColorStop(0, 'rgba(255, 255, 255, 1.0)');
+        grad.addColorStop(0.3, 'rgba(0, 242, 254, 1.0)');
+        grad.addColorStop(0.7, 'rgba(0, 230, 118, 0.8)');
+        grad.addColorStop(1.0, 'rgba(0, 230, 118, 0.0)');
 
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, size, size);
@@ -375,13 +399,14 @@ function initHeroLidar() {
         return new THREE.CanvasTexture(cv);
     }
 
+    // NORMAL BLENDING ensures the WebGL canvas writes solid alpha pixels to the HTML compositor!
     const material = new THREE.PointsMaterial({
-        size: 5.5,
+        size: 5.8,
         vertexColors: true,
         map: createPointTexture(),
         transparent: true,
-        opacity: 0.98,
-        blending: THREE.AdditiveBlending,
+        opacity: 1.0,
+        blending: THREE.NormalBlending,
         depthWrite: false
     });
 
@@ -414,9 +439,9 @@ function initHeroLidar() {
 
     function handleResize() {
         if (!container || !renderer || !camera) return;
-        const w = container.clientWidth || 500;
-        const h = container.clientHeight || 440;
-        if (w === 0 || h === 0) return;
+        const rect = container.getBoundingClientRect();
+        const w = rect.width > 50 ? rect.width : 500;
+        const h = rect.height > 50 ? rect.height : 460;
 
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
@@ -432,14 +457,6 @@ function initHeroLidar() {
         const now = performance.now();
 
         if (controls) controls.update();
-
-        // Responsive aspect sync
-        if (container && container.clientWidth > 50) {
-            const currentAspect = container.clientWidth / container.clientHeight;
-            if (Math.abs(camera.aspect - currentAspect) > 0.05) {
-                handleResize();
-            }
-        }
 
         const posAttr = geometry.attributes.position;
         const arr = posAttr.array;
@@ -488,6 +505,7 @@ function initHeroLidar() {
                 currentPositions.set(targetPositions);
             }
         } else {
+            // Absolute offset from base position (NO numerical drift)
             const time = now * 0.002;
 
             for (let i = 0; i < TOTAL_POINTS; i++) {
@@ -522,10 +540,9 @@ function initHeroLidar() {
     animate();
     handleResize();
 
-    console.log("⚡ Hero 3D LiDAR Engine initialized with guaranteed viewport render.");
+    console.log("⚡ Hero 3D LiDAR Engine: High-Visibility NormalBlending active.");
 }
 
-// Auto-run on DOM ready or immediate
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initHeroLidar);
 } else {
