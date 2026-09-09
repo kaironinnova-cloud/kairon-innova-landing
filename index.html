@@ -69,28 +69,83 @@
     </nav>
 
     <main>
-        <!-- ============ HERO SECTION WITH FIELD IMAGERY ============ -->
+        <!-- ============ HERO SECTION WITH DUAL COLUMN + 3D LiDAR MORPHING ============ -->
         <section id="hero" class="hero corporate-hero">
             <div class="hero-bg-overlay">
                 <img src="images/hero_refinery_sunset.jpg" alt="Refinería e Instalaciones Petroleras" class="hero-bg-img">
                 <div class="hero-scrim"></div>
             </div>
             <div class="hero-container">
-                <div class="hero-grid" data-aos="fade-up" data-aos-duration="1000">
+                <div class="hero-dual-grid" data-aos="fade-up" data-aos-duration="1000">
+                    
+                    <!-- Left: High-Level Corporate Copy -->
                     <div class="hero-content">
                         <div class="hero-badge">
                             <span class="badge-dot"></span>
                             INGENIERÍA & TELECOMUNICACIONES PETROLERAS
                         </div>
-                        <h1>Infraestructura de Redes, Telecomunicaciones & <span class="gradient-text">Gemelos Digitales</span></h1>
+                        <h1 class="hero-title">Infraestructura de Redes, Telecomunicaciones & <span class="gradient-text">Gemelos&nbsp;Digitales</span></h1>
                         
-                        <p class="hero-subtitle">Desarrollamos soluciones de conectividad crítica, ciberseguridad industrial OT/IT, automatización de procesos con IA y simulación 3D en tiempo real para refinerías, taladros y plantas energéticas.</p>
+                        <p class="hero-subtitle">Desarrollamos soluciones de conectividad crítica, ciberseguridad industrial OT/IT, automatización con IA y simulación 3D en tiempo real para refinerías, taladros y complejos&nbsp;petroquímicos.</p>
 
                         <div class="hero-cta">
                             <a href="#telecom-networks" class="btn-primary-corporate">Servicios de Redes</a>
                             <a href="#contact" class="btn-secondary-corporate">Solicitar Cotización</a>
                         </div>
+
+                        <!-- Micro KPI Strip -->
+                        <div class="hero-micro-kpi">
+                            <div class="micro-kpi-item">
+                                <span class="micro-kpi-num">99.999%</span>
+                                <span class="micro-kpi-lbl">Disponibilidad SLA</span>
+                            </div>
+                            <div class="micro-kpi-divider"></div>
+                            <div class="micro-kpi-item">
+                                <span class="micro-kpi-num">&lt; 2ms</span>
+                                <span class="micro-kpi-lbl">Latencia OT/IT</span>
+                            </div>
+                            <div class="micro-kpi-divider"></div>
+                            <div class="micro-kpi-item">
+                                <span class="micro-kpi-num">IEC 62443</span>
+                                <span class="micro-kpi-lbl">Ciberseguridad</span>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Right: Interactive 3D LiDAR Point Cloud Morphing Card -->
+                    <div class="hero-visual-col" data-aos="fade-left" data-aos-delay="200">
+                        <div class="hero-lidar-card">
+                            <div class="lidar-card-header">
+                                <div class="lidar-status">
+                                    <span class="status-pulse-dot"></span>
+                                    <span class="status-label">ESCÁNER LiDAR &bull; EN VIVO</span>
+                                </div>
+                                <div class="lidar-phase-badge" id="hero-lidar-phase-badge">FASE 01/03</div>
+                            </div>
+                            
+                            <div class="hero-canvas-wrapper">
+                                <canvas id="hero-lidar-canvas"></canvas>
+                                <div class="lidar-overlay-coords">
+                                    <span id="hero-lidar-coords">COORD: 10.4806° N, 68.1258° W</span>
+                                    <span class="coords-points">2,800 PUNTOS 3D</span>
+                                </div>
+                                <div class="lidar-watermark">kaironInnova 3D Engine</div>
+                            </div>
+                            
+                            <div class="lidar-card-footer">
+                                <div class="lidar-structure-info">
+                                    <span class="structure-type-label">ESTRUCTURA ACTIVA:</span>
+                                    <span class="structure-name" id="hero-lidar-name">Taladro de Perforación de Campo (Derrick)</span>
+                                </div>
+                                <div class="lidar-phase-indicators" title="Haz clic para cambiar estructura">
+                                    <span class="phase-pip active" data-phase="0"></span>
+                                    <span class="phase-pip" data-phase="1"></span>
+                                    <span class="phase-pip" data-phase="2"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -99,403 +154,424 @@
         <section class="standards-marquee-section">
             <div class="marquee-track">
                 <div class="marquee-content">
-                    <span class="marquee-item"><span class="item-dot"></span>API Spec (American Petroleum Institute)</span>
-                    <span class="marquee-item"><span class="item-dot"></span>IEEE 802.11ax / 802.3 Ethernet</span>
-                    <span class="marquee-item"><span class="item-dot"></span>TIA-568.0-E Certified Cabling</span>
-                    <span class="marquee-item"><span class="item-dot"></span>Normas ISA-95 / ISA-88</span>
-                    <span class="marquee-item"><span class="item-dot"></span>IEC 62443 (Ciberseguridad OT/IT)</span>
-                    <span class="marquee-item"><span class="item-dot"></span>ATEX / IECEx (Áreas Clasificadas Zona 0)</span>
-                    <span class="marquee-item"><span class="item-dot"></span>ISO 9001 / ISO 27001 Compliance</span>
-                    <span class="marquee-item"><span class="item-dot"></span>SCADA & DCS Integrations</span>
+                    <span class="marquee-item"><span class="item-dot"></span> TIA-568-D FIBRA ÓPTICA INDUSTRIAL</span>
+                    <span class="marquee-item"><span class="item-dot"></span> IEC 62443 CIBERSEGURIDAD OT / IT</span>
+                    <span class="marquee-item"><span class="item-dot"></span> IEEE 802.3 CONMUTACIÓN RED CRÍTICA</span>
+                    <span class="marquee-item"><span class="item-dot"></span> ISO 27001 GESTIÓN DE SEGURIDAD</span>
+                    <span class="marquee-item"><span class="item-dot"></span> API RP 554 CONTROL EN REFINERÍAS</span>
+                    <span class="marquee-item"><span class="item-dot"></span> NFPA 70 CABLEADO PARA ÁREAS CLASIFICADAS</span>
+                    <span class="marquee-item"><span class="item-dot"></span> ISA-95 ARQUITECTURA DE INTEGRACIÓN</span>
                 </div>
                 <div class="marquee-content" aria-hidden="true">
-                    <span class="marquee-item"><span class="item-dot"></span>API Spec (American Petroleum Institute)</span>
-                    <span class="marquee-item"><span class="item-dot"></span>IEEE 802.11ax / 802.3 Ethernet</span>
-                    <span class="marquee-item"><span class="item-dot"></span>TIA-568.0-E Certified Cabling</span>
-                    <span class="marquee-item"><span class="item-dot"></span>Normas ISA-95 / ISA-88</span>
-                    <span class="marquee-item"><span class="item-dot"></span>IEC 62443 (Ciberseguridad OT/IT)</span>
-                    <span class="marquee-item"><span class="item-dot"></span>ATEX / IECEx (Áreas Clasificadas Zona 0)</span>
-                    <span class="marquee-item"><span class="item-dot"></span>ISO 9001 / ISO 27001 Compliance</span>
-                    <span class="marquee-item"><span class="item-dot"></span>SCADA & DCS Integrations</span>
+                    <span class="marquee-item"><span class="item-dot"></span> TIA-568-D FIBRA ÓPTICA INDUSTRIAL</span>
+                    <span class="marquee-item"><span class="item-dot"></span> IEC 62443 CIBERSEGURIDAD OT / IT</span>
+                    <span class="marquee-item"><span class="item-dot"></span> IEEE 802.3 CONMUTACIÓN RED CRÍTICA</span>
+                    <span class="marquee-item"><span class="item-dot"></span> ISO 27001 GESTIÓN DE SEGURIDAD</span>
+                    <span class="marquee-item"><span class="item-dot"></span> API RP 554 CONTROL EN REFINERÍAS</span>
+                    <span class="marquee-item"><span class="item-dot"></span> NFPA 70 CABLEADO PARA ÁREAS CLASIFICADAS</span>
+                    <span class="marquee-item"><span class="item-dot"></span> ISA-95 ARQUITECTURA DE INTEGRACIÓN</span>
                 </div>
             </div>
         </section>
 
-        <!-- ============ KPI PERFORMANCE METRICS ============ -->
+        <!-- ============ KPI STRIP SECTION ============ -->
         <section class="kpi-strip-section">
             <div class="kpi-container">
-                <div class="kpi-item" data-aos="fade-up" data-aos-delay="50">
-                    <div class="kpi-value"><span class="text-blue">99.99</span><span class="kpi-unit">%</span></div>
-                    <div class="kpi-label">Disponibilidad en Campo</div>
-                    <div class="kpi-sub">Uptime en enlaces y redes críticas</div>
-                </div>
-                <div class="kpi-item" data-aos="fade-up" data-aos-delay="100">
-                    <div class="kpi-value"><span class="text-green">10</span><span class="kpi-unit">Gbps</span></div>
-                    <div class="kpi-label">Troncal Fibra Dieléctrica</div>
-                    <div class="kpi-sub">Aislamiento EMI en Zona 0</div>
-                </div>
-                <div class="kpi-item" data-aos="fade-up" data-aos-delay="150">
-                    <div class="kpi-value"><span class="text-blue">&lt;3.5</span><span class="kpi-unit">ms</span></div>
-                    <div class="kpi-label">Latencia en SCADA/DCS</div>
-                    <div class="kpi-sub">Lazos de control en tiempo real</div>
-                </div>
-                <div class="kpi-item" data-aos="fade-up" data-aos-delay="200">
-                    <div class="kpi-value"><span class="text-green">140</span><span class="kpi-unit">MBD</span></div>
-                    <div class="kpi-label">Capacidad de Simulación</div>
-                    <div class="kpi-sub">Refinería El Palito & Unidades</div>
-                </div>
-                <div class="kpi-item" data-aos="fade-up" data-aos-delay="250">
-                    <div class="kpi-value"><span class="text-amber">24/7</span></div>
-                    <div class="kpi-label">Monitoreo NOC & IA</div>
-                    <div class="kpi-sub">Detección predictiva de anomalías</div>
+                <div class="kpi-grid">
+                    <div class="kpi-card" data-aos="fade-up" data-aos-delay="50">
+                        <div class="kpi-number">99.999%</div>
+                        <div class="kpi-label">Disponibilidad de Red (SLA)</div>
+                        <p class="kpi-desc">Topologías en anillo redundante con conmutación en milisegundos para operaciones continuas sin paradas no programadas.</p>
+                    </div>
+                    <div class="kpi-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="kpi-number">&lt; 2 ms</div>
+                        <div class="kpi-label">Latencia en Enlace OT/IT</div>
+                        <p class="kpi-desc">Transmisión de telemetría SCADA y video analítico de alta definición con cero pérdidas de paquetes en ambientes de campo.</p>
+                    </div>
+                    <div class="kpi-card" data-aos="fade-up" data-aos-delay="150">
+                        <div class="kpi-number">10 Gbps+</div>
+                        <div class="kpi-label">Capacidad de Backbone</div>
+                        <p class="kpi-desc">Tendido e interconexión por fibra óptica monomodo certificada para soportar miles de sensores IoT y gemelos digitales.</p>
+                    </div>
+                    <div class="kpi-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="kpi-number">24/7/365</div>
+                        <div class="kpi-label">Soporte & Monitoreo NOC/SOC</div>
+                        <p class="kpi-desc">Cuadrillas técnicas en sitio y monitoreo predictivo con IA para respuesta inmediata ante eventos operativos en planta.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- ============ NOSOTROS / ABOUT SECTION ============ -->
+        <!-- ============ QUIÉNES SOMOS / SOBRE NOSOTROS ============ -->
         <section id="about" class="about-section">
             <div class="about-container">
                 <div class="about-grid">
-                    <div class="about-image-col" data-aos="fade-right">
-                        <div class="about-image-card">
-                            <img src="images/divider_workers.png" alt="Ingenieros en campo kaironInnova" class="about-img">
-                            <div class="about-badge-floating">
-                                <span class="badge-number">100%</span>
-                                <span class="badge-text">Compromiso con Cero Paradas No Programadas</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="about-content-col" data-aos="fade-left">
+                    
+                    <div class="about-content" data-aos="fade-right">
                         <div class="section-tag">QUIÉNES SOMOS</div>
-                        <h2>Solidez Técnica & Respaldo Operativo en el <span class="gradient-text">Sector Energético</span></h2>
-                        <p>En <strong>kaironInnova</strong> integramos ingeniería de telecomunicaciones, ciberseguridad industrial y tecnología de gemelos digitales para optimizar las operaciones de hidrocarburos, refinación y manufactura pesada.</p>
-                        <p>Nuestro equipo multidisciplinario combina experiencia directa en plantas, taladros y salas de control con las herramientas más avanzadas de orquestación IA y modelado tridimensional.</p>
+                        <h2>Ingeniería de Conectividad & Automatización para la <span class="gradient-text">Industria Energética</span></h2>
+                        <p class="about-lead">En <strong>kaironInnova</strong> diseñamos, desplegamos y aseguramos la infraestructura de telecomunicaciones y redes críticas que alimenta las operaciones petroleras, petroquímicas e industriales más exigentes.</p>
                         
-                        <div class="about-features-list">
-                            <div class="about-feature-item">
-                                <div class="feature-icon">🛡️</div>
-                                <div>
-                                    <h4>Seguridad Intrínseca en Campo</h4>
-                                    <p>Instalaciones certificadas para atmósferas explosivas y áreas clasificadas.</p>
+                        <p>Combinamos ingeniería de campo en telecomunicaciones, protocolos de ciberseguridad industrial bajo norma IEC&nbsp;62443, modelado tridimensional de gemelos digitales y agentes autónomos de IA para optimizar la toma de decisiones y garantizar cero interrupciones en la producción.</p>
+
+                        <div class="about-pillars">
+                            <div class="pillar-item">
+                                <div class="pillar-icon">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                </div>
+                                <div class="pillar-text">
+                                    <h4>Robustez en Ambientes Hostiles</h4>
+                                    <p>Equipamiento industrial rugerizado para altas temperaturas, humedad marina y áreas con riesgo de explosión (HazLoc / ATEX).</p>
                                 </div>
                             </div>
-                            <div class="about-feature-item">
-                                <div class="feature-icon">⚡</div>
-                                <div>
-                                    <h4>Conectividad de Alta Disponibilidad</h4>
-                                    <p>Arquitecturas redundantes en fibra óptica, microondas y redes Wi-Fi 6 industriales.</p>
+
+                            <div class="pillar-item">
+                                <div class="pillar-icon">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                                </div>
+                                <div class="pillar-text">
+                                    <h4>Integración OT/IT Sin Fisuras</h4>
+                                    <p>Convergencia segura entre sistemas SCADA/DCS de planta y redes corporativas de gestión administrativa y análisis en la nube.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="about-media-col" data-aos="fade-left">
+                        <div class="about-image-card">
+                            <img src="images/refineria_el_palito.jpg" alt="Instalaciones de Refinería El Palito" class="about-img">
+                            <div class="about-badge-float">
+                                <span class="badge-float-title">PROYECTO DE REFERENCIA</span>
+                                <span class="badge-float-val">Refinería El Palito &bull; Carabobo</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
 
-        <!-- ============ 1. APARTADO: REDES & TELECOMUNICACIONES INDUSTRIALES ============ -->
+        <!-- ============ 1. APARTADO: REDES & TELECOMUNICACIONES EMPRESARIALES ============ -->
         <section id="telecom-networks" class="telecom-section">
             <div class="telecom-container">
+                
                 <div class="section-header text-center" data-aos="fade-up">
-                    <div class="section-tag">INFRAESTRUCTURA DE COMUNICACIONES</div>
-                    <h2>Ingeniería de Redes & <span class="gradient-text">Telecomunicaciones de Campo</span></h2>
-                    <p>Diseñamos, desplegamos y certificamos redes de misión crítica para refinerías, patios de tanques, taladros de perforación y plantas petroquímicas.</p>
+                    <div class="section-tag">SERVICIOS DE TELECOMUNICACIONES & REDES</div>
+                    <h2>Ingeniería de Redes Empresariales & <span class="gradient-text">Conectividad de Campo</span></h2>
+                    <p>Diseño, provisión, configuración y certificación de redes de datos industriales para refinerías, taladros, campamentos y puertos de embarque.</p>
                 </div>
 
-                <div class="telecom-grid">
-                    <!-- Pillar 1: Fibra Dieléctrica -->
-                    <div class="telecom-card" data-aos="fade-up" data-aos-delay="100">
-                        <div class="telecom-card-header">
-                            <div class="telecom-icon-box blue">
-                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-                                    <rect x="2" y="2" width="20" height="8" rx="2"></rect>
-                                    <rect x="2" y="14" width="20" height="8" rx="2"></rect>
-                                    <line x1="6" y1="6" x2="6.01" y2="6"></line>
-                                    <line x1="6" y1="18" x2="6.01" y2="18"></line>
-                                </svg>
-                            </div>
-                            <h3>Fibra Óptica Dieléctrica & Cableado Cat6A</h3>
+                <div class="telecom-services-grid">
+                    
+                    <!-- Card 1: Backbone de Fibra -->
+                    <div class="telecom-service-card" data-aos="fade-up" data-aos-delay="50">
+                        <div class="card-icon-wrapper">
+                            <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
                         </div>
-                        <p>Enlaces troncales a 10 Gbps 100% dieléctricos sin metales ni riesgo de chispas, ideales para áreas clasificadas (Zona 0 / Clase I Div 1), junto a cableado Cat6A LSZH libre de halógenos.</p>
-                        <div class="telecom-tags">
-                            <span class="telecom-tag">Troncal 10 Gbps</span>
-                            <span class="telecom-tag">Dieléctrico Inmune a EMI</span>
-                            <span class="telecom-tag">Cat6A LSZH</span>
-                            <span class="telecom-tag">Áreas Clasificadas</span>
-                        </div>
+                        <h3>Tendido de Fibra Óptica & Cableado Estructurado</h3>
+                        <p>Diseño y fusión de redes troncales de fibra monomodo/multimodo dieléctrica blindada y cableado Cat6A/Cat7 para plantas petroquímicas, bajo normas TIA/EIA-568 e ISO/IEC 11801.</p>
+                        <ul class="card-feature-list">
+                            <li>Certificación OTDR y pérdida por inserción</li>
+                            <li>Canalizaciones y tubería Conduit para áreas clasificadas</li>
+                            <li>Empalmes por fusión de ultra baja atenuación</li>
+                        </ul>
                     </div>
 
-                    <!-- Pillar 2: WiFi 6 & Microondas -->
-                    <div class="telecom-card" data-aos="fade-up" data-aos-delay="150">
-                        <div class="telecom-card-header">
-                            <div class="telecom-icon-box green">
-                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-                                    <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
-                                    <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
-                                    <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
-                                    <line x1="12" y1="20" x2="12.01" y2="20"></line>
-                                </svg>
-                            </div>
-                            <h3>WLAN Wi-Fi 6 Industrial & Radioenlaces</h3>
+                    <!-- Card 2: Conmutación y Ruteo OT/IT -->
+                    <div class="telecom-service-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="card-icon-wrapper">
+                            <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
                         </div>
-                        <p>Cobertura inalámbrica de alta densidad para plantas y patios con roaming continuo (802.11k/v/r) y radioenlaces microondas punto a punto/multipunto para taladros y pozos remotos.</p>
-                        <div class="telecom-tags">
-                            <span class="telecom-tag">Wi-Fi 6 Industrial</span>
-                            <span class="telecom-tag">Roaming Continuo</span>
-                            <span class="telecom-tag">Microondas PtP/PtMP</span>
-                            <span class="telecom-tag">Telemetría de Pozos</span>
-                        </div>
+                        <h3>Conmutación L2/L3 & Ruteo Empresarial</h3>
+                        <p>Arquitectura de alta disponibilidad con switches industriales PoE+, routers de núcleo y segmentación de tráfico por VLANs para aislar control SCADA, videovigilancia y datos administrativos.</p>
+                        <ul class="card-feature-list">
+                            <li>Protocolos de redundancia rápida (ERPS, RSTP, VRRP)</li>
+                            <li>Switches rugerizados para carril DIN (-40°C a +75°C)</li>
+                            <li>Calidad de Servicio (QoS) para tráfico crítico de sensores</li>
+                        </ul>
                     </div>
 
-                    <!-- Pillar 3: Ciberseguridad OT/IT -->
-                    <div class="telecom-card" data-aos="fade-up" data-aos-delay="200">
-                        <div class="telecom-card-header">
-                            <div class="telecom-icon-box cyan">
-                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                                </svg>
-                            </div>
-                            <h3>Core de Red & Ciberseguridad OT/IT (NGFW)</h3>
+                    <!-- Card 3: Ciberseguridad Perimetral -->
+                    <div class="telecom-service-card" data-aos="fade-up" data-aos-delay="150">
+                        <div class="card-icon-wrapper">
+                            <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                         </div>
-                        <p>Switches gestionables L2+/L3 con PoE+, agregación LACP y segmentación estricta de redes de control (SCADA/DCS) bajo norma IEC 62443. Firewalls NGFW con inspección profunda y VPNs cifradas.</p>
-                        <div class="telecom-tags">
-                            <span class="telecom-tag">Switches L2/L3 PoE+</span>
-                            <span class="telecom-tag">Firewalls NGFW</span>
-                            <span class="telecom-tag">Norma IEC 62443</span>
-                            <span class="telecom-tag">VPN IPSec / WireGuard</span>
-                        </div>
+                        <h3>Ciberseguridad Industrial & Firewalls OT/IT</h3>
+                        <p>Protección perimetral mediante Firewalls de Próxima Generación (NGFW), inspección profunda de paquetes (DPI) de protocolos industriales (Modbus, DNP3, OPC-UA) y zonas desmilitarizadas (DMZ).</p>
+                        <ul class="card-feature-list">
+                            <li>Alineación con el estándar internacional IEC 62443</li>
+                            <li>Túneles VPN seguros para acceso remoto autenticado</li>
+                            <li>Prevención de intrusiones (IPS) y micro-segmentación</li>
+                        </ul>
                     </div>
 
-                    <!-- Pillar 4: Data Center Local -->
-                    <div class="telecom-card" data-aos="fade-up" data-aos-delay="250">
-                        <div class="telecom-card-header">
-                            <div class="telecom-icon-box amber">
-                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-                                    <rect x="2" y="2" width="20" height="8" rx="2"></rect>
-                                    <rect x="2" y="14" width="20" height="8" rx="2"></rect>
-                                    <line x1="6" y1="6" x2="6.01" y2="6"></line>
-                                    <line x1="6" y1="18" x2="6.01" y2="18"></line>
-                                </svg>
-                            </div>
-                            <h3>Data Center Local, Servidores & Respaldo</h3>
+                    <!-- Card 4: Wi-Fi Industrial 6 & Enlaces Mesh -->
+                    <div class="telecom-service-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="card-icon-wrapper">
+                            <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
                         </div>
-                        <p>Gabinetes industriales NEMA 4X / IP66 ventilados, servidores en rack para virtualización local/híbrida (Dell PowerEdge / HPE) y sistemas UPS Online de Doble Conversión 24/7 sin caídas.</p>
-                        <div class="telecom-tags">
-                            <span class="telecom-tag">Dell PowerEdge</span>
-                            <span class="telecom-tag">UPS Online Doble Conversión</span>
-                            <span class="telecom-tag">NEMA 4X / IP66</span>
-                            <span class="telecom-tag">Operación 24/7</span>
-                        </div>
+                        <h3>Wi-Fi 6 en Campo & Redes Inalámbricas Mesh</h3>
+                        <p>Cobertura inalámbrica de alto rendimiento en áreas abiertas de patios de tanques, taladros y muelles, permitiendo movilidad continua a operadores y tabletas industriales intrínsecamente seguras.</p>
+                        <ul class="card-feature-list">
+                            <li>Access Points con protección IP67/NEMA 4X</li>
+                            <li>Site Survey de radiofrecuencia (RF) predictivo y activo</li>
+                            <li>Roaming transparente sin caídas de sesión SCADA</li>
+                        </ul>
                     </div>
+
+                    <!-- Card 5: Enlaces de Microondas & Radioenlaces -->
+                    <div class="telecom-service-card" data-aos="fade-up" data-aos-delay="250">
+                        <div class="card-icon-wrapper">
+                            <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+                        </div>
+                        <h3>Radioenlaces de Microondas & Telemetría Punto a Punto</h3>
+                        <p>Interconexión de locaciones remotas, plataformas marinas, pozos y estaciones de bombeo sin acceso a fibra, con enlaces de microondas de alta capacidad en bandas licenciadas y libres.</p>
+                        <ul class="card-feature-list">
+                            <li>Enlaces Punto a Punto (PTP) y Punto a Multipunto (PTMP)</li>
+                            <li>Cálculos de línea de vista y zonas de Fresnel</li>
+                            <li>Monitoreo continuo de nivel de señal (RSSI / SNR)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 6: Telefonía IP & Radiocomunicación -->
+                    <div class="telecom-service-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="card-icon-wrapper">
+                            <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        </div>
+                        <h3>Telefonía IP Industrial, VoIP & Radiocomunicación</h3>
+                        <p>Sistemas de comunicación unificada de voz, perifoneo y voceo industrial (PA/GA) de emergencia, interconectados con radios digitales DMR/TETRA para brigadas operativas y de seguridad.</p>
+                        <ul class="card-feature-list">
+                            <li>Conmutadores IP PBX con redundancia geográfica</li>
+                            <li>Teléfonos antideflagrantes para áreas con riesgo de gas</li>
+                            <li>Integración de audio y video con salas de control central</li>
+                        </ul>
+                    </div>
+
                 </div>
 
-                <!-- Executive Blueprint Card -->
-                <div class="telecom-blueprint-card" data-aos="fade-up" data-aos-delay="150">
-                    <div class="blueprint-header">
-                        <div class="blueprint-title">
-                            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" class="text-blue">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
-                            <span>Topología de Red Corporativa e Industrial Integrada</span>
-                        </div>
-                        <span class="blueprint-badge">Estándar TIA-568.0-E / IEEE 802.11ax / IEC 62443</span>
-                    </div>
-
-                    <div class="blueprint-grid">
-                        <div class="blueprint-zone">
-                            <div class="zone-badge zone-admin">🏢 Sede Administrativa & Sala de Control</div>
-                            <ul class="zone-features">
-                                <li><strong>Red WiFi 6 & Cat6A:</strong> Cobertura total sin zonas muertas y puestos directos 10 Gbps.</li>
-                                <li><strong>Data Center Core:</strong> Rack de 42U con switch core L3, firewall NGFW y servidor Dell.</li>
-                            </ul>
-                        </div>
-
-                        <div class="blueprint-connector">
-                            <div class="fiber-link">
-                                <span class="fiber-pulse"></span>
-                                <span class="fiber-label">Enlace Fibra Dieléctrica (Aislamiento Total EMI - Zona 0)</span>
-                            </div>
-                        </div>
-
-                        <div class="blueprint-zone">
-                            <div class="zone-badge zone-ops">⛽ Área Operativa / Patio de Tanques / Taladros</div>
-                            <ul class="zone-features">
-                                <li><strong>Seguridad Intrínseca:</strong> Enlace 100% dieléctrico sin riesgo de chispas en combustible.</li>
-                                <li><strong>Telemetría Industrial:</strong> Conexión en tiempo real para sensores SCADA, CCTV y despacho.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="blueprint-footer">
-                        <p>¿Planeas modernizar la infraestructura de red o telecomunicaciones en tu planta o pozo?</p>
-                        <a href="#contact" class="btn-primary-corporate">Solicitar Propuesta Técnica</a>
-                    </div>
-                </div>
             </div>
         </section>
 
-        <!-- ============ 2. APARTADO: GEMELOS DIGITALES 3D & SIMULACIÓN ============ -->
+        <!-- ============ BANNER SEPARADOR INDUSTRIAL ============ -->
+        <section class="industrial-divider-banner">
+            <div class="divider-bg-overlay">
+                <img src="images/divider_pipeline.png" alt="Tuberías e Infraestructura Industrial" class="divider-bg-img">
+                <div class="divider-scrim"></div>
+            </div>
+            <div class="divider-content" data-aos="fade-up">
+                <span class="divider-tag">DISPONIBILIDAD ININTERRUMPIDA</span>
+                <h2>Conectividad Inmune a Fallas para las Operaciones Críticas</h2>
+                <p>Nuestras redes industriales operan bajo condiciones extremas garantizando la continuidad del bombeo, refinación y despacho de hidrocarburos.</p>
+                <a href="#contact" class="btn-primary-corporate">Solicitar Estudio Técnico de Campo</a>
+            </div>
+        </section>
+
+        <!-- ============ 2. APARTADO: SHOWROOM GEMELOS DIGITALES 3D ============ -->
         <section id="digital-twins-showroom" class="showroom-section">
             <div class="showroom-container">
-                <div class="section-header text-center" data-aos="fade-up">
-                    <div class="section-tag">SIMULACIÓN TRIDIMENSIONAL EN TIEMPO REAL</div>
-                    <h2>Gemelos Digitales para la <span class="gradient-text">Industria Petrolera</span></h2>
-                    <p>Explora y manipula las réplicas virtuales interactivas 3D de refinerías, separadores trifásicos P&ID, sistemas de almacenamiento y redes eléctricas.</p>
-                </div>
                 
-                <div class="showroom-carousel-wrapper">
-                    <button class="carousel-btn prev-btn" id="carousel-prev" aria-label="Anterior">
-                        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                    </button>
-                    
+                <div class="section-header text-center" data-aos="fade-up">
+                    <div class="section-tag">SIMULACIÓN AVANZADA & GEMELOS DIGITALES</div>
+                    <h2>Gemelos Digitales 3D & <span class="gradient-text">Monitoreo SCADA en Vivo</span></h2>
+                    <p>Modelos tridimensionales de alta fidelidad sincronizados con telemetría en tiempo real de sensores industriales de campo.</p>
+                </div>
+
+                <!-- 3D Card Gallery Carousel Viewport -->
+                <div class="showroom-carousel-wrapper" data-aos="fade-up" data-aos-delay="100">
                     <div class="showroom-carousel">
                         <div class="carousel-track" id="carousel-track">
                             
-                            <!-- Card 1: Refinery -->
-                            <div class="showroom-card active-card" data-aos="fade-up" data-aos-delay="100">
-                                <div class="card-visual-container">
-                                    <div id="refinery-card-canvas" class="card-canvas"></div>
-                                    <img src="images/refineria_el_palito.jpg" alt="Refinería El Palito" class="card-bg-preview">
-                                    <div class="card-status-badge"><span class="status-dot green"></span>Telemetría Activa</div>
+                            <!-- Card 1: Refinería El Palito -->
+                            <div class="showroom-card active-card" data-index="0" data-type="refinery">
+                                <div class="showroom-card-media">
+                                    <div class="card-canvas" id="canvas-refinery-preview"></div>
+                                    <div class="media-badge">3D INTERACTIVO</div>
+                                    <div class="telemetry-live-chip"><span class="chip-pulse"></span> SCADA ONLINE</div>
                                 </div>
-                                <div class="card-details">
-                                    <h3>Refinería El Palito</h3>
-                                    <p>Simulación termodinámica, balance de masa en tuberías y control de nivel en tanques de almacenamiento.</p>
-                                    <div class="card-specs-list">
-                                        <div class="spec-row"><span>DESTILACIÓN</span><strong>140 MBD</strong></div>
-                                        <div class="spec-row"><span>CRAQUEO (FCC)</span><strong>61.5 MBD</strong></div>
-                                        <div class="spec-row"><span>ALQUILACIÓN</span><strong>22 MBD</strong></div>
+                                <div class="showroom-card-body">
+                                    <div class="card-kicker">INFRAESTRUCTURA PETROLERA</div>
+                                    <h3>Refinería El Palito (Zona 1)</h3>
+                                    <p>Gemelo digital de la torre de destilación atmosférica y patio de tanques con telemetría de presión, temperatura y flujo en tiempo real.</p>
+                                    <div class="card-metrics-grid">
+                                        <div class="metric-item">
+                                            <span class="metric-label">Capacidad</span>
+                                            <span class="metric-value">140,000 BPD</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-label">Sensores RT</span>
+                                            <span class="metric-value">1,420 Nodos</span>
+                                        </div>
                                     </div>
-                                    <button class="btn-showroom-action" onclick="openHologramModal('refinery', 'Refinería El Palito - DCS Planta 1')">Ver Modelo 3D Interactivo</button>
+                                    <button class="btn-showroom-action" onclick="openHologramModal('refinery', 'Refinería El Palito - Zona 1')">
+                                        <span>Abrir Simulación 3D</span>
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                    </button>
                                 </div>
                             </div>
 
-                            <!-- Card 2: Separator -->
-                            <div class="showroom-card" data-aos="fade-up" data-aos-delay="150">
-                                <div class="card-visual-container">
-                                    <div id="separator-card-canvas" class="card-canvas"></div>
-                                    <img src="images/industry_pipes.png" alt="Separador Trifásico" class="card-bg-preview">
-                                    <div class="card-status-badge"><span class="status-dot green"></span>Lazo de Control OK</div>
+                            <!-- Card 2: Puente Estructural -->
+                            <div class="showroom-card" data-index="1" data-type="bridge">
+                                <div class="showroom-card-media">
+                                    <div class="card-canvas" id="canvas-bridge-preview"></div>
+                                    <div class="media-badge">3D INTERACTIVO</div>
+                                    <div class="telemetry-live-chip"><span class="chip-pulse"></span> SCADA ONLINE</div>
                                 </div>
-                                <div class="card-details">
-                                    <h3>Separador Trifásico P&ID</h3>
-                                    <p>Separación de Agua, Crudo y Gas con modelado esquemático P&ID de transmisores de presión y nivel.</p>
-                                    <div class="card-specs-list">
-                                        <div class="spec-row"><span>PRESIÓN VASIJA</span><strong>3.2 bar</strong></div>
-                                        <div class="spec-row"><span>NIVEL AGUA</span><strong>45.2%</strong></div>
-                                        <div class="spec-row"><span>FLUJO SALIDA</span><strong>120 L/s</strong></div>
+                                <div class="showroom-card-body">
+                                    <div class="card-kicker">INGENIERÍA CIVIL & VIAL</div>
+                                    <h3>Puente Atirantado Estructural</h3>
+                                    <p>Monitoreo de fatiga de materiales, oscilaciones por viento y carga viva con red de sensores LoRaWAN integrados en tirantes.</p>
+                                    <div class="card-metrics-grid">
+                                        <div class="metric-item">
+                                            <span class="metric-label">Vano Central</span>
+                                            <span class="metric-value">480 Metros</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-label">Tolerancia</span>
+                                            <span class="metric-value">99.8% Segura</span>
+                                        </div>
                                     </div>
-                                    <button class="btn-showroom-action" onclick="openHologramModal('separator', 'Separador Trifásico - Instrumentación P&ID')">Ver Modelo 3D Interactivo</button>
+                                    <button class="btn-showroom-action" onclick="openHologramModal('bridge', 'Puente Atirantado Estructural')">
+                                        <span>Abrir Simulación 3D</span>
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                    </button>
                                 </div>
                             </div>
 
-                            <!-- Card 3: Bridge -->
-                            <div class="showroom-card" data-aos="fade-up" data-aos-delay="200">
-                                <div class="card-visual-container">
-                                    <div id="bridge-card-canvas" class="card-canvas"></div>
-                                    <img src="images/construction.png" alt="Puente e Infraestructura" class="card-bg-preview">
-                                    <div class="card-status-badge"><span class="status-dot green"></span>SHM Online</div>
+                            <!-- Card 3: Almacén Logístico -->
+                            <div class="showroom-card" data-index="2" data-type="warehouse">
+                                <div class="showroom-card-media">
+                                    <div class="card-canvas" id="canvas-warehouse-preview"></div>
+                                    <div class="media-badge">3D INTERACTIVO</div>
+                                    <div class="telemetry-live-chip"><span class="chip-pulse"></span> SCADA ONLINE</div>
                                 </div>
-                                <div class="card-details">
-                                    <h3>Puente & Vías Industriales</h3>
-                                    <p>Monitor de salud estructural (SHM) con sensores de tensión en cables y vibración dinámica en tiempo real.</p>
-                                    <div class="card-specs-list">
-                                        <div class="spec-row"><span>SENSORES ACTIVOS</span><strong>32 / 32</strong></div>
-                                        <div class="spec-row"><span>LATENCIA</span><strong>4.2 ms</strong></div>
-                                        <div class="spec-row"><span>INTEGRIDAD</span><strong>99.8%</strong></div>
+                                <div class="showroom-card-body">
+                                    <div class="card-kicker">LOGÍSTICA & ALMACÉN OT</div>
+                                    <h3>Almacén Logístico Autónomo</h3>
+                                    <p>Visualización espacial de stock de repuestos críticos, trazabilidad de robots AMR y optimización térmica de racks en tiempo real.</p>
+                                    <div class="card-metrics-grid">
+                                        <div class="metric-item">
+                                            <span class="metric-label">Ítems WMS</span>
+                                            <span class="metric-value">14,200 SKUs</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-label">Flota AMR</span>
+                                            <span class="metric-value">12 Unidades</span>
+                                        </div>
                                     </div>
-                                    <button class="btn-showroom-action" onclick="openHologramModal('bridge', 'Puente e Infraestructura - Salud Estructural')">Ver Modelo 3D Interactivo</button>
+                                    <button class="btn-showroom-action" onclick="openHologramModal('warehouse', 'Almacén Logístico Autónomo')">
+                                        <span>Abrir Simulación 3D</span>
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                    </button>
                                 </div>
                             </div>
 
-                            <!-- Card 4: Warehouse -->
-                            <div class="showroom-card" data-aos="fade-up" data-aos-delay="250">
-                                <div class="card-visual-container">
-                                    <div id="warehouse-card-canvas" class="card-canvas"></div>
-                                    <img src="images/petrochemical_plant.png" alt="Almacén Logístico" class="card-bg-preview">
-                                    <div class="card-status-badge"><span class="status-dot green"></span>WMS Sincronizado</div>
+                            <!-- Card 4: Separador Trifásico -->
+                            <div class="showroom-card" data-index="3" data-type="separator">
+                                <div class="showroom-card-media">
+                                    <div class="card-canvas" id="canvas-separator-preview"></div>
+                                    <div class="media-badge">3D INTERACTIVO</div>
+                                    <div class="telemetry-live-chip"><span class="chip-pulse"></span> SCADA ONLINE</div>
                                 </div>
-                                <div class="card-details">
-                                    <h3>Almacén Logístico AMR</h3>
-                                    <p>Gestión de repuestos críticos y materiales en almacenes industriales con robots móviles y WMS.</p>
-                                    <div class="card-specs-list">
-                                        <div class="spec-row"><span>CARGA DE TRABAJO</span><strong>84.5%</strong></div>
-                                        <div class="spec-row"><span>BATERÍA PROMEDIO</span><strong>92.1%</strong></div>
-                                        <div class="spec-row"><span>PRECISIÓN RUTA</span><strong>99.9%</strong></div>
+                                <div class="showroom-card-body">
+                                    <div class="card-kicker">PROCESOS QUÍMICOS</div>
+                                    <h3>Separador Trifásico (P&ID)</h3>
+                                    <p>Simulación del proceso de separación de crudo, gas y agua con cálculo de interfases y balance dinámico de masa en la vasija.</p>
+                                    <div class="card-metrics-grid">
+                                        <div class="metric-item">
+                                            <span class="metric-label">Presión Nom.</span>
+                                            <span class="metric-value">3.2 bar</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-label">Pureza Gas</span>
+                                            <span class="metric-value">99.1%</span>
+                                        </div>
                                     </div>
-                                    <button class="btn-showroom-action" onclick="openHologramModal('warehouse', 'Almacén Industrial AMR - WMS')">Ver Modelo 3D Interactivo</button>
+                                    <button class="btn-showroom-action" onclick="openHologramModal('separator', 'Separador Trifásico Químico')">
+                                        <span>Abrir Simulación 3D</span>
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                    </button>
                                 </div>
                             </div>
 
-                            <!-- Card 5: Energy Grid -->
-                            <div class="showroom-card" data-aos="fade-up" data-aos-delay="300">
-                                <div class="card-visual-container">
-                                    <div id="energy-card-canvas" class="card-canvas"></div>
-                                    <img src="images/oil_refinery_night.png" alt="Red Eléctrica Smart Grid" class="card-bg-preview">
-                                    <div class="card-status-badge"><span class="status-dot green"></span>Malla Estable</div>
+                            <!-- Card 5: Smart Grid Energética -->
+                            <div class="showroom-card" data-index="4" data-type="energy">
+                                <div class="showroom-card-media">
+                                    <div class="card-canvas" id="canvas-energy-preview"></div>
+                                    <div class="media-badge">3D INTERACTIVO</div>
+                                    <div class="telemetry-live-chip"><span class="chip-pulse"></span> SCADA ONLINE</div>
                                 </div>
-                                <div class="card-details">
-                                    <h3>Red Eléctrica Smart Grid</h3>
-                                    <p>Monitoreo de subestaciones, generación auxiliar y parques de distribución para balanceo dinámico de carga.</p>
-                                    <div class="card-specs-list">
-                                        <div class="spec-row"><span>GEN. AUXILIAR</span><strong>4.2 MW</strong></div>
-                                        <div class="spec-row"><span>GEN. SOLAR</span><strong>2.8 MW</strong></div>
-                                        <div class="spec-row"><span>EFICIENCIA GRID</span><strong>98.1%</strong></div>
+                                <div class="showroom-card-body">
+                                    <div class="card-kicker">ENERGÍA & COGENERACIÓN</div>
+                                    <h3>Red Inteligente & Subestación</h3>
+                                    <p>Monitoreo del balance de generación eólica, fotovoltaica y térmica con despacho autónomo hacia bombas y compresores de campo.</p>
+                                    <div class="card-metrics-grid">
+                                        <div class="metric-item">
+                                            <span class="metric-label">Generación</span>
+                                            <span class="metric-value">7.0 MW</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-label">Eficiencia</span>
+                                            <span class="metric-value">99.4%</span>
+                                        </div>
                                     </div>
-                                    <button class="btn-showroom-action" onclick="openHologramModal('energy', 'Red Eléctrica Inteligente - Smart Grid')">Ver Modelo 3D Interactivo</button>
+                                    <button class="btn-showroom-action" onclick="openHologramModal('energy', 'Red Eléctrica Inteligente')">
+                                        <span>Abrir Simulación 3D</span>
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                    </button>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-                    
-                    <button class="carousel-btn next-btn" id="carousel-next" aria-label="Siguiente">
-                        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                    </button>
+
+                    <!-- Carousel Controls -->
+                    <div class="carousel-nav-bar">
+                        <button class="btn-carousel-ctrl" id="carousel-prev" aria-label="Anterior">&#8592;</button>
+                        <div class="carousel-dots" id="carousel-dots"></div>
+                        <button class="btn-carousel-ctrl" id="carousel-next" aria-label="Siguiente">&#8594;</button>
+                    </div>
                 </div>
 
-                <!-- Carousel Navigation Dots Container -->
-                <div class="carousel-dots" id="carousel-dots"></div>
             </div>
         </section>
 
-        <!-- ============ 3D HOLOGRAM EXPANDED MODAL ============ -->
-        <div id="hologram-modal" class="hologram-modal">
+        <!-- ============ FULLSCREEN HOLOGRAM SIMULATION MODAL ============ -->
+        <div class="hologram-modal" id="hologram-modal">
             <div class="modal-backdrop" onclick="closeHologramModal()"></div>
             <div class="modal-window">
+                
                 <div class="modal-header">
                     <div class="modal-title-group">
-                        <span class="modal-badge-dot pulse-green"></span>
-                        <h3 id="modal-model-title">Simulación Holográfica 3D</h3>
+                        <span class="modal-badge">SISTEMA SCADA / DCS EN VIVO</span>
+                        <h4 id="modal-title-text">Simulador de Gemelo Digital 3D</h4>
                     </div>
-                    <button class="modal-close-btn" onclick="closeHologramModal()" aria-label="Cerrar">&times;</button>
+                    <button class="modal-close-btn" onclick="closeHologramModal()">&times;</button>
                 </div>
                 
-                <div class="modal-body">
-                    <!-- 3D Interactive Canvas -->
-                    <div class="modal-canvas-wrapper">
-                        <div id="modal-3d-canvas" class="modal-canvas"></div>
-                        <div class="modal-overlay-controls">
-                            <span class="control-hint">Arrastra para rotar · Rueda del ratón para zoom</span>
+                <div class="modal-body-grid">
+                    <div class="modal-3d-viewport">
+                        <div id="modal-webgl-container" class="modal-webgl-container"></div>
+                        <div class="modal-viewport-overlay">
+                            <span class="viewport-indicator"><span class="chip-pulse"></span> MOTOR WEBGL 3D ACTIVO</span>
+                            <span class="viewport-hint">Arrastra para rotar &bull; Rueda para zoom</span>
                         </div>
                     </div>
-                    
-                    <!-- Side Telemetry Dashboard -->
-                    <div class="modal-telemetry-panel">
-                        <h4>Telemetría en Vivo</h4>
-                        <div class="telemetry-metrics-list" id="modal-metrics-list">
+
+                    <div class="modal-telemetry-sidebar">
+                        <div class="telemetry-header">
+                            <h5>Telemetría & Diagnóstico IA</h5>
+                            <span class="badge-status-ok">ESTABLE</span>
+                        </div>
+                        
+                        <div class="modal-console-box">
+                            <div class="console-title">REGISTROS DEL AGENTE AUTÓNOMO</div>
+                            <div class="console-logs" id="modal-console-logs"></div>
+                        </div>
+
+                        <div class="telemetry-metrics-row">
                             <div class="telemetry-metric-box">
-                                <span class="metric-key">RENDIMIENTO</span>
-                                <span class="metric-val text-green">99.4%</span>
-                            </div>
-                            <div class="telemetry-metric-box">
-                                <span class="metric-key">CARGA TÉRMICA</span>
-                                <span class="metric-val">42.8 °C</span>
-                            </div>
-                            <div class="telemetry-metric-box">
-                                <span class="metric-key">VIBRACIÓN</span>
-                                <span class="metric-val text-blue">0.02 G</span>
+                                <span class="metric-key">TEMPERATURA</span>
+                                <span class="metric-val">342.6 °C</span>
                             </div>
                             <div class="telemetry-metric-box">
                                 <span class="metric-key">PRESIÓN DIF.</span>
@@ -598,96 +674,96 @@
 
                     <div class="how-card" data-aos="fade-up" data-aos-delay="250">
                         <div class="how-step-num">04</div>
-                        <h3>Agentes IA & Soporte 24/7</h3>
-                        <p>Orquestación con agentes autónomos (n8n), modelos predictivos de anomalías y alertas automáticas 24/7.</p>
+                        <h3>Automatización IA & Soporte 24/7</h3>
+                        <p>Configuración de flujos n8n para análisis predictivo de fallas, entrega de documentación AS-BUILT y guardia técnica permanente.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ============ INDUSTRIAL BANNER DIVIDER ============ -->
-        <section class="industrial-divider-section">
-            <div class="divider-bg-overlay">
-                <img src="images/divider_pipeline.png" alt="Oleoductos y Tendido Industrial" class="divider-bg-img">
-                <div class="divider-scrim"></div>
-            </div>
-            <div class="divider-content" data-aos="fade-up">
-                <h2>Conectividad Ininterrumpida & Seguridad de Grado Industrial</h2>
-                <p>Optimizamos la operación de tus instalaciones con estándares de ingeniería de clase mundial.</p>
-                <a href="#contact" class="btn-primary-corporate">Solicitar Asesoría de Ingeniería</a>
-            </div>
-        </section>
-
-        <!-- ============ 5. APARTADO: CONTACTO / COTIZACIÓN ============ -->
+        <!-- ============ CONTACTO & COTIZACIONES ============ -->
         <section id="contact" class="contact-section">
             <div class="contact-container">
                 <div class="contact-grid">
                     
-                    <div class="contact-info" data-aos="fade-right">
-                        <div class="section-tag">CONTACTO & LICITACIONES</div>
-                        <h2>Impulsa la Conectividad e Inteligencia de <span class="gradient-text">tu Empresa</span></h2>
-                        <p>Solicita una asesoría técnica, propuesta de diseño de red industrial o demostración de gemelos digitales para tus operaciones.</p>
+                    <div class="contact-info-col" data-aos="fade-right">
+                        <div class="section-tag">CONTACTO CORPORATIVO</div>
+                        <h2>Hablemos de su Próximo <span class="gradient-text">Proyecto de Redes o Gemelos 3D</span></h2>
+                        <p>Nuestro equipo de ingenieros está disponible para realizar levantamientos técnicos en sitio, auditorías de infraestructura y cotizaciones de proyectos llave en mano.</p>
                         
-                        <div class="contact-bullets">
-                            <div class="bullet-item">
-                                <span class="bullet-icon">✓</span>
-                                <span>Ingeniería de redes Wi-Fi 6, fibra óptica dieléctrica y ciberseguridad NGFW</span>
+                        <div class="contact-methods">
+                            <div class="contact-method-item">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                </div>
+                                <div class="method-details">
+                                    <span class="method-label">Correo Electrónico Directo</span>
+                                    <a href="mailto:proyectos@kaironinnova.com" class="method-val">proyectos@kaironinnova.com</a>
+                                </div>
                             </div>
-                            <div class="bullet-item">
-                                <span class="bullet-icon">✓</span>
-                                <span>Automatización de flujos operativos con Agentes IA y orquestación n8n</span>
-                            </div>
-                            <div class="bullet-item">
-                                <span class="bullet-icon">✓</span>
-                                <span>Simulación tridimensional interactiva y telemetría de planta en tiempo real</span>
-                            </div>
-                            <div class="bullet-item">
-                                <span class="bullet-icon">✓</span>
-                                <span>Soporte de ingeniería en campo y respaldo energético 24/7</span>
-                            </div>
-                        </div>
 
-                        <div class="contact-direct-box">
-                            <div class="direct-item">
-                                <strong>Sede de Operaciones:</strong>
-                                <span>Eje Industrial y Energético</span>
+                            <div class="contact-method-item">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                </div>
+                                <div class="method-details">
+                                    <span class="method-label">Oficina Técnica & Centro de Operaciones</span>
+                                    <span class="method-val">Valencia / Puerto Cabello &bull; Carabobo, Venezuela</span>
+                                </div>
                             </div>
-                            <div class="direct-item">
-                                <strong>Disponibilidad Técnica:</strong>
-                                <span>24 Horas / 365 Días al Año</span>
+
+                            <div class="contact-method-item">
+                                <div class="method-icon">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                </div>
+                                <div class="method-details">
+                                    <span class="method-label">Línea de Atención a Operaciones</span>
+                                    <span class="method-val">+58 (412) 000-0000 &bull; Soporte 24/7</span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="contact-form-wrapper" data-aos="fade-left">
-                        <form class="demo-form" onsubmit="event.preventDefault(); alert('Solicitud enviada con éxito. Un ingeniero de kaironInnova se pondrá en contacto contigo.');">
-                            <div class="form-group">
-                                <label for="name">Nombre y Apellido</label>
-                                <input type="text" id="name" required placeholder="Ingresa tu nombre completo">
+                    <div class="contact-form-col" data-aos="fade-left">
+                        <form class="corporate-contact-form" onsubmit="event.preventDefault(); alert('Solicitud enviada con éxito. Un ingeniero de proyectos de kaironInnova se pondrá en contacto a la brevedad.');">
+                            <h4 class="form-heading">Solicitud de Propuesta Técnica</h4>
+                            <p class="form-subheading">Complete el formulario y le responderemos en menos de 24 horas hábiles.</p>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">Nombre y Apellido *</label>
+                                    <input type="text" id="name" name="name" required placeholder="Ej. Ing. Carlos Mendoza">
+                                </div>
+                                <div class="form-group">
+                                    <label for="company">Empresa / Organización *</label>
+                                    <input type="text" id="company" name="company" required placeholder="Ej. Contratista Petrolera C.A.">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="email">Correo Corporativo</label>
-                                <input type="email" id="email" required placeholder="correo@empresa.com">
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Correo Corporativo *</label>
+                                    <input type="email" id="email" name="email" required placeholder="carlos.mendoza@empresa.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="service">Servicio de Interés *</label>
+                                    <select id="service" name="service" required>
+                                        <option value="" disabled selected>Seleccione un área de ingeniería</option>
+                                        <option value="redes">Redes & Fibra Óptica Industrial</option>
+                                        <option value="gemelos">Gemelo Digital 3D & SCADA</option>
+                                        <option value="ciberseguridad">Ciberseguridad OT/IT (IEC 62443)</option>
+                                        <option value="ai">Automatización de Procesos con IA</option>
+                                        <option value="integral">Proyecto Integral Llave en Mano</option>
+                                    </select>
+                                </div>
                             </div>
+
                             <div class="form-group">
-                                <label for="company">Empresa / Operadora / Contratista</label>
-                                <input type="text" id="company" required placeholder="Nombre de tu organización">
+                                <label for="message">Alcance del Proyecto o Requerimiento Técnico *</label>
+                                <textarea id="message" name="message" rows="4" required placeholder="Describa la ubicación de la instalación, cantidad de puntos de red, metraje aproximado o alcance del gemelo digital requerido..."></textarea>
                             </div>
-                            <div class="form-group">
-                                <label for="service_interest">Servicio Requerido</label>
-                                <select id="service_interest" class="form-select">
-                                    <option value="redes">Diseño e Ingeniería de Redes & Fibra Óptica</option>
-                                    <option value="gemelos">Gemelos Digitales 3D & Simulación de Planta</option>
-                                    <option value="ciberseguridad">Ciberseguridad OT/IT & Firewalls NGFW</option>
-                                    <option value="automatizacion">Automatización con Agentes IA & n8n</option>
-                                    <option value="integral">Solución Integral Llave en Mano</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="msg">Alcance del Proyecto o Instalaciones</label>
-                                <textarea id="msg" rows="3" placeholder="Describe brevemente las instalaciones, sede o requerimiento..."></textarea>
-                            </div>
-                            <button type="submit" class="btn-primary-corporate w-full text-center">Enviar Solicitud de Cotización</button>
+
+                            <button type="submit" class="btn-submit-corporate">Enviar Solicitud de Cotización</button>
                         </form>
                     </div>
 
@@ -765,7 +841,10 @@
     <script src="separator-twin-3d.js"></script>
     <script src="energy-twin-3d.js"></script>
 
-    <!-- Main Corporate Application Script (loaded last after 3D engines) -->
+    <!-- 3D Hero LiDAR Morphing Engine -->
+    <script src="hero-lidar-3d.js"></script>
+
+    <!-- Main Corporate Application Script -->
     <script src="script.js"></script>
 </body>
 </html>

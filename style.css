@@ -1,3 +1,19 @@
+
+/* ==========================================================================
+   TYPOGRAPHY & ORPHAN PREVENTION (ANTI-HUÉRFANAS)
+   ========================================================================== */
+h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+}
+
+p, li, .hero-subtitle, .kpi-desc, .footer-desc {
+    text-wrap: pretty;
+}
+
+.text-balance {
+    text-wrap: balance;
+}
 /* ==========================================================================
    KAIRON INNOVA - CORPORATE INDUSTRIAL THEME (OIL & GAS / ENGINEERING)
    ========================================================================== */
@@ -1619,4 +1635,272 @@ a {
     .corporate-hero h1 { font-size: 2.1rem; }
     .modal-body { grid-template-columns: 1fr; height: auto; }
     .modal-canvas-wrapper { height: 300px; }
+}
+
+
+/* ==========================================================================
+   HERO DUAL GRID & 3D LIDAR MORPHING CARD
+   ========================================================================== */
+.hero-dual-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 48px;
+    align-items: center;
+}
+
+.hero-title {
+    font-size: clamp(2.4rem, 4.2vw, 3.4rem);
+    color: #ffffff;
+    margin-bottom: var(--space-6);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    text-wrap: balance;
+}
+
+.hero-subtitle {
+    font-size: 1.15rem;
+    color: #cbd5e1;
+    line-height: 1.65;
+    margin-bottom: var(--space-8);
+    text-wrap: pretty;
+    max-width: 620px;
+}
+
+.hero-micro-kpi {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.micro-kpi-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.micro-kpi-num {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #00f2fe;
+    letter-spacing: -0.01em;
+}
+
+.micro-kpi-lbl {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.micro-kpi-divider {
+    width: 1px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* --- LiDAR Card Container --- */
+.hero-visual-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.hero-lidar-card {
+    width: 100%;
+    max-width: 520px;
+    background: rgba(11, 19, 43, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 176, 116, 0.1);
+    overflow: hidden;
+    position: relative;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-lidar-card:hover {
+    border-color: rgba(0, 242, 254, 0.45);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 242, 254, 0.15);
+}
+
+.lidar-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    background: rgba(15, 23, 42, 0.75);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.lidar-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00e676;
+    box-shadow: 0 0 10px #00e676;
+    animation: statusPulse 2s infinite ease-in-out;
+}
+
+@keyframes statusPulse {
+    0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 8px #00e676; }
+    50% { transform: scale(1.3); opacity: 0.7; box-shadow: 0 0 16px #00e676; }
+}
+
+.status-label {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #e2e8f0;
+}
+
+.lidar-phase-badge {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    font-weight: 700;
+    color: #00f2fe;
+    background: rgba(0, 242, 254, 0.12);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    border-radius: 4px;
+    padding: 4px 10px;
+    letter-spacing: 0.06em;
+}
+
+.hero-canvas-wrapper {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    background: radial-gradient(circle at center, rgba(15, 23, 42, 0.5) 0%, rgba(7, 14, 30, 0.95) 100%);
+    cursor: grab;
+}
+
+.hero-canvas-wrapper:active {
+    cursor: grabbing;
+}
+
+#hero-lidar-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.lidar-overlay-coords {
+    position: absolute;
+    top: 12px;
+    left: 16px;
+    right: 16px;
+    display: flex;
+    justify-content: space-between;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 11px;
+    color: #64748b;
+    pointer-events: none;
+}
+
+.coords-points {
+    color: #00e676;
+    font-weight: 600;
+}
+
+.lidar-watermark {
+    position: absolute;
+    bottom: 10px;
+    right: 14px;
+    font-size: 10px;
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+}
+
+.lidar-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    background: rgba(15, 23, 42, 0.85);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.structure-type-label {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.structure-name {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+    color: #f8fafc;
+    transition: opacity 0.2s ease;
+}
+
+.lidar-phase-indicators {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.phase-pip {
+    width: 22px;
+    height: 5px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.phase-pip:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.phase-pip.active {
+    background: #00f2fe;
+    box-shadow: 0 0 8px #00f2fe;
+    width: 30px;
+}
+
+@media (max-width: 1024px) {
+    .hero-dual-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+    .hero-content {
+        max-width: 100%;
+    }
+    .hero-subtitle {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .hero-cta {
+        justify-content: center;
+    }
+    .hero-micro-kpi {
+        justify-content: center;
+    }
+    .hero-canvas-wrapper {
+        height: 320px;
+    }
 }
