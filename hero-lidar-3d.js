@@ -1,8 +1,9 @@
 // ==========================================================================
-// kaironInnova - 3D LiDAR Point Cloud Engine (High-Visibility Solid Alpha)
+// kaironInnova - 3D LiDAR Morphing Point Cloud Engine
+// Ultra-Realistic Industrial Oilfield Formations:
 // 1. Complejo de Refinación & Gran Tanque Esférico (Hortonsphere)
-// 2. Balancín Petrolero "Cabeza de Caballo" con Contrapesos & Tanque
-// 3. Taladro de Perforación & Well Testing con Mechurrio de Llama Activa
+// 2. Balancín Petrolero "Cabeza de Caballo" (Walking Beam Pumpjack & Tank)
+// 3. Taladro de Perforación de Campo & Well Testing con Mechurrio Activo
 // ==========================================================================
 
 let isHeroLidarInitialized = false;
@@ -25,28 +26,28 @@ function initHeroLidar() {
 
     isHeroLidarInitialized = true;
 
-    const TOTAL_POINTS = 3800;
+    const TOTAL_POINTS = 4200;
     const container = canvas.parentElement;
 
-    // Get actual pixel dimensions with safe minimums
+    // Viewport dimensions
     const rect = container ? container.getBoundingClientRect() : { width: 500, height: 460 };
     const width = rect.width > 50 ? rect.width : 500;
     const height = rect.height > 50 ? rect.height : 460;
 
     // --- THREE.JS SCENE SETUP ---
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(42, width / height, 1, 2000);
-    camera.position.set(0, 10, 310);
+    const camera = new THREE.PerspectiveCamera(40, width / height, 1, 2000);
+    camera.position.set(0, 8, 320);
 
     const renderer = new THREE.WebGLRenderer({ 
         canvas: canvas, 
         antialias: true, 
-        alpha: true
+        alpha: true 
     });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
-    // --- ORBIT CONTROLS ---
+    // --- ORBIT CONTROLS (Gentle, majestic auto-rotation) ---
     let controls = null;
     try {
         if (typeof THREE.OrbitControls !== 'undefined') {
@@ -56,7 +57,7 @@ function initHeroLidar() {
             controls.enableZoom = false;
             controls.enablePan = false;
             controls.autoRotate = true;
-            controls.autoRotateSpeed = 1.2;
+            controls.autoRotateSpeed = 0.65; // Slow, majestic panoramic turn
             controls.maxPolarAngle = Math.PI / 2 + 0.12;
             controls.minPolarAngle = Math.PI / 4;
             controls.target.set(0, 0, 0);
@@ -79,75 +80,150 @@ function initHeroLidar() {
             targets[idx++] = z;
         }
 
-        // Tall Fractionation Column on Left (X = -50, Y = -65 to +65, R = 22)
-        const colX = -50;
-        const colR = 22;
-        const colH = 130;
-        for (let i = 0; i < 1300; i++) {
-            const y = -65 + (i / 1300) * colH;
-            const angle = Math.random() * Math.PI * 2;
-            const isSurface = Math.random() > 0.2;
-            const r = isSurface ? colR + (Math.random() - 0.5) * 1.5 : Math.random() * colR;
+        // --- A. Columna de Fraccionamiento / Destilación (Izquierda, X = -56) ---
+        const colX = -56;
+        const colR = 21;
+        const colBottomY = -65;
+        const colTopY = 68;
+        const colH = colTopY - colBottomY;
+
+        // Cilindro principal (superficie con anillos horizontales y costuras)
+        for (let i = 0; i < 1100; i++) {
+            const y = colBottomY + (i / 1100) * colH;
+            const angle = (i * 0.45) % (Math.PI * 2);
+            const r = colR + (Math.random() - 0.5) * 1.0;
             addPoint(colX + Math.cos(angle) * r, y, Math.sin(angle) * r);
         }
-        for (let t = 0; t < 7; t++) {
-            const ty = -60 + t * 20;
+
+        // 7 Platos de fraccionamiento con barandas perimetrales (Catwalks circulares)
+        const trays = [-50, -32, -14, 4, 22, 40, 58];
+        trays.forEach(ty => {
             for (let p = 0; p < 50; p++) {
                 const angle = (p / 50) * Math.PI * 2;
-                addPoint(colX + Math.cos(angle) * (colR + 3.5), ty, Math.sin(angle) * (colR + 3.5));
+                addPoint(colX + Math.cos(angle) * (colR + 4.5), ty, Math.sin(angle) * (colR + 4.5));
+                if (p % 5 === 0) {
+                    addPoint(colX + Math.cos(angle) * (colR + 4.5), ty + 3.5, Math.sin(angle) * (colR + 4.5));
+                }
             }
-        }
-        for (let i = 0; i < 90; i++) {
-            const vy = 65 + Math.random() * 12;
-            addPoint(colX + (Math.random() - 0.5) * 6, vy, (Math.random() - 0.5) * 6);
+        });
+
+        // Cúpula superior (Domo semiesférico)
+        for (let i = 0; i < 120; i++) {
+            const u = Math.random();
+            const theta = Math.random() * Math.PI * 2;
+            const r = colR * Math.sqrt(1 - u * u);
+            const dy = u * 9;
+            addPoint(colX + Math.cos(theta) * r, colTopY + dy, Math.sin(theta) * r);
         }
 
-        // Large Spherical Gas/LPG Hortonsphere on Right (X = +50, Y = -5, R = 42)
-        const sphereX = 50;
-        const sphereY = -5;
-        const sphereR = 42;
-        for (let i = 0; i < 1200; i++) {
-            const u = Math.random();
-            const v = Math.random();
-            const theta = u * 2.0 * Math.PI;
-            const phi = Math.acos(2.0 * v - 1.0);
-            const r = sphereR + (Math.random() - 0.5) * 1.5;
-            
+        // Tubería vertical de venteo superior
+        for (let i = 0; i < 50; i++) {
+            const vy = colTopY + 9 + (i / 50) * 15;
+            addPoint(colX + (Math.random() - 0.5) * 2.5, vy, (Math.random() - 0.5) * 2.5);
+        }
+
+        // Tubería de alimentación externa (Riser vertical con codos)
+        for (let i = 0; i < 180; i++) {
+            const ry = colBottomY + (i / 180) * 110;
+            addPoint(colX + colR + 5, ry, 0);
+        }
+
+        // Escalera de gato con aros de seguridad
+        for (let i = 0; i < 140; i++) {
+            const ly = colBottomY + (i / 140) * 120;
+            addPoint(colX - colR - 3.5, ly, (Math.random() - 0.5) * 4);
+        }
+
+        // --- B. Gran Tanque Esférico Hortonsphere (Derecha, X = +52, Y = 0, R = 44) ---
+        const sphereX = 52;
+        const sphereY = 0;
+        const sphereR = 44;
+
+        // Distribución esférica de alta fidelidad (Fibonacci spiral en superficie)
+        const goldenRatio = (1 + Math.sqrt(5)) / 2;
+        for (let i = 0; i < 1150; i++) {
+            const theta = 2 * Math.PI * i / goldenRatio;
+            const phi = Math.acos(1 - 2 * (i + 0.5) / 1150);
+            const r = sphereR + (Math.random() - 0.5) * 1.0;
             const x = sphereX + r * Math.sin(phi) * Math.cos(theta);
-            const y = sphereY + r * Math.sin(phi) * Math.sin(theta);
-            const z = r * Math.cos(phi);
+            const y = sphereY + r * Math.cos(phi);
+            const z = r * Math.sin(phi) * Math.sin(theta);
             addPoint(x, y, z);
         }
-        for (let i = 0; i < 120; i++) {
-            const angle = (i / 120) * Math.PI * 2;
-            addPoint(sphereX + Math.cos(angle) * (sphereR + 3), sphereY, Math.sin(angle) * (sphereR + 3));
+
+        // Pasarela circular ecuatorial con barandilla (Equator walkway)
+        for (let p = 0; p < 130; p++) {
+            const angle = (p / 130) * Math.PI * 2;
+            const px = sphereX + Math.cos(angle) * (sphereR + 4.5);
+            const pz = Math.sin(angle) * (sphereR + 4.5);
+            addPoint(px, sphereY, pz);
+            addPoint(px, sphereY + 3.8, pz);
         }
+
+        // 8 Columnas tubulares de soporte verticales hasta el suelo con placas base
         for (let leg = 0; leg < 8; leg++) {
             const angle = (leg / 8) * Math.PI * 2;
             const lx = sphereX + Math.cos(angle) * (sphereR * 0.88);
             const lz = Math.sin(angle) * (sphereR * 0.88);
-            for (let p = 0; p < 40; p++) {
-                const s = p / 40;
-                const ly = sphereY - (sphereR * 0.4) - s * 40;
+            for (let p = 0; p < 45; p++) {
+                const s = p / 45;
+                const ly = sphereY - (sphereR * 0.35) - s * 38;
                 addPoint(lx, Math.max(-65, ly), lz);
+            }
+            for (let b = 0; b < 6; b++) {
+                addPoint(lx + (Math.random() - 0.5) * 5, -65, lz + (Math.random() - 0.5) * 5);
             }
         }
 
-        // 3 Pipe Manifolds connecting Column and Sphere
-        for (let pipe = 0; pipe < 3; pipe++) {
-            const py = -40 + pipe * 30;
+        // Cruces diagonales de arriostramiento en X entre patas adyacentes (Signature Hortonsphere X-bracing)
+        for (let leg = 0; leg < 8; leg++) {
+            const a1 = (leg / 8) * Math.PI * 2;
+            const a2 = ((leg + 1) / 8) * Math.PI * 2;
+            const x1 = sphereX + Math.cos(a1) * (sphereR * 0.88);
+            const z1 = Math.sin(a1) * (sphereR * 0.88);
+            const x2 = sphereX + Math.cos(a2) * (sphereR * 0.88);
+            const z2 = Math.sin(a2) * (sphereR * 0.88);
+            const yTop = sphereY - 16;
+            const yBottom = -64;
+
+            for (let b = 0; b < 18; b++) {
+                const s = b / 18;
+                addPoint(x1 + s * (x2 - x1), yTop + s * (yBottom - yTop), z1 + s * (z2 - z1));
+                addPoint(x1 + s * (x2 - x1), yBottom + s * (yTop - yBottom), z1 + s * (z2 - z1));
+            }
+        }
+
+        // Plataforma superior y venteo del domo
+        for (let p = 0; p < 50; p++) {
+            const angle = (p / 50) * Math.PI * 2;
+            addPoint(sphereX + Math.cos(angle) * 11, sphereY + sphereR + 1, Math.sin(angle) * 11);
+        }
+
+        // --- C. Racks de Tuberías Interconectadas (Puente de Tuberías) ---
+        const pipeLevels = [-42, -24, -6];
+        pipeLevels.forEach((py) => {
             for (let p = 0; p < 80; p++) {
                 const s = p / 80;
                 const px = colX + colR + s * (sphereX - sphereR - (colX + colR));
-                const pz = (Math.random() - 0.5) * 5;
-                addPoint(px, py + Math.sin(s * Math.PI) * 5, pz);
+                const pz = Math.sin(s * Math.PI * 2) * 3;
+                addPoint(px, py, pz);
+            }
+        });
+
+        // Trestles / Pilares de soporte de tuberías
+        for (let trestle = 0; trestle < 3; trestle++) {
+            const tx = colX + colR + 18 + trestle * 19;
+            for (let ty = -65; ty <= -6; ty += 4) {
+                addPoint(tx, ty, -4);
+                addPoint(tx, ty, 4);
             }
         }
 
+        // --- D. Suelo Industrial / Pavimento de Hormigón ---
         while (idx < TOTAL_POINTS * 3) {
-            const gx = (Math.random() - 0.5) * 220;
-            const gz = (Math.random() - 0.5) * 120;
-            addPoint(gx, -65 + (Math.random() - 0.5) * 2, gz);
+            const gx = -95 + Math.random() * 190;
+            const gz = (Math.random() - 0.5) * 110;
+            addPoint(gx, -65, gz);
         }
 
         return targets;
@@ -167,88 +243,184 @@ function initHeroLidar() {
             targets[idx++] = z;
         }
 
-        // Base frame on ground (Y = -65)
-        for (let i = 0; i < 450; i++) {
-            const gx = -80 + Math.random() * 160;
-            const gz = (Math.random() - 0.5) * 55;
-            addPoint(gx, -65 + (Math.random() - 0.5) * 2, gz);
+        // --- A. Base de Patín y Viga Trineo (Ground Skid) ---
+        for (let i = 0; i < 350; i++) {
+            const gx = -80 + Math.random() * 165;
+            const side = Math.random() > 0.5 ? 20 : -20;
+            addPoint(gx, -65, side + (Math.random() - 0.5) * 4);
+        }
+        for (let cross = 0; cross < 6; cross++) {
+            const cx = -75 + cross * 28;
+            for (let z = -20; z <= 20; z += 3) {
+                addPoint(cx, -65, z);
+            }
         }
 
-        // Samson Post A-Frame (Y = -65 to +12)
-        for (let i = 0; i < 750; i++) {
-            const s = Math.random();
-            const y = -65 + s * 77;
-            const corner = Math.floor(Math.random() * 4);
-            const spreadX = (1 - s) * 25;
-            const spreadZ = (1 - s) * 20;
+        // --- B. Torre Central Samson Post (Trípode/Pirámide A-Frame) ---
+        const samsonBaseW = 28;
+        const samsonBaseD = 22;
+        const samsonTopW = 7;
+        const samsonTopD = 7;
 
-            const cx = (corner === 0 || corner === 1) ? spreadX : -spreadX;
-            const cz = (corner === 0 || corner === 3) ? spreadZ : -spreadZ;
-            addPoint(cx + (Math.random() - 0.5) * 2, y, cz + (Math.random() - 0.5) * 2);
+        for (let leg = 0; leg < 4; leg++) {
+            const signX = (leg === 0 || leg === 1) ? 1 : -1;
+            const signZ = (leg === 0 || leg === 3) ? 1 : -1;
+            for (let p = 0; p < 130; p++) {
+                const s = p / 130;
+                const y = -65 + s * 80;
+                const wx = (1 - s) * samsonBaseW + s * samsonTopW;
+                const wz = (1 - s) * samsonBaseD + s * samsonTopD;
+                addPoint(signX * wx, y, signZ * wz);
+            }
         }
 
-        // Walking Beam (Y = +12 to +22, X = -52 to +42)
-        for (let i = 0; i < 600; i++) {
-            const s = Math.random();
-            const bx = -52 + s * 94;
-            const by = 16 + Math.sin(s * Math.PI) * 3.5;
-            const bz = (Math.random() - 0.5) * 7;
-            addPoint(bx, by, bz);
+        // 3 Niveles de travesaños horizontales y tirantes en X en el Samson Post
+        const samsonLevels = [-44, -22, -2];
+        samsonLevels.forEach((ly) => {
+            const s = (ly + 65) / 80;
+            const wx = (1 - s) * samsonBaseW + s * samsonTopW;
+            const wz = (1 - s) * samsonBaseD + s * samsonTopD;
+            for (let p = 0; p < 36; p++) {
+                const frac = (p / 36) * 4;
+                if (frac < 1) addPoint(-wx + frac * 2 * wx, ly, wz);
+                else if (frac < 2) addPoint(wx, ly, wz - (frac - 1) * 2 * wz);
+                else if (frac < 3) addPoint(wx - (frac - 2) * 2 * wx, ly, -wz);
+                else addPoint(-wx, ly, -wz + (frac - 3) * 2 * wz);
+            }
+        });
+
+        // Chumacera central / Sillín de rodamiento (Center Bearing Saddle)
+        for (let i = 0; i < 80; i++) {
+            addPoint((Math.random() - 0.5) * 12, 15 + Math.random() * 4, (Math.random() - 0.5) * 12);
         }
 
-        // Horsehead Curved Arc (X = +42 to +65, Y = +2 to +35)
+        // --- C. Viga Balancín (Walking Beam I-Beam) ---
+        const beamStartX = -55;
+        const beamEndX = 48;
+        const beamLen = beamEndX - beamStartX;
+
         for (let i = 0; i < 550; i++) {
-            const angle = -Math.PI / 2 + Math.random() * Math.PI;
-            const r = 17 + Math.random() * 3;
-            const hx = 43 + Math.cos(angle) * r * 1.15;
-            const hy = 18 + Math.sin(angle) * r;
-            const hz = (Math.random() - 0.5) * 5.5;
-            addPoint(hx, hy, hz);
+            const s = i / 550;
+            const bx = beamStartX + s * beamLen;
+            const by = 16.5;
+            const part = i % 3;
+            if (part === 0) addPoint(bx, by + 4, (Math.random() - 0.5) * 7);
+            else if (part === 1) addPoint(bx, by - 4, (Math.random() - 0.5) * 7);
+            else addPoint(bx, by + (Math.random() - 0.5) * 7, (Math.random() - 0.5) * 2);
         }
 
-        // Polished Rod
-        for (let i = 0; i < 350; i++) {
-            const ry = -65 + Math.random() * 71;
-            addPoint(62 + (Math.random() - 0.5) * 2, ry, (Math.random() - 0.5) * 2);
-        }
+        // --- D. Cabeza de Caballo (Horsehead Arc - FRONT, X = +48 a +72, Y = +2 a +36) ---
+        const hhCenter = { x: 48, y: 16.5 };
+        const hhRadius = 22;
 
-        // Wellhead Christmas Tree (X = +62, Y = -65 to -40)
-        for (let i = 0; i < 280; i++) {
-            const vy = -65 + Math.random() * 25;
-            const vz = (Math.random() - 0.5) * 14;
-            addPoint(62 + (Math.random() - 0.5) * 6, vy, vz);
-        }
-
-        // Rotating Counterweights (X = -52, Y = -38 to +8)
         for (let i = 0; i < 450; i++) {
-            const cAngle = Math.random() * Math.PI * 2;
-            const cr = 12 + Math.random() * 11;
-            const cx = -52 + Math.cos(cAngle) * cr * 0.75;
-            const cy = -18 + Math.sin(cAngle) * cr;
-            const cz = (Math.random() - 0.5) * 10;
-            addPoint(cx, cy, cz);
+            const angle = -Math.PI / 2.3 + (i / 450) * (Math.PI * 0.88);
+            const hx = hhCenter.x + Math.cos(angle) * hhRadius;
+            const hy = hhCenter.y + Math.sin(angle) * hhRadius;
+            addPoint(hx, hy, (Math.random() - 0.5) * 5.5);
+            if (i % 4 === 0) {
+                const s = Math.random();
+                addPoint(hhCenter.x + s * (hx - hhCenter.x), hhCenter.y + s * (hy - hhCenter.y), 0);
+            }
         }
 
-        // Storage Tank (X = -75, Y = -65 to -22, R = 17)
-        const tankX = -75;
-        const tankR = 17;
-        for (let i = 0; i < 350; i++) {
-            const ty = -65 + Math.random() * 43;
-            const tAngle = Math.random() * Math.PI * 2;
-            addPoint(tankX + Math.cos(tAngle) * tankR, ty, Math.sin(tAngle) * tankR);
+        // Cables de suspensión flexibles (Bridle Cables - Caída vertical)
+        for (let p = 0; p < 160; p++) {
+            const y = -14 + (p / 160) * 44;
+            addPoint(69, y, -2.5);
+            addPoint(69, y, 2.5);
         }
 
+        // Barra transversal de enganche (Carrier Bar)
+        for (let z = -6; z <= 6; z += 1.5) {
+            addPoint(69, -14, z);
+        }
+
+        // Vástago pulido (Polished Rod) que baja directamente al pozo
+        for (let p = 0; p < 180; p++) {
+            const y = -65 + (p / 180) * 51;
+            addPoint(69, y, 0);
+        }
+
+        // Cabezal de Pozo y Árbol de Navidad (Wellhead Christmas Tree, X = 69, Y = -65 a -25)
+        for (let i = 0; i < 260; i++) {
+            const y = -65 + Math.random() * 40;
+            const angle = Math.random() * Math.PI * 2;
+            const r = 4.5 + (Math.random() - 0.5) * 2.0;
+            addPoint(69 + Math.cos(angle) * r, y, Math.sin(angle) * r);
+        }
+        for (let v = 0; v < 3; v++) {
+            const vy = -56 + v * 12;
+            for (let z = -14; z <= 14; z += 2) {
+                addPoint(69, vy, z);
+            }
+        }
+
+        // --- E. Manivela, Bielas y Contrapesos Giratorios (Rear Crank & Counterweights, X = -45) ---
+        const crankX = -45;
+        const crankCenterY = -18;
+        const crankR = 17;
+
+        for (let side = -1; side <= 1; side += 2) {
+            const cz = side * 9;
+            for (let p = 0; p < 220; p++) {
+                const angle = (p / 220) * Math.PI * 2;
+                const r = 7 + Math.random() * crankR;
+                if (Math.cos(angle) > -0.3) {
+                    addPoint(crankX + Math.cos(angle) * r, crankCenterY + Math.sin(angle) * r, cz);
+                }
+            }
+        }
+
+        // Bielas (Pitman Arms) conectando los contrapesos a la cola de la viga
+        for (let p = 0; p < 130; p++) {
+            const s = p / 130;
+            const px = crankX + s * (beamStartX - crankX);
+            const py = crankCenterY + s * (16.5 - crankCenterY);
+            addPoint(px, py, -9);
+            addPoint(px, py, 9);
+        }
+
+        // Caja reductora de engranajes (Gearbox on skid)
+        for (let i = 0; i < 180; i++) {
+            const gx = crankX - 6 + Math.random() * 12;
+            const gy = -65 + Math.random() * 32;
+            const gz = (Math.random() - 0.5) * 20;
+            addPoint(gx, gy, gz);
+        }
+
+        // --- F. Tanque Cilíndrico de Crudo Adyacente (Izquierda, X = -78, Z = +24) ---
+        const tankX = -78;
+        const tankZ = 24;
+        const tankR = 19;
+        const tankBottomY = -65;
+        const tankTopY = -18;
+
+        for (let i = 0; i < 450; i++) {
+            const y = tankBottomY + (i / 450) * (tankTopY - tankBottomY);
+            const angle = Math.random() * Math.PI * 2;
+            addPoint(tankX + Math.cos(angle) * tankR, y, tankZ + Math.sin(angle) * tankR);
+        }
+        for (let i = 0; i < 160; i++) {
+            const u = Math.random();
+            const angle = Math.random() * Math.PI * 2;
+            const r = tankR * Math.sqrt(u);
+            const cy = tankTopY + (1 - u) * 4.5;
+            addPoint(tankX + Math.cos(angle) * r, cy, tankZ + Math.sin(angle) * r);
+        }
+
+        // --- G. Relleno y Plataforma de Suelo ---
         while (idx < TOTAL_POINTS * 3) {
-            const ax = (Math.random() - 0.5) * 210;
-            const az = (Math.random() - 0.5) * 100;
-            addPoint(ax, -65, az);
+            const gx = -95 + Math.random() * 190;
+            const gz = (Math.random() - 0.5) * 105;
+            addPoint(gx, -65, gz);
         }
 
         return targets;
     }
 
     // =========================================================================
-    // 3. FORMATION: TALADRO DE PERFORACIÓN & WELL TESTING
+    // 3. FORMATION: TALADRO DE PERFORACIÓN DE CAMPO & WELL TESTING
     // =========================================================================
     function generateWellTestingTargets() {
         const targets = new Float32Array(TOTAL_POINTS * 3);
@@ -261,104 +433,181 @@ function initHeroLidar() {
             targets[idx++] = z;
         }
 
-        // Substructure Base (Y = -65 to -42)
-        for (let i = 0; i < 400; i++) {
-            const x = (Math.random() - 0.5) * 54;
-            const z = (Math.random() - 0.5) * 54;
-            const y = -65 + Math.random() * 23;
-            addPoint(x, y, z);
-        }
+        // --- A. Subestructura Elevada y Piso de Perforación (Drill Floor) ---
+        const rigX = -10;
+        const subW = 26;
+        const subD = 24;
+        const floorY = -35;
 
-        // BOP Stack
-        for (let i = 0; i < 200; i++) {
-            const angle = Math.random() * Math.PI * 2;
-            const r = 5.5 + Math.random() * 3.5;
-            const y = -65 + Math.random() * 21;
-            addPoint(Math.cos(angle) * r, y, Math.sin(angle) * r);
-        }
-
-        // 4 Mast Legs (Y = -42 to +65)
-        const towerBottomW = 25;
-        const towerTopW = 11;
-        for (let i = 0; i < 850; i++) {
-            const t = Math.random();
-            const y = -42 + t * 107;
-            const w = (1 - t) * towerBottomW + t * towerTopW;
-
-            const corner = Math.floor(Math.random() * 4);
-            const cx = (corner === 0 || corner === 1) ? w : -w;
-            const cz = (corner === 0 || corner === 3) ? w : -w;
-            addPoint(cx + (Math.random() - 0.5) * 2, y, cz + (Math.random() - 0.5) * 2);
-        }
-
-        for (let tier = 0; tier < 5; tier++) {
-            const ty = -30 + tier * 18;
-            const tw = towerBottomW - tier * 2.5;
-            for (let p = 0; p < 60; p++) {
-                const angle = (p / 60) * Math.PI * 2;
-                addPoint(Math.cos(angle) * tw, ty, Math.sin(angle) * tw);
+        for (let leg = 0; leg < 4; leg++) {
+            const sx = (leg === 0 || leg === 1) ? rigX + subW : rigX - subW;
+            const sz = (leg === 0 || leg === 3) ? subD : -subD;
+            for (let y = -65; y <= floorY; y += 1.8) {
+                addPoint(sx, y, sz);
             }
         }
 
+        for (let p = 0; p < 180; p++) {
+            const fx = rigX - subW + Math.random() * (subW * 2);
+            const fz = -subD + Math.random() * (subD * 2);
+            addPoint(fx, floorY, fz);
+        }
+        for (let p = 0; p < 70; p++) {
+            const angle = (p / 70) * Math.PI * 2;
+            addPoint(rigX + Math.cos(angle) * (subW + 1), floorY + 4, Math.sin(angle) * (subD + 1));
+        }
+
         for (let i = 0; i < 200; i++) {
-            const x = (Math.random() - 0.5) * (towerTopW * 2 + 2);
-            const z = (Math.random() - 0.5) * (towerTopW * 2 + 2);
-            const y = 65 + Math.random() * 10;
-            addPoint(x, y, z);
-        }
-
-        for (let i = 0; i < 300; i++) {
-            const y = -42 + Math.random() * 107;
+            const y = -65 + Math.random() * 28;
             const angle = Math.random() * Math.PI * 2;
-            addPoint(Math.cos(angle) * 3.5, y, Math.sin(angle) * 3.5);
+            const r = 6 + (Math.random() - 0.5) * 2;
+            addPoint(rigX + Math.cos(angle) * r, y, Math.sin(angle) * r);
         }
 
-        // Flare Boom
-        for (let i = 0; i < 450; i++) {
+        // --- B. Torre / Mástil de Perforación Piramidal Enrejado (Derrick) ---
+        const mastBottomW = 20;
+        const mastTopW = 7.5;
+        const mastBottomY = floorY;
+        const mastTopY = 74;
+        const mastH = mastTopY - mastBottomY;
+
+        for (let leg = 0; leg < 4; leg++) {
+            const signX = (leg === 0 || leg === 1) ? 1 : -1;
+            const signZ = (leg === 0 || leg === 3) ? 1 : -1;
+            for (let p = 0; p < 180; p++) {
+                const s = p / 180;
+                const y = mastBottomY + s * mastH;
+                const w = (1 - s) * mastBottomW + s * mastTopW;
+                addPoint(rigX + signX * w, y, signZ * w);
+            }
+        }
+
+        const derrickTiers = 7;
+        for (let tier = 0; tier < derrickTiers; tier++) {
+            const s1 = tier / derrickTiers;
+            const s2 = (tier + 1) / derrickTiers;
+            const y1 = mastBottomY + s1 * mastH;
+            const y2 = mastBottomY + s2 * mastH;
+            const w1 = (1 - s1) * mastBottomW + s1 * mastTopW;
+            const w2 = (1 - s2) * mastBottomW + s2 * mastTopW;
+
+            for (let p = 0; p < 36; p++) {
+                const frac = (p / 36) * 4;
+                if (frac < 1) addPoint(rigX - w1 + frac * 2 * w1, y1, w1);
+                else if (frac < 2) addPoint(rigX + w1, y1, w1 - (frac - 1) * 2 * w1);
+                else if (frac < 3) addPoint(rigX + w1 - (frac - 2) * 2 * w1, y1, -w1);
+                else addPoint(rigX - w1, y1, -w1 + (frac - 3) * 2 * w1);
+            }
+
+            for (let d = 0; d < 16; d++) {
+                const t = d / 16;
+                const y = y1 + t * (y2 - y1);
+                const wx = (1 - t) * w1 + t * w2;
+                addPoint(rigX - wx + 2 * t * wx, y, wx);
+                addPoint(rigX + wx - 2 * t * wx, y, wx);
+                addPoint(rigX + wx, y, -wx + 2 * t * wx);
+                addPoint(rigX + wx, y, wx - 2 * t * wx);
+            }
+        }
+
+        for (let i = 0; i < 140; i++) {
+            const cx = rigX + (Math.random() - 0.5) * (mastTopW * 2 + 3);
+            const cy = mastTopY + Math.random() * 8;
+            const cz = (Math.random() - 0.5) * (mastTopW * 2 + 3);
+            addPoint(cx, cy, cz);
+        }
+
+        for (let p = 0; p < 220; p++) {
+            const y = -65 + (p / 220) * 135;
+            addPoint(rigX, y, 0);
+        }
+        for (let i = 0; i < 90; i++) {
+            addPoint(rigX + (Math.random() - 0.5) * 5, 20 + Math.random() * 14, (Math.random() - 0.5) * 5);
+        }
+
+        // --- C. Mechurrio de Well Testing (Cantilever Flare Boom) ---
+        const boomStartX = 16;
+        const boomStartY = -35;
+        const boomEndX = 92;
+        const boomEndY = 10;
+        const boomLen = boomEndX - boomStartX;
+
+        for (let p = 0; p < 260; p++) {
+            const s = p / 260;
+            const bx = boomStartX + s * boomLen;
+            const by = boomStartY + s * (boomEndY - boomStartY);
+            const spread = (1 - s * 0.4) * 4.5;
+            addPoint(bx, by + spread, 0);
+            addPoint(bx, by - spread, -spread);
+            addPoint(bx, by - spread, spread);
+        }
+
+        for (let i = 0; i < 180; i++) {
             const s = Math.random();
-            const bx = 25 + s * 60;
-            const by = -42 + s * 52;
-            const bz = (Math.random() - 0.5) * (7 * (1 - s * 0.5));
-            addPoint(bx, by, bz);
+            const bx = boomStartX + s * boomLen;
+            const by = boomStartY + s * (boomEndY - boomStartY);
+            const r = (Math.random() - 0.5) * 5;
+            addPoint(bx, by + r, (Math.random() - 0.5) * 5);
         }
 
-        // Gas Flare Flame at tip (X = 85 to 105, Y = 10 to 32)
-        for (let i = 0; i < 280; i++) {
-            const fx = 85 + Math.random() * 20;
-            const fy = 10 + Math.random() * 22;
-            const fz = (Math.random() - 0.5) * 14;
+        for (let p = 0; p < 45; p++) {
+            addPoint(boomEndX + (p / 45) * 6, boomEndY + (Math.random() - 0.5) * 3, (Math.random() - 0.5) * 3);
+        }
+
+        // --- D. Llama Activa Ondulante de Well Testing ---
+        for (let i = 0; i < 340; i++) {
+            const s = Math.random();
+            const fx = 96 + s * 19 + Math.sin(s * Math.PI * 3) * 3;
+            const fy = 11 + s * 27 + (Math.random() - 0.5) * 4;
+            const fz = (Math.random() - 0.5) * (14 * (1 - s * 0.3));
             addPoint(fx, fy, fz);
         }
 
-        // Skid
-        for (let i = 0; i < 350; i++) {
-            const sx = -32 - Math.random() * 43;
-            const sy = -65 + Math.random() * 20;
-            const sz = (Math.random() - 0.5) * 28;
-            addPoint(sx, sy, sz);
+        // --- E. Unidad de Separación Trifásica (Separator Skid on Left, X = -58) ---
+        const sepX = -58;
+        const sepY = -52;
+        const sepLen = 34;
+        const sepR = 9;
+
+        for (let i = 0; i < 380; i++) {
+            const x = sepX - sepLen / 2 + Math.random() * sepLen;
+            const angle = Math.random() * Math.PI * 2;
+            addPoint(x, sepY + Math.cos(angle) * sepR, Math.sin(angle) * sepR);
+        }
+        for (let side = -1; side <= 1; side += 2) {
+            const hx = sepX + side * (sepLen / 2);
+            for (let p = 0; p < 80; p++) {
+                const u = Math.random();
+                const angle = Math.random() * Math.PI * 2;
+                const r = sepR * Math.sqrt(1 - u * u);
+                addPoint(hx + side * (u * 4.5), sepY + Math.cos(angle) * r, Math.sin(angle) * r);
+            }
         }
 
+        // --- F. Relleno y Suelo ---
         while (idx < TOTAL_POINTS * 3) {
-            const angle = Math.random() * Math.PI * 2;
-            const r = 28 + Math.random() * 80;
-            addPoint(Math.cos(angle) * r, -65, Math.sin(angle) * r);
+            const gx = -95 + Math.random() * 190;
+            const gz = (Math.random() - 0.5) * 105;
+            addPoint(gx, -65, gz);
         }
 
         return targets;
     }
 
+    // =========================================================================
+    // STATE MACHINE & BUFFER INITIALIZATION
+    // =========================================================================
     const formations = [
         generateRefinerySphereTargets(),
         generatePumpjackTargets(),
         generateWellTestingTargets()
     ];
 
-    // State variables declared BEFORE updateColors so TDZ never occurs!
     let currentFormationIndex = 0;
     let isMorphing = false;
     let sourcePositions = new Float32Array(TOTAL_POINTS * 3);
     let targetPositions = formations[0];
-    const morphDuration = 1.8;
+    const morphDuration = 2.8; // 2.8s transición suave y perceptible
     let morphStartTime = 0;
 
     const geometry = new THREE.BufferGeometry();
@@ -371,8 +620,9 @@ function initHeroLidar() {
     }
 
     const colorBottom = new THREE.Color(0x00e676); // Emerald Green
-    const colorTop = new THREE.Color(0x00f2fe);    // Vivid Cyan
-    const colorFlame = new THREE.Color(0xffb703);  // Vivid Warm Gold
+    const colorTop = new THREE.Color(0x00f2fe);    // Electric Cyber Cyan
+    const colorFlameCore = new THREE.Color(0xffaa00); // Luminous Amber Gold
+    const colorFlameTip = new THREE.Color(0xff4500);  // Vivid Flame Orange
     const tempColor = new THREE.Color();
 
     function updateColors(time) {
@@ -380,14 +630,15 @@ function initHeroLidar() {
             const x = currentPositions[i * 3];
             const y = currentPositions[i * 3 + 1];
             
-            const t = Math.max(0, Math.min(1, (y + 65) / 135));
+            const t = Math.max(0, Math.min(1, (y + 65) / 139));
             tempColor.copy(colorBottom).lerp(colorTop, t);
 
-            if (x > 82 && y > 6 && currentFormationIndex === 2) {
-                tempColor.lerp(colorFlame, 0.85);
+            if (x > 92 && y > 8 && currentFormationIndex === 2) {
+                const flameRatio = Math.min(1, Math.max(0, (y - 10) / 26));
+                tempColor.copy(colorFlameCore).lerp(colorFlameTip, flameRatio);
             }
 
-            const wave = Math.sin(x * 0.04 + y * 0.03 + (time || 0) * 0.003) * 0.12;
+            const wave = Math.sin(x * 0.035 + y * 0.025 + (time || 0) * 0.002) * 0.12;
             tempColor.r = Math.min(1, Math.max(0, tempColor.r + wave));
             tempColor.g = Math.min(1, Math.max(0, tempColor.g + wave));
             tempColor.b = Math.min(1, Math.max(0, tempColor.b + wave));
@@ -402,7 +653,6 @@ function initHeroLidar() {
     geometry.setAttribute('position', new THREE.BufferAttribute(currentPositions, 3));
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-    // Crisp circular glowing particle texture
     function createPointTexture() {
         const size = 64;
         const cv = document.createElement('canvas');
@@ -422,9 +672,8 @@ function initHeroLidar() {
         return new THREE.CanvasTexture(cv);
     }
 
-    // AdditiveBlending ensures vivid glowing particles against the dark hero background!
     const material = new THREE.PointsMaterial({
-        size: 5.2,
+        size: 5.4,
         vertexColors: true,
         map: createPointTexture(),
         transparent: true,
@@ -445,7 +694,8 @@ function initHeroLidar() {
         morphStartTime = performance.now();
     }
 
-    setInterval(triggerNextFormation, 6200);
+    // Intervalo de 10.5 segundos (7.7s de exhibición pausada + 2.8s de metamorfosis)
+    setInterval(triggerNextFormation, 10500);
 
     function easeInOutCubic(x) {
         return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
@@ -482,14 +732,14 @@ function initHeroLidar() {
             const t = Math.min(1.0, elapsed);
             const easedT = easeInOutCubic(t);
 
-            const dispersionStrength = Math.sin(t * Math.PI) * 26.0;
+            const dispersionStrength = Math.sin(t * Math.PI) * 22.0;
 
             for (let i = 0; i < TOTAL_POINTS; i++) {
                 const idx3 = i * 3;
                 
-                const seedX = Math.sin(i * 12.9898) * 1.5;
-                const seedY = Math.cos(i * 78.233) * 1.5;
-                const seedZ = Math.sin(i * 45.164) * 1.5;
+                const seedX = Math.sin(i * 12.9898) * 1.3;
+                const seedY = Math.cos(i * 78.233) * 1.3;
+                const seedZ = Math.sin(i * 45.164) * 1.3;
 
                 const sx = sourcePositions[idx3];
                 const sy = sourcePositions[idx3 + 1];
@@ -521,28 +771,81 @@ function initHeroLidar() {
                 currentPositions.set(targetPositions);
             }
         } else {
-            // Absolute offset from base position (NO numerical drift)
-            const time = now * 0.002;
+            const time = now * 0.0015;
 
-            for (let i = 0; i < TOTAL_POINTS; i++) {
-                const idx3 = i * 3;
-                const bx = currentPositions[idx3];
-                const by = currentPositions[idx3 + 1];
-                const bz = currentPositions[idx3 + 2];
+            if (currentFormationIndex === 1) {
+                // Dinámica realista de bombeo del balancín (stroke de ~3.6 segundos)
+                const pumpAngle = Math.sin(time * 1.7) * 0.042;
+                const cosA = Math.cos(pumpAngle);
+                const sinA = Math.sin(pumpAngle);
+                const pivotX = 0;
+                const pivotY = 16.5;
 
-                let dy = Math.sin(time + i * 0.08) * 0.6;
-                let dx = 0;
-                let dz = 0;
+                for (let i = 0; i < TOTAL_POINTS; i++) {
+                    const idx3 = i * 3;
+                    const bx = currentPositions[idx3];
+                    const by = currentPositions[idx3 + 1];
+                    const bz = currentPositions[idx3 + 2];
 
-                if (currentFormationIndex === 2 && bx > 82 && by > 8) {
-                    dx = Math.sin(time * 5 + i) * 1.2;
-                    dy = Math.cos(time * 4 + i) * 1.8;
-                    dz = Math.sin(time * 4.5 + i) * 1.2;
+                    if (bx > -56 && bx < 74 && by > 0) {
+                        const relX = bx - pivotX;
+                        const relY = by - pivotY;
+                        arr[idx3] = pivotX + relX * cosA - relY * sinA;
+                        arr[idx3 + 1] = pivotY + relX * sinA + relY * cosA;
+                        arr[idx3 + 2] = bz;
+                    } 
+                    else if (bx > 67 && bx < 71 && by > -65) {
+                        const verticalStroke = Math.sin(time * 1.7) * 3.8;
+                        arr[idx3] = bx;
+                        arr[idx3 + 1] = by + verticalStroke;
+                        arr[idx3 + 2] = bz;
+                    }
+                    else {
+                        arr[idx3] = bx;
+                        arr[idx3 + 1] = by;
+                        arr[idx3 + 2] = bz;
+                    }
                 }
+            } else if (currentFormationIndex === 2) {
+                // Dinámica de oscilación de la llama del mechurrio
+                for (let i = 0; i < TOTAL_POINTS; i++) {
+                    const idx3 = i * 3;
+                    const bx = currentPositions[idx3];
+                    const by = currentPositions[idx3 + 1];
+                    const bz = currentPositions[idx3 + 2];
 
-                arr[idx3] = bx + dx;
-                arr[idx3 + 1] = by + dy;
-                arr[idx3 + 2] = bz + dz;
+                    if (bx > 92 && by > 8) {
+                        const wind = Math.sin(time * 4 + i) * 1.6;
+                        const rise = Math.cos(time * 5 + i * 2) * 1.8;
+                        arr[idx3] = bx + wind;
+                        arr[idx3 + 1] = by + rise;
+                        arr[idx3 + 2] = bz + Math.sin(time * 3 + i) * 1.2;
+                    } else {
+                        const vib = Math.sin(time * 2 + i * 0.1) * 0.15;
+                        arr[idx3] = bx;
+                        arr[idx3 + 1] = by + vib;
+                        arr[idx3 + 2] = bz;
+                    }
+                }
+            } else {
+                // Dinámica de flujo en tuberías de refinería
+                for (let i = 0; i < TOTAL_POINTS; i++) {
+                    const idx3 = i * 3;
+                    const bx = currentPositions[idx3];
+                    const by = currentPositions[idx3 + 1];
+                    const bz = currentPositions[idx3 + 2];
+
+                    if (bx > -35 && bx < 10 && by > -45 && by < 0) {
+                        const pulse = Math.sin(time * 3 + bx * 0.15) * 0.4;
+                        arr[idx3] = bx;
+                        arr[idx3 + 1] = by + pulse;
+                        arr[idx3 + 2] = bz;
+                    } else {
+                        arr[idx3] = bx;
+                        arr[idx3 + 1] = by;
+                        arr[idx3 + 2] = bz;
+                    }
+                }
             }
 
             posAttr.needsUpdate = true;
@@ -556,7 +859,7 @@ function initHeroLidar() {
     animate();
     handleResize();
 
-    console.log("⚡ Hero 3D LiDAR Engine: High-Visibility NormalBlending active.");
+    console.log("⚡ kaironInnova 3D LiDAR Engine: Formaciones petroleras ultra-realistas activas (10.5s ciclo).");
 }
 
 if (document.readyState === 'loading') {
