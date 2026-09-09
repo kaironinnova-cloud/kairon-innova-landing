@@ -2258,3 +2258,210 @@ section {
         grid-template-columns: 1fr;
     }
 }
+
+/* ==========================================================================
+   CORPORATE LOGO & BRANDING (VECTOR K)
+   ========================================================================== */
+.logo-k-svg-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.1);
+    transition: all 0.3s var(--ease-snappy);
+}
+
+.nav-logo:hover .logo-k-svg-wrapper {
+    transform: scale(1.08);
+    border-color: rgba(0, 230, 118, 0.4);
+    box-shadow: 0 0 20px rgba(0, 230, 118, 0.2);
+}
+
+.logo-text-group {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+}
+
+.logo-brand {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+}
+
+.logo-brand strong {
+    color: var(--color-accent-primary);
+}
+
+.logo-subline {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    color: var(--color-accent-secondary);
+    margin-top: 2px;
+}
+
+/* ==========================================================================
+   STANDARDS & CERTIFICATIONS MARQUEE
+   ========================================================================== */
+.standards-marquee-section {
+    position: relative;
+    z-index: 10;
+    background: rgba(7, 10, 15, 0.75);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 14px 0;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marqueeScroll 35s linear infinite;
+}
+
+.marquee-track:hover {
+    animation-play-state: paused;
+}
+
+.marquee-content {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    padding-right: var(--space-8);
+    white-space: nowrap;
+}
+
+.marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-heading);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.65);
+    transition: color 0.3s;
+}
+
+.marquee-item:hover {
+    color: var(--color-accent-primary);
+}
+
+.item-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent-secondary);
+    box-shadow: 0 0 8px var(--color-accent-secondary);
+}
+
+@keyframes marqueeScroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* ==========================================================================
+   KPI CAPACITY STRIP
+   ========================================================================== */
+.kpi-strip-section {
+    position: relative;
+    z-index: 10;
+    padding: var(--space-12) var(--space-8);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.kpi-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-4);
+}
+
+.kpi-item {
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: var(--space-6);
+    backdrop-filter: blur(12px);
+    transition: all 0.3s var(--ease-smooth);
+}
+
+.kpi-item:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 242, 254, 0.3);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 242, 254, 0.05);
+}
+
+.kpi-value {
+    font-family: var(--font-heading);
+    font-size: 2.25rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: var(--space-2);
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+
+.kpi-unit {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.kpi-label {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 2px;
+}
+
+.kpi-sub {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.text-gold {
+    color: #f59e0b;
+    text-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+}
+
+/* Form select styling */
+.form-select {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(10, 15, 25, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: var(--text-sm);
+    outline: none;
+    transition: border-color 0.3s;
+    cursor: pointer;
+}
+
+.form-select:focus {
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+}
+
+.form-select option {
+    background: #0b111a;
+    color: #ffffff;
+}
