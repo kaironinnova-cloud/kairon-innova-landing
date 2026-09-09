@@ -1,23 +1,22 @@
 // ==========================================================================
 // kaironInnova - 3D LiDAR Morphing Engine (Hero Viewport)
-// Venezuelan & Oilfield High-Precision Landmarks:
-// 1. Well Testing & Taladro de Perforación (Drilling Derrick + Flare Boom + BOP)
-// 2. Buque Tanquero Petrolero (Oil Tanker Vessel + Deck Manifold + Bridge)
-// 3. Balancín Petrolero & Campo Lago Guanoco (Pumpjack Horsehead + Christmas Tree + Tank)
+// 100% Recognizable Venezuelan Oil & Gas Industrial Landmarks:
+// 1. Plataforma Marina Offshore con Helipuerto "H", Taladro y Mechurrio de Gas
+// 2. Buque Tanquero Petrolero de Alta Mar (VLCC) con Manifold y Puente
+// 3. Balancín Petrolero "Cabeza de Caballo" & Pozo Guanoco con Contrapesos
 // ==========================================================================
 
 (function initHeroLidar() {
     const canvas = document.getElementById('hero-lidar-canvas');
     if (!canvas) return;
 
-    const TOTAL_POINTS = 3600;
+    const TOTAL_POINTS = 3800;
 
     // --- THREE.JS SCENE SETUP ---
     const scene = new THREE.Scene();
     const container = canvas.parentElement;
 
-    // Center camera with generous FOV and target at (0, 0, 0)
-    const camera = new THREE.PerspectiveCamera(42, container.clientWidth / container.clientHeight, 1, 2000);
+    const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 1, 2000);
     camera.position.set(0, 15, 340);
 
     const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
@@ -30,19 +29,19 @@
         controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
-        controls.enableZoom = false; // Prevents page scroll interference
+        controls.enableZoom = false;
         controls.enablePan = false;
         controls.autoRotate = true;
         controls.autoRotateSpeed = 1.1;
         controls.maxPolarAngle = Math.PI / 2 + 0.12;
         controls.minPolarAngle = Math.PI / 4;
-        controls.target.set(0, 0, 0); // Perfectly centered at (0,0,0)
+        controls.target.set(0, 0, 0);
     }
 
     // =========================================================================
-    // 1. FORMATION: WELL TESTING & TALADRO DE PERFORACIÓN
+    // 1. FORMATION: PLATAFORMA MARINA JACK-UP OFFSHORE (HELIPUERTO "H" + TALADRO + MECHURRIO)
     // =========================================================================
-    function generateWellTestingDerrickTargets() {
+    function generateOffshorePlatformTargets() {
         const targets = new Float32Array(TOTAL_POINTS * 3);
         let idx = 0;
 
@@ -53,104 +52,122 @@
             targets[idx++] = z;
         }
 
-        // Substructure Base (-70 to -45)
-        const baseW = 65;
-        for (let i = 0; i < 400; i++) {
-            const x = (Math.random() - 0.5) * baseW;
-            const z = (Math.random() - 0.5) * baseW;
-            const y = -70 + Math.random() * 25;
-            addPoint(x, y, z);
+        // 3 Massive Cylindrical Jack-Up Legs in Seabed (Y = -70 to -15)
+        const legPositions = [
+            { x: -50, z: -35 },
+            { x: -50, z: 35 },
+            { x: 45, z: 0 }
+        ];
+
+        legPositions.forEach(pos => {
+            // Spudcan circular footing at bottom
+            for (let i = 0; i < 90; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const r = Math.random() * 16;
+                addPoint(pos.x + Math.cos(angle) * r, -70 + (Math.random() - 0.5) * 4, pos.z + Math.sin(angle) * r);
+            }
+            // Vertical leg lattice cylinder
+            for (let i = 0; i < 260; i++) {
+                const y = -70 + (i / 260) * 55;
+                const angle = Math.random() * Math.PI * 2;
+                const r = 8 + (Math.random() - 0.5) * 1.5;
+                addPoint(pos.x + Math.cos(angle) * r, y, pos.z + Math.sin(angle) * r);
+            }
+        });
+
+        // Main Triangular Hull / Living Quarters Deck (Y = -15 to -5)
+        for (let i = 0; i < 900; i++) {
+            const u = Math.random();
+            const v = Math.random();
+            // Point in triangle between the 3 legs
+            const w1 = 1 - Math.sqrt(u);
+            const w2 = (1 - v) * Math.sqrt(u);
+            const w3 = v * Math.sqrt(u);
+
+            const px = w1 * -55 + w2 * -55 + w3 * 50;
+            const pz = w1 * -40 + w2 * 40 + w3 * 0;
+            const py = -16 + Math.random() * 10;
+            addPoint(px, py, pz);
         }
 
-        // Blowout Preventer (BOP Stack) under drill floor
-        for (let i = 0; i < 220; i++) {
+        // Cantilevered Circular Helideck with "H" (Left side: X = -72, Z = 0, Y = -5 to 0)
+        const heliX = -68;
+        const heliZ = 0;
+        const heliR = 24;
+        // Circular perimeter & deck surface
+        for (let i = 0; i < 380; i++) {
             const angle = Math.random() * Math.PI * 2;
-            const r = 6 + Math.random() * 4;
-            const y = -68 + Math.random() * 22;
-            addPoint(Math.cos(angle) * r, y, Math.sin(angle) * r);
+            const r = Math.random() * heliR;
+            addPoint(heliX + Math.cos(angle) * r, -5, heliZ + Math.sin(angle) * r);
+        }
+        // Distinctive "H" marking on helideck
+        // Left bar of H
+        for (let i = 0; i < 50; i++) {
+            addPoint(heliX - 7, -4, heliZ - 10 + (i / 50) * 20);
+        }
+        // Right bar of H
+        for (let i = 0; i < 50; i++) {
+            addPoint(heliX + 7, -4, heliZ - 10 + (i / 50) * 20);
+        }
+        // Crossbar of H
+        for (let i = 0; i < 40; i++) {
+            addPoint(heliX - 7 + (i / 40) * 14, -4, heliZ);
         }
 
-        // 4 Main Derrick Legs tapering from Y = -45 to Y = +65
-        const towerBottomW = 28;
-        const towerTopW = 11;
-        const legPoints = 900;
-        for (let i = 0; i < legPoints; i++) {
+        // Offshore Drilling Derrick Mast (Cantilever position: X = 15, Z = 0, Y = -5 to +68)
+        const derrickX = 15;
+        const derrickZ = 0;
+        const derrickBottomW = 18;
+        const derrickTopW = 10;
+        // 4 Legs
+        for (let i = 0; i < 600; i++) {
             const t = Math.random();
-            const y = -45 + t * 110;
-            const w = (1 - t) * towerBottomW + t * towerTopW;
+            const y = -5 + t * 73;
+            const w = (1 - t) * derrickBottomW + t * derrickTopW;
 
             const corner = Math.floor(Math.random() * 4);
             const cx = (corner === 0 || corner === 1) ? w : -w;
             const cz = (corner === 0 || corner === 3) ? w : -w;
-            const jx = (Math.random() - 0.5) * 2;
-            const jz = (Math.random() - 0.5) * 2;
-            addPoint(cx + jx, y, cz + jz);
+            addPoint(derrickX + cx, y, derrickZ + cz);
         }
-
-        // Derrick X-Bracing across 6 tiers
-        const tiers = 6;
-        for (let l = 0; l < tiers; l++) {
-            const y1 = -45 + (l / tiers) * 110;
-            const y2 = -45 + ((l + 1) / tiers) * 110;
-            const w1 = (1 - l / tiers) * towerBottomW + (l / tiers) * towerTopW;
-            const w2 = (1 - (l + 1) / tiers) * towerBottomW + ((l + 1) / tiers) * towerTopW;
-
-            for (let p = 0; p < 75; p++) {
-                const s = Math.random();
-                const y = y1 + s * (y2 - y1);
-                const side = Math.floor(Math.random() * 4);
-
-                const x_start = (side === 0 || side === 1) ? w1 : -w1;
-                const x_end = (side === 0 || side === 1) ? -w2 : w2;
-                const z_pos = (side === 0 || side === 2) ? w1 : -w1;
-
-                const curX = x_start + s * (x_end - x_start);
-                addPoint(curX, y, z_pos + (Math.random() - 0.5) * 2.5);
+        // Horizontal Fingerboards & Top Drive
+        for (let tier = 0; tier < 5; tier++) {
+            const ty = 5 + tier * 13;
+            for (let p = 0; p < 45; p++) {
+                const angle = Math.random() * Math.PI * 2;
+                addPoint(derrickX + Math.cos(angle) * 12, ty, derrickZ + Math.sin(angle) * 12);
             }
         }
-
-        // Crown Block & Mast Top (Y = +65 to +78)
-        for (let i = 0; i < 280; i++) {
-            const x = (Math.random() - 0.5) * (towerTopW * 2 + 4);
-            const z = (Math.random() - 0.5) * (towerTopW * 2 + 4);
-            const y = 65 + Math.random() * 13;
-            addPoint(x, y, z);
+        // Crown Block (flat top block)
+        for (let i = 0; i < 120; i++) {
+            const x = (Math.random() - 0.5) * (derrickTopW * 2);
+            const z = (Math.random() - 0.5) * (derrickTopW * 2);
+            addPoint(derrickX + x, 68 + Math.random() * 6, derrickZ + z);
         }
 
-        // Central Drill String & Kelly / Traveling Block
+        // Gas Flare Boom & Burner (Angled truss extending to right: X = 35 to 88, Y = -10 to +35)
         for (let i = 0; i < 350; i++) {
-            const y = -45 + Math.random() * 110;
-            const angle = Math.random() * Math.PI * 2;
-            const r = Math.random() * 3.5;
-            addPoint(Math.cos(angle) * r, y, Math.sin(angle) * r);
-        }
-
-        // Well Testing Flare Boom (Brazo de Quemador Well Testing extending right)
-        for (let i = 0; i < 420; i++) {
             const s = Math.random();
-            const bx = 30 + s * 65; // from X=30 to X=95
-            const by = -45 + s * 22; // angled upwards
-            const bz = (Math.random() - 0.5) * (8 * (1 - s * 0.5));
-            addPoint(bx, by + (Math.random() - 0.5) * 3, bz);
+            const fx = 35 + s * 53;
+            const fy = -10 + s * 45;
+            const fz = 15 + s * 15;
+            addPoint(fx + (Math.random() - 0.5) * 3, fy + (Math.random() - 0.5) * 3, fz + (Math.random() - 0.5) * 3);
         }
-
-        // Flare Burner Flame (Llama de gas en la punta del Well Testing)
+        // Gas Flame at tip
         for (let i = 0; i < 180; i++) {
-            const fx = 95 + Math.random() * 18;
-            const fy = -23 + Math.random() * 16 + (fx - 95) * 0.3;
-            const fz = (Math.random() - 0.5) * 12;
+            const fx = 88 + Math.random() * 16;
+            const fy = 35 + Math.random() * 15;
+            const fz = 30 + (Math.random() - 0.5) * 10;
             addPoint(fx, fy, fz);
         }
 
-        // Choke Manifold & Separator Skid (Left side)
-        for (let i = 0; i < 320; i++) {
-            const sx = -35 - Math.random() * 45; // X: -35 to -80
-            const sy = -70 + Math.random() * 20;
-            const sz = (Math.random() - 0.5) * 30;
-            addPoint(sx, sy, sz);
+        // Pedestal Deck Crane
+        for (let i = 0; i < 180; i++) {
+            const s = Math.random();
+            addPoint(-20 + s * 25, -5 + s * 20, 25);
         }
 
-        // Ground base ring
+        // Fill remaining with sea water waves around platform legs
         while (idx < TOTAL_POINTS * 3) {
             const angle = Math.random() * Math.PI * 2;
             const r = 30 + Math.random() * 85;
@@ -161,7 +178,7 @@
     }
 
     // =========================================================================
-    // 2. FORMATION: BUQUE TANQUERO PETROLERO (OIL TANKER)
+    // 2. FORMATION: BUQUE TANQUERO PETROLERO DE ALTA MAR (VLCC CRUDE OIL TANKER)
     // =========================================================================
     function generateOilTankerTargets() {
         const targets = new Float32Array(TOTAL_POINTS * 3);
@@ -174,86 +191,90 @@
             targets[idx++] = z;
         }
 
-        // Ship Hull (Length: X = -95 to +95, Depth: Y = -45 to -10, Beam: Z = -26 to +26)
-        for (let i = 0; i < 1400; i++) {
-            const t = Math.random(); // 0 to 1 along length
+        // Ship Hull (Length: X = -95 to +95, Depth: Y = -42 to -10, Beam: Z = -28 to +28)
+        for (let i = 0; i < 1500; i++) {
+            const t = Math.random();
             const x = -95 + t * 190;
             
-            // Beam profile (tapered bow at X > 50, tapered stern at X < -70)
             let beamFactor = 1.0;
-            if (x > 50) beamFactor = Math.max(0.05, 1.0 - Math.pow((x - 50) / 45, 1.8));
-            else if (x < -70) beamFactor = Math.max(0.3, 1.0 - Math.pow((Math.abs(x) - 70) / 25, 1.2));
+            if (x > 50) beamFactor = Math.max(0.08, 1.0 - Math.pow((x - 50) / 45, 1.7));
+            else if (x < -68) beamFactor = Math.max(0.35, 1.0 - Math.pow((Math.abs(x) - 68) / 27, 1.3));
             
-            const maxZ = 25 * beamFactor;
+            const maxZ = 27 * beamFactor;
             const z = (Math.random() - 0.5) * 2 * maxZ;
             
-            // Keel to deck profile (U-shaped hull)
-            const hullDepth = Math.pow(Math.abs(z) / (maxZ || 1), 2) * 10;
-            const y = -42 + hullDepth + Math.random() * 28;
+            const hullCurve = Math.pow(Math.abs(z) / (maxZ || 1), 2) * 12;
+            const y = -40 + hullCurve + Math.random() * 28;
             addPoint(x, Math.min(-10, y), z);
         }
 
-        // Main Cargo Deck Manifolds & Pipelines (X = -45 to +50, Y = -10 to -3)
-        for (let pipe = 0; pipe < 4; pipe++) {
-            const pz = -12 + pipe * 8;
-            for (let p = 0; p < 130; p++) {
-                const px = -45 + (p / 130) * 95;
-                addPoint(px, -8 + (Math.random() - 0.5) * 2, pz + (Math.random() - 0.5) * 1.5);
-            }
-        }
-
-        // Cargo Crane / Hose Handling Derrick (Midship X = 5, Y = -10 to +25)
-        for (let i = 0; i < 220; i++) {
-            const cy = -10 + Math.random() * 32;
-            const angle = Math.random() * Math.PI * 2;
-            const cr = Math.random() * 4;
-            addPoint(5 + Math.cos(angle) * cr, cy, Math.sin(angle) * cr);
-        }
-        // Crane Boom arm
-        for (let i = 0; i < 160; i++) {
-            const s = Math.random();
-            addPoint(5 + s * 30, 22 - s * 10, (Math.random() - 0.5) * 4);
-        }
-
-        // Navigation Bridge & Superstructure Castle at Stern (X = -82 to -52, Y = -10 to +42)
-        for (let i = 0; i < 650; i++) {
-            const bx = -82 + Math.random() * 30;
-            const bz = (Math.random() - 0.5) * 36;
-            const by = -10 + Math.random() * 50;
+        // Bulbous Bow at front waterline (X = 85 to 98, Y = -40 to -24, Z = -10 to +10)
+        for (let i = 0; i < 180; i++) {
+            const bx = 85 + Math.random() * 13;
+            const by = -38 + Math.random() * 14;
+            const bz = (Math.random() - 0.5) * 14;
             addPoint(bx, by, bz);
         }
 
-        // Exhaust Funnel / Chimney (X = -74, Y = +40 to +65)
+        // Cargo Deck Parallel Oil Manifolds (X = -45 to +50, Y = -8, 4 lines of pipes)
+        for (let pipe = 0; pipe < 4; pipe++) {
+            const pz = -14 + pipe * 9.5;
+            for (let p = 0; p < 140; p++) {
+                const px = -45 + (p / 140) * 95;
+                addPoint(px, -7 + (Math.random() - 0.5) * 1.5, pz + (Math.random() - 0.5) * 1.2);
+            }
+        }
+
+        // Midship Hose-Handling Cranes (X = 2, Y = -8 to +24)
         for (let i = 0; i < 200; i++) {
-            const fy = 40 + Math.random() * 24;
-            const fAngle = Math.random() * Math.PI * 2;
-            const fr = Math.random() * 5;
-            addPoint(-74 + Math.cos(fAngle) * fr, fy, Math.sin(fAngle) * fr);
+            const cy = -8 + Math.random() * 32;
+            const angle = Math.random() * Math.PI * 2;
+            addPoint(2 + Math.cos(angle) * 3, cy, Math.sin(angle) * 3);
+        }
+        for (let i = 0; i < 150; i++) {
+            const s = Math.random();
+            addPoint(2 + s * 28, 24 - s * 10, (Math.random() - 0.5) * 3.5);
         }
 
-        // Radar Mast atop Bridge (X = -62, Y = +40 to +72)
-        for (let i = 0; i < 160; i++) {
-            const my = 40 + Math.random() * 32;
-            addPoint(-62 + (Math.random() - 0.5) * 2, my, (Math.random() - 0.5) * 2);
-        }
-        // Radar Crossbars
-        for (let i = 0; i < 100; i++) {
-            const rz = (Math.random() - 0.5) * 22;
-            addPoint(-62, 62 + (Math.random() - 0.5) * 2, rz);
+        // Multi-Tier Navigation Superstructure at Stern (X = -82 to -52, Y = -10 to +38, Z = -26 to +26)
+        for (let i = 0; i < 750; i++) {
+            const bx = -82 + Math.random() * 30;
+            const bz = (Math.random() - 0.5) * 44; // Wide bridge wings
+            const by = -10 + Math.random() * 46;
+            addPoint(bx, by, bz);
         }
 
-        // Sea Waterline Wave Ring
+        // Twin Exhaust Funnels behind Bridge (X = -75, Y = +36 to +58)
+        [-10, 10].forEach(fz => {
+            for (let i = 0; i < 140; i++) {
+                const fy = 36 + Math.random() * 22;
+                const angle = Math.random() * Math.PI * 2;
+                addPoint(-75 + Math.cos(angle) * 4.5, fy, fz + Math.sin(angle) * 4.5);
+            }
+        });
+
+        // Radar Mast atop Bridge (X = -62, Y = +36 to +68)
+        for (let i = 0; i < 140; i++) {
+            const my = 36 + Math.random() * 32;
+            addPoint(-62, my, (Math.random() - 0.5) * 2);
+        }
+        for (let i = 0; i < 80; i++) {
+            const rz = (Math.random() - 0.5) * 24;
+            addPoint(-62, 58, rz);
+        }
+
+        // Water Wake & Ocean Surface
         while (idx < TOTAL_POINTS * 3) {
             const sx = (Math.random() - 0.5) * 230;
             const sz = (Math.random() - 0.5) * 110;
-            addPoint(sx, -44 + (Math.random() - 0.5) * 2, sz);
+            addPoint(sx, -42 + (Math.random() - 0.5) * 2, sz);
         }
 
         return targets;
     }
 
     // =========================================================================
-    // 3. FORMATION: BALANCÍN PETROLERO & CAMPO LAGO GUANOCO
+    // 3. FORMATION: BALANCÍN PETROLERO "CABEZA DE CABALLO" & POZO LAGO GUANOCO
     // =========================================================================
     function generateGuanocoPumpjackTargets() {
         const targets = new Float32Array(TOTAL_POINTS * 3);
@@ -266,82 +287,80 @@
             targets[idx++] = z;
         }
 
-        // Base frame & Guanoco Ground Platform (Y = -68)
-        for (let i = 0; i < 450; i++) {
+        // Heavy I-Beam Steel Skid Frame on Ground (Y = -68, X = -85 to +85, Z = -30 to +30)
+        for (let i = 0; i < 500; i++) {
             const gx = -85 + Math.random() * 170;
-            const gz = (Math.random() - 0.5) * 70;
-            addPoint(gx, -68 + (Math.random() - 0.5) * 2.5, gz);
+            const gz = (Math.random() - 0.5) * 60;
+            addPoint(gx, -68 + (Math.random() - 0.5) * 2, gz);
         }
 
-        // Samson Post (Central A-Frame Tower: Y = -68 to +15, X around 0)
-        for (let i = 0; i < 650; i++) {
+        // Samson Post (Central 4-Leg Heavy A-Frame: Y = -68 to +12, X around 0)
+        for (let i = 0; i < 750; i++) {
             const s = Math.random();
-            const y = -68 + s * 83; // from -68 to +15
-            const leg = Math.floor(Math.random() * 3);
-            
-            let lx = 0, lz = 0;
-            const spread = (1 - s) * 22;
-            if (leg === 0) { lx = -spread; lz = -spread; }
-            else if (leg === 1) { lx = -spread; lz = spread; }
-            else { lx = spread * 1.1; lz = 0; }
-            
-            addPoint(lx + (Math.random() - 0.5) * 2.5, y, lz + (Math.random() - 0.5) * 2.5);
+            const y = -68 + s * 80;
+            const corner = Math.floor(Math.random() * 4);
+            const spreadX = (1 - s) * 26;
+            const spreadZ = (1 - s) * 22;
+
+            const cx = (corner === 0 || corner === 1) ? spreadX : -spreadX;
+            const cz = (corner === 0 || corner === 3) ? spreadZ : -spreadZ;
+            addPoint(cx + (Math.random() - 0.5) * 2.5, y, cz + (Math.random() - 0.5) * 2.5);
         }
 
-        // Walking Beam (Viga Balancín: Y = +15 to +25, X = -55 to +42)
-        for (let i = 0; i < 550; i++) {
+        // Walking Beam (Heavy Rocking Beam: Y = +12 to +22, X = -55 to +45)
+        for (let i = 0; i < 600; i++) {
             const s = Math.random();
-            const bx = -55 + s * 97;
-            const by = 18 + Math.sin(s * Math.PI) * 4;
-            const bz = (Math.random() - 0.5) * 7;
+            const bx = -55 + s * 100;
+            const by = 16 + Math.sin(s * Math.PI) * 4;
+            const bz = (Math.random() - 0.5) * 8;
             addPoint(bx, by, bz);
         }
 
-        // Horsehead (Cabeza de Caballo at front: X = +42 to +65, Y = +5 to +36)
-        for (let i = 0; i < 480; i++) {
+        // Iconic Curved Horsehead (Cabeza de Caballo at front: X = +45 to +68, Y = +2 to +35)
+        for (let i = 0; i < 550; i++) {
             const angle = -Math.PI / 2 + Math.random() * Math.PI;
-            const r = 16 + Math.random() * 3;
-            const hx = 45 + Math.cos(angle) * r * 1.1;
-            const hy = 20 + Math.sin(angle) * r;
-            const hz = (Math.random() - 0.5) * 5;
+            const r = 18 + Math.random() * 3.5;
+            const hx = 45 + Math.cos(angle) * r * 1.15;
+            const hy = 18 + Math.sin(angle) * r;
+            const hz = (Math.random() - 0.5) * 6;
             addPoint(hx, hy, hz);
         }
 
-        // Bridle & Polished Rod into Wellhead (Vertical line at X = +62, Y = +8 down to -65)
-        for (let i = 0; i < 300; i++) {
-            const ry = -65 + Math.random() * 73;
-            addPoint(62 + (Math.random() - 0.5) * 2, ry, (Math.random() - 0.5) * 2);
+        // Wireline Bridle & Polished Rod into Wellhead (Vertical line at X = +65, Y = +6 down to -65)
+        for (let i = 0; i < 350; i++) {
+            const ry = -65 + Math.random() * 72;
+            addPoint(65 + (Math.random() - 0.5) * 2, ry, (Math.random() - 0.5) * 2);
         }
 
-        // Wellhead Christmas Tree (Árbol de Navidad con válvulas at X = +62, Y = -68 to -45)
-        for (let i = 0; i < 220; i++) {
-            const vy = -68 + Math.random() * 23;
-            const vz = (Math.random() - 0.5) * 14;
-            addPoint(62 + (Math.random() - 0.5) * 6, vy, vz);
+        // Wellhead Christmas Tree & Valves Cluster (X = +65, Y = -68 to -42)
+        for (let i = 0; i < 280; i++) {
+            const vy = -68 + Math.random() * 26;
+            const vz = (Math.random() - 0.5) * 16;
+            addPoint(65 + (Math.random() - 0.5) * 8, vy, vz);
         }
 
-        // Crank Arm & Counterweights at Back (X = -55, Y = -42 to +8)
-        for (let i = 0; i < 400; i++) {
+        // Twin Rotating Counterweights & Crank Arms at Back (X = -55, Y = -38 to +8)
+        for (let i = 0; i < 450; i++) {
             const cAngle = Math.random() * Math.PI * 2;
-            const cr = 10 + Math.random() * 12;
-            const cx = -55 + Math.cos(cAngle) * cr * 0.7;
-            const cy = -20 + Math.sin(cAngle) * cr;
-            const cz = (Math.random() - 0.5) * 10;
+            const cr = 12 + Math.random() * 12;
+            const cx = -55 + Math.cos(cAngle) * cr * 0.75;
+            const cy = -18 + Math.sin(cAngle) * cr;
+            const cz = (Math.random() - 0.5) * 12;
             addPoint(cx, cy, cz);
         }
 
-        // Crude Storage Tank at Lago Guanoco (Left background: X = -95 to -65, Y = -68 to -30)
-        const tankX = -80;
-        const tankR = 16;
+        // Asphalt Storage Tank at Lago Guanoco (Left background: X = -85 to -60, Y = -68 to -28)
+        const tankX = -75;
+        const tankR = 15;
         for (let i = 0; i < 350; i++) {
-            const ty = -68 + Math.random() * 38;
+            const ty = -68 + Math.random() * 40;
             const tAngle = Math.random() * Math.PI * 2;
             addPoint(tankX + Math.cos(tAngle) * tankR, ty, Math.sin(tAngle) * tankR);
         }
 
-        // Asphalt reservoir ground fill
+        // Asphalt Ground Matrix
         while (idx < TOTAL_POINTS * 3) {
-            const ax = (Math.random() - 0.5) * 210;
+            const ax = (Math.random() - 0.5) * 220;
             const az = (Math.random() - 0.5) * 110;
             addPoint(ax, -68, az);
         }
@@ -351,7 +370,7 @@
 
     // --- FORMATIONS ARRAY ---
     const formations = [
-        generateWellTestingDerrickTargets(),
+        generateOffshorePlatformTargets(),
         generateOilTankerTargets(),
         generateGuanocoPumpjackTargets()
     ];
@@ -361,7 +380,6 @@
     const currentPositions = new Float32Array(TOTAL_POINTS * 3);
     const colors = new Float32Array(TOTAL_POINTS * 3);
 
-    // Initialise at formation 0
     const initialTargets = formations[0];
     for (let i = 0; i < TOTAL_POINTS * 3; i++) {
         currentPositions[i] = initialTargets[i] + (Math.random() - 0.5) * 6;
@@ -374,8 +392,7 @@
     function updateColors() {
         for (let i = 0; i < TOTAL_POINTS; i++) {
             const y = currentPositions[i * 3 + 1];
-            // Y spans -70 to +80 -> normalize
-            const t = Math.max(0, Math.min(1, (y + 70) / 150));
+            const t = Math.max(0, Math.min(1, (y + 70) / 145));
             tempColor.copy(colorBottom).lerp(colorTop, t);
             colors[i * 3] = tempColor.r;
             colors[i * 3 + 1] = tempColor.g;
@@ -490,7 +507,6 @@
                 isMorphing = false;
             }
         } else {
-            // Subtle breathing idle oscillation
             const time = now * 0.0015;
             const posAttr = geometry.attributes.position;
             const arr = posAttr.array;
@@ -521,5 +537,5 @@
     window.addEventListener('resize', handleResize);
     handleResize();
 
-    console.log("⚡ Hero Well Testing, Petrolero & Guanoco 3D Engine active.");
+    console.log("⚡ Hero Offshore Platform, Oil Tanker & Guanoco 3D Engine active.");
 })();
