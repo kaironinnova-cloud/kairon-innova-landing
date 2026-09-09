@@ -1,27 +1,30 @@
 // ==========================================================================
-// kaironInnova - 3D LiDAR Morphing Engine (Hero Section - Rock-Solid Edition)
+// kaironInnova - 3D LiDAR Morphing Engine (Hero Section - Instant Load Edition)
 // 100% Recognizable Oilfield Landmarks:
 // 1. Refinería El Palito: Torre de Destilación + Gran Tanque Esférico (Hortonsphere) + Tuberías
 // 2. Balancín Petrolero "Cabeza de Caballo" + Tanque de Crudo + Árbol de Navidad
 // 3. Taladro de Perforación & Well Testing con Mechurrio de Llama Activa
 // ==========================================================================
 
-(function initHeroLidar() {
+function initHeroLidar() {
     const canvas = document.getElementById('hero-lidar-canvas');
     if (!canvas) return;
 
     const TOTAL_POINTS = 3800;
+    const container = canvas.parentElement;
+
+    // Guaranteed dimensions
+    const width = (container && container.clientWidth > 50) ? container.clientWidth : 500;
+    const height = (container && container.clientHeight > 50) ? container.clientHeight : 440;
 
     // --- THREE.JS SCENE SETUP ---
     const scene = new THREE.Scene();
-    const container = canvas.parentElement;
-
-    const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 1, 2000);
+    const camera = new THREE.PerspectiveCamera(40, width / height, 1, 2000);
     camera.position.set(0, 8, 300);
 
     const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
     // --- ORBIT CONTROLS ---
     let controls = null;
@@ -52,7 +55,7 @@
             targets[idx++] = z;
         }
 
-        // Tall Distillation Fractionation Column (Left: X = -50, Y = -65 to +65, R = 22)
+        // Fractionation Column (Left: X = -50, Y = -65 to +65, R = 22)
         const colX = -50;
         const colR = 22;
         const colH = 130;
@@ -63,7 +66,6 @@
             const r = isSurface ? colR + (Math.random() - 0.5) * 1.5 : Math.random() * colR;
             addPoint(colX + Math.cos(angle) * r, y, Math.sin(angle) * r);
         }
-        // Fractionation Trays / Rings on the column (every 18 units)
         for (let t = 0; t < 7; t++) {
             const ty = -60 + t * 20;
             for (let p = 0; p < 50; p++) {
@@ -71,13 +73,12 @@
                 addPoint(colX + Math.cos(angle) * (colR + 3.5), ty, Math.sin(angle) * (colR + 3.5));
             }
         }
-        // Column Top Vent / Flare cap
         for (let i = 0; i < 90; i++) {
             const vy = 65 + Math.random() * 12;
             addPoint(colX + (Math.random() - 0.5) * 6, vy, (Math.random() - 0.5) * 6);
         }
 
-        // Large Spherical Gas / LPG Tank (Hortonsphere on Right: X = +50, Y = -5, R = 42)
+        // Spherical Hortonsphere Tank (Right: X = +50, Y = -5, R = 42)
         const sphereX = 50;
         const sphereY = -5;
         const sphereR = 42;
@@ -93,12 +94,10 @@
             const z = r * Math.cos(phi);
             addPoint(x, y, z);
         }
-        // Equatorial Walkway / Railing Ring on Sphere
         for (let i = 0; i < 120; i++) {
             const angle = (i / 120) * Math.PI * 2;
             addPoint(sphereX + Math.cos(angle) * (sphereR + 3), sphereY, Math.sin(angle) * (sphereR + 3));
         }
-        // 8 Equatorial Support Legs for the Sphere (reaching to ground Y = -65)
         for (let leg = 0; leg < 8; leg++) {
             const angle = (leg / 8) * Math.PI * 2;
             const lx = sphereX + Math.cos(angle) * (sphereR * 0.88);
@@ -110,7 +109,7 @@
             }
         }
 
-        // Interconnecting Pipe Manifold Bridge between Column and Sphere (3 levels)
+        // Interconnecting Pipe Manifold Bridge
         for (let pipe = 0; pipe < 3; pipe++) {
             const py = -40 + pipe * 30;
             for (let p = 0; p < 80; p++) {
@@ -121,7 +120,6 @@
             }
         }
 
-        // Ground Platform & Pump Skid
         while (idx < TOTAL_POINTS * 3) {
             const gx = (Math.random() - 0.5) * 220;
             const gz = (Math.random() - 0.5) * 120;
@@ -132,7 +130,7 @@
     }
 
     // =========================================================================
-    // 2. FORMATION: BALANCÍN PETROLERO "CABEZA DE CABALLO" & TANQUE DE CRUDO
+    // 2. FORMATION: BALANCÍN PETROLERO "CABEZA DE CABALLO" & TANQUE
     // =========================================================================
     function generatePumpjackTargets() {
         const targets = new Float32Array(TOTAL_POINTS * 3);
@@ -145,14 +143,12 @@
             targets[idx++] = z;
         }
 
-        // Heavy I-Beam Steel Skid Frame on Ground (Y = -65)
         for (let i = 0; i < 450; i++) {
             const gx = -80 + Math.random() * 160;
             const gz = (Math.random() - 0.5) * 55;
             addPoint(gx, -65 + (Math.random() - 0.5) * 2, gz);
         }
 
-        // Samson Post (Central 4-Leg Heavy A-Frame: Y = -65 to +12, X around 0)
         for (let i = 0; i < 750; i++) {
             const s = Math.random();
             const y = -65 + s * 77;
@@ -165,7 +161,6 @@
             addPoint(cx + (Math.random() - 0.5) * 2, y, cz + (Math.random() - 0.5) * 2);
         }
 
-        // Walking Beam (Heavy Rocking Beam: Y = +12 to +22, X = -52 to +42)
         for (let i = 0; i < 600; i++) {
             const s = Math.random();
             const bx = -52 + s * 94;
@@ -174,7 +169,6 @@
             addPoint(bx, by, bz);
         }
 
-        // Iconic Curved Horsehead (Cabeza de Caballo at front: X = +42 to +65, Y = +2 to +35)
         for (let i = 0; i < 550; i++) {
             const angle = -Math.PI / 2 + Math.random() * Math.PI;
             const r = 17 + Math.random() * 3;
@@ -184,20 +178,17 @@
             addPoint(hx, hy, hz);
         }
 
-        // Wireline Bridle & Polished Rod into Wellhead (Vertical line at X = +62, Y = +6 down to -65)
         for (let i = 0; i < 350; i++) {
             const ry = -65 + Math.random() * 71;
             addPoint(62 + (Math.random() - 0.5) * 2, ry, (Math.random() - 0.5) * 2);
         }
 
-        // Wellhead Christmas Tree & Valves Cluster (X = +62, Y = -65 to -40)
         for (let i = 0; i < 280; i++) {
             const vy = -65 + Math.random() * 25;
             const vz = (Math.random() - 0.5) * 14;
             addPoint(62 + (Math.random() - 0.5) * 6, vy, vz);
         }
 
-        // Twin Rotating Counterweights & Crank Arms at Back (X = -52, Y = -38 to +8)
         for (let i = 0; i < 450; i++) {
             const cAngle = Math.random() * Math.PI * 2;
             const cr = 12 + Math.random() * 11;
@@ -207,7 +198,6 @@
             addPoint(cx, cy, cz);
         }
 
-        // Crude Storage Tank (Left: X = -75, Y = -65 to -22, R = 17)
         const tankX = -75;
         const tankR = 17;
         for (let i = 0; i < 350; i++) {
@@ -239,7 +229,6 @@
             targets[idx++] = z;
         }
 
-        // Elevated Drill Floor Substructure (X = -28 to +28, Y = -65 to -42)
         for (let i = 0; i < 400; i++) {
             const x = (Math.random() - 0.5) * 54;
             const z = (Math.random() - 0.5) * 54;
@@ -247,7 +236,6 @@
             addPoint(x, y, z);
         }
 
-        // BOP Stack (Blowout Preventer under drill floor)
         for (let i = 0; i < 200; i++) {
             const angle = Math.random() * Math.PI * 2;
             const r = 5.5 + Math.random() * 3.5;
@@ -255,7 +243,6 @@
             addPoint(Math.cos(angle) * r, y, Math.sin(angle) * r);
         }
 
-        // 4 Derrick Mast Legs (Y = -42 to +65)
         const towerBottomW = 25;
         const towerTopW = 11;
         for (let i = 0; i < 850; i++) {
@@ -269,7 +256,6 @@
             addPoint(cx + (Math.random() - 0.5) * 2, y, cz + (Math.random() - 0.5) * 2);
         }
 
-        // Derrick Horizontal Fingerboards & Platforms
         for (let tier = 0; tier < 5; tier++) {
             const ty = -30 + tier * 18;
             const tw = towerBottomW - tier * 2.5;
@@ -279,7 +265,6 @@
             }
         }
 
-        // Square Crown Block at Top (Y = +65 to +75)
         for (let i = 0; i < 200; i++) {
             const x = (Math.random() - 0.5) * (towerTopW * 2 + 2);
             const z = (Math.random() - 0.5) * (towerTopW * 2 + 2);
@@ -287,14 +272,12 @@
             addPoint(x, y, z);
         }
 
-        // Drill String / Kelly vertical core
         for (let i = 0; i < 300; i++) {
             const y = -42 + Math.random() * 107;
             const angle = Math.random() * Math.PI * 2;
             addPoint(Math.cos(angle) * 3.5, y, Math.sin(angle) * 3.5);
         }
 
-        // Well Testing Flare Boom (Angled cantilever truss to right: X = 25 to 85, Y = -42 to +10)
         for (let i = 0; i < 450; i++) {
             const s = Math.random();
             const bx = 25 + s * 60;
@@ -303,7 +286,6 @@
             addPoint(bx, by, bz);
         }
 
-        // Active Gas Flare Flame at tip (X = 85 to 105, Y = 10 to 32)
         for (let i = 0; i < 280; i++) {
             const fx = 85 + Math.random() * 20;
             const fy = 10 + Math.random() * 22;
@@ -311,7 +293,6 @@
             addPoint(fx, fy, fz);
         }
 
-        // Choke Manifold Skid on left (X = -32 to -75, Y = -65 to -45)
         for (let i = 0; i < 350; i++) {
             const sx = -32 - Math.random() * 43;
             const sy = -65 + Math.random() * 20;
@@ -319,7 +300,6 @@
             addPoint(sx, sy, sz);
         }
 
-        // Ground Matrix
         while (idx < TOTAL_POINTS * 3) {
             const angle = Math.random() * Math.PI * 2;
             const r = 28 + Math.random() * 80;
@@ -329,27 +309,24 @@
         return targets;
     }
 
-    // --- FORMATIONS ARRAY ---
     const formations = [
-        generateRefinerySphereTargets(), // 1. Torre de Destilación + Hortonsphere
-        generatePumpjackTargets(),       // 2. Balancín Cabeza de Caballo + Tanque
-        generateWellTestingTargets()     // 3. Taladro + Flare Boom
+        generateRefinerySphereTargets(),
+        generatePumpjackTargets(),
+        generateWellTestingTargets()
     ];
 
-    // --- BUFFER GEOMETRY ---
     const geometry = new THREE.BufferGeometry();
     const currentPositions = new Float32Array(TOTAL_POINTS * 3);
     const colors = new Float32Array(TOTAL_POINTS * 3);
 
-    // Initialise at formation 0
     const initialTargets = formations[0];
     for (let i = 0; i < TOTAL_POINTS * 3; i++) {
         currentPositions[i] = initialTargets[i];
     }
 
-    const colorBottom = new THREE.Color(0x00e676); // Emerald Green
-    const colorTop = new THREE.Color(0x00f2fe);    // Electric Cyan
-    const colorFlame = new THREE.Color(0xffaa00);  // Gold / Amber for flame
+    const colorBottom = new THREE.Color(0x00e676);
+    const colorTop = new THREE.Color(0x00f2fe);
+    const colorFlame = new THREE.Color(0xffaa00);
     const tempColor = new THREE.Color();
 
     function updateColors(time) {
@@ -399,7 +376,7 @@
     }
 
     const material = new THREE.PointsMaterial({
-        size: 5.2,
+        size: 5.5,
         vertexColors: true,
         map: createPointTexture(),
         transparent: true,
@@ -411,7 +388,6 @@
     const pointCloud = new THREE.Points(geometry, material);
     scene.add(pointCloud);
 
-    // --- MORPHING TIMELINE (EXTENDED DURATION: 6.2s) ---
     let currentFormationIndex = 0;
     let isMorphing = false;
     let sourcePositions = new Float32Array(TOTAL_POINTS * 3);
@@ -436,6 +412,19 @@
 
     let clock = new THREE.Clock();
 
+    function handleResize() {
+        if (!container || !renderer || !camera) return;
+        const w = container.clientWidth || 500;
+        const h = container.clientHeight || 440;
+        if (w === 0 || h === 0) return;
+
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+    }
+
+    window.addEventListener('resize', handleResize);
+
     function animate() {
         requestAnimationFrame(animate);
 
@@ -443,6 +432,14 @@
         const now = performance.now();
 
         if (controls) controls.update();
+
+        // Responsive aspect sync
+        if (container && container.clientWidth > 50) {
+            const currentAspect = container.clientWidth / container.clientHeight;
+            if (Math.abs(camera.aspect - currentAspect) > 0.05) {
+                handleResize();
+            }
+        }
 
         const posAttr = geometry.attributes.position;
         const arr = posAttr.array;
@@ -488,11 +485,9 @@
 
             if (t >= 1.0) {
                 isMorphing = false;
-                // Lock exact target positions
                 currentPositions.set(targetPositions);
             }
         } else {
-            // STABLE IDLE STATE (Non-accumulative, absolute offset from currentPositions)
             const time = now * 0.002;
 
             for (let i = 0; i < TOTAL_POINTS; i++) {
@@ -501,12 +496,10 @@
                 const by = currentPositions[idx3 + 1];
                 const bz = currentPositions[idx3 + 2];
 
-                // Breathing wave
                 let dy = Math.sin(time + i * 0.08) * 0.6;
                 let dx = 0;
                 let dz = 0;
 
-                // Active flame flickering in Well Testing formation (X > 82, Y > 8)
                 if (currentFormationIndex === 2 && bx > 82 && by > 8) {
                     dx = Math.sin(time * 5 + i) * 1.2;
                     dy = Math.cos(time * 4 + i) * 1.8;
@@ -527,20 +520,14 @@
     }
 
     animate();
-
-    function handleResize() {
-        if (!container || !renderer || !camera) return;
-        const width = container.clientWidth;
-        const height = container.clientHeight;
-        if (width === 0 || height === 0) return;
-
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-        renderer.setSize(width, height);
-    }
-
-    window.addEventListener('resize', handleResize);
     handleResize();
 
-    console.log("⚡ Hero Rock-Solid 3D LiDAR Engine initialized with permanent stability.");
-})();
+    console.log("⚡ Hero 3D LiDAR Engine initialized with guaranteed viewport render.");
+}
+
+// Auto-run on DOM ready or immediate
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeroLidar);
+} else {
+    initHeroLidar();
+}
