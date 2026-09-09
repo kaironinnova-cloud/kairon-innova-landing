@@ -1,13 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // ===== INITIALIZE AOS (Animate On Scroll) =====
-    AOS.init({
-        duration: 800,
-        easing: 'ease-out-cubic',
-        once: true,
-        offset: 50
-    });
+    console.log("⚡ kaironInnova Corporate Platform Engine Initialized");
 
-    // ===== MOBILE MENU =====
+    // ===== 1. INITIALIZE AOS (Animate On Scroll) =====
+    if (typeof AOS !== 'undefined') {
+        AOS.init({
+            duration: 750,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 40
+        });
+    }
+
+    // ===== 2. MOBILE MENU =====
     const hamburger = document.getElementById('hamburger');
     const navLinksContainer = document.getElementById('nav-links');
 
@@ -19,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Close menu when clicking a link
-        const navLinks = navLinksContainer.querySelectorAll('.nav-link');
+        const navLinks = navLinksContainer.querySelectorAll('.nav-link, .nav-login, .btn-nav-demo');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
@@ -29,32 +33,33 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ===== NAVBAR SCROLL EFFECT =====
+    // ===== 3. NAVBAR SCROLL EFFECT & SPY =====
     const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(15, 17, 21, 0.8)';
-            navbar.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.1)';
+    function handleNavbarScroll() {
+        if (!navbar) return;
+        if (window.scrollY > 30) {
+            navbar.classList.add('scrolled');
         } else {
-            navbar.style.background = 'rgba(15, 17, 21, 0.4)';
-            navbar.style.boxShadow = 'none';
+            navbar.classList.remove('scrolled');
         }
-    });
+    }
+    window.addEventListener('scroll', handleNavbarScroll, { passive: true });
+    handleNavbarScroll();
 
-    // ===== NAVBAR SCROLL SPY =====
-    const navLinks = document.querySelectorAll('.nav-link');
-    const spySections = Array.from(navLinks).map(link => document.querySelector(link.getAttribute('href')));
+    // Scroll spy
+    const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+    const spySections = Array.from(navLinks).map(link => {
+        const id = link.getAttribute('href');
+        return id && id !== '#' ? document.querySelector(id) : null;
+    }).filter(Boolean);
 
     function updateActiveNavbar() {
         let activeLinkIndex = 0;
-        const scrollPosition = window.scrollY + 120; // Offset for navbar height
+        const scrollPosition = window.scrollY + 140;
 
         spySections.forEach((section, index) => {
-            if (section) {
-                const top = section.offsetTop;
-                if (scrollPosition >= top) {
-                    activeLinkIndex = index;
-                }
+            if (section && scrollPosition >= section.offsetTop) {
+                activeLinkIndex = index;
             }
         });
 
@@ -66,155 +71,101 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    window.addEventListener('scroll', updateActiveNavbar, { passive: true });
+    updateActiveNavbar();
 
-    window.addEventListener('scroll', updateActiveNavbar);
-    updateActiveNavbar(); // Initial run
-
-
-
-
-
-    // ===== 3D SECTION TRANSITIONS ON SCROLL =====
-    const allSections = document.querySelectorAll('section');
-
-    function animate3DSections() {
-        const viewportHeight = window.innerHeight;
-        const viewportCenter = viewportHeight / 2;
-
-        allSections.forEach(sec => {
-            const rect = sec.getBoundingClientRect();
-            
-            // Skip sections completely outside of view for rendering performance
-            if (rect.bottom < -50 || rect.top > viewportHeight + 50) return;
-
-            const secCenter = rect.top + rect.height / 2;
-            
-            // Normalized distance from viewport center (range -1 to 1)
-            const distance = (secCenter - viewportCenter) / (viewportHeight + rect.height / 2);
-            const clampedDistance = Math.max(-1, Math.min(1, distance));
-
-            // Smooth eased factor using sine wave for more fluid transitions
-            const easedFactor = Math.sin(clampedDistance * Math.PI / 2);
-
-            // Calculate tilt angle (rotateX) and depth translation (translateZ)
-            const angle = easedFactor * 5; // Max tilt: 5 degrees (subtler & more readable)
-            const zDepth = -Math.abs(easedFactor) * 40; // Max depth push-back: -40px
-            const opacity = 1 - Math.abs(easedFactor) * 0.25; // Slight fading on margins
-
-            sec.style.transform = `perspective(1600px) rotateX(${angle}deg) translateZ(${zDepth}px)`;
-            sec.style.opacity = opacity;
-        });
-    }
-
-    window.addEventListener('scroll', animate3DSections);
-    animate3DSections(); // Initial run
-
-
-    // ===== 3D CARD HOVER TILT =====
-    const tiltCards = document.querySelectorAll('.service-card, .workflow-card, .how-card, .contact-form-wrapper');
-    
+    // ===== 4. 3D CARD HOVER TILT (Subtle & Professional) =====
+    const tiltCards = document.querySelectorAll('.telecom-service-card, .workflow-card, .how-card, .about-card, .kpi-card');
     tiltCards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
-            
-            // Map mouse coordinates relative to card center to a max tilt of 6 degrees
-            const rotateX = ((centerY - y) / centerY) * 6;
-            const rotateY = ((x - centerX) / centerX) * 6;
-            
-            card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.025, 1.025, 1.025)`;
+            const rotateX = ((centerY - y) / centerY) * 3.5;
+            const rotateY = ((x - centerX) / centerX) * 3.5;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
         });
 
         card.addEventListener('mouseleave', () => {
-            card.style.transform = `perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
         });
     });
-    // ===== DIGITAL TWINS CAROUSEL GALLERY WITH FOCUSED EXPANSION =====
+
+    // ===== 5. DIGITAL TWINS 3D SHOWROOM CAROUSEL =====
     const track = document.getElementById('carousel-track');
     const prevBtn = document.getElementById('carousel-prev');
     const nextBtn = document.getElementById('carousel-next');
     const dotsContainer = document.getElementById('carousel-dots');
     const showroomCarousel = document.querySelector('.showroom-carousel');
     const cards = track ? Array.from(track.children) : [];
-    
-    const initFunctions = {
-        'refinery': window.initRefinery3D,
-        'bridge': window.initBridge3D,
-        'warehouse': window.initWarehouse3D,
-        'separator': window.initSeparator3D,
-        'energy': window.initEnergy3D
-    };
+
+    function getInitFunction(modelType) {
+        if (modelType === 'refinery') return window.initRefinery3D;
+        if (modelType === 'bridge') return window.initBridge3D;
+        if (modelType === 'warehouse') return window.initWarehouse3D;
+        if (modelType === 'separator') return window.initSeparator3D;
+        if (modelType === 'energy') return window.initEnergy3D;
+        return null;
+    }
 
     let activeIndex = 0;
     const showroomInstances = new Map();
     let isShowroomVisible = false;
 
-    if (track && prevBtn && nextBtn && dotsContainer && showroomCarousel) {
-        // Create dots dynamically
-        cards.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.classList.add('carousel-dot');
-            if (index === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => {
-                goToSlide(index);
+    if (track && showroomCarousel) {
+        // Create navigation dots if container exists
+        if (dotsContainer) {
+            dotsContainer.innerHTML = '';
+            cards.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('carousel-dot');
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    goToSlide(index);
+                });
+                dotsContainer.appendChild(dot);
             });
-            dotsContainer.appendChild(dot);
-        });
-
-        const dots = Array.from(dotsContainer.children);
+        }
 
         function updateCarousel() {
             if (cards.length === 0) return;
-            
-            // Remove active class from all cards
-            cards.forEach((card) => {
-                card.classList.remove('active-card');
-            });
 
-            // Add active class to focused card
-            const activeCard = cards[activeIndex];
-            activeCard.classList.add('active-card');
-
-            // Centering calculation:
-            // Translate track so that the activeCard is in the center of the showroomCarousel viewport
-            const viewportWidth = showroomCarousel.clientWidth;
-            const cardWidth = activeCard.clientWidth;
-            const gap = 30; // Gap between cards in CSS
-            
-            // Calculate active card offset relative to the track start
-            const activeCardOffset = activeIndex * (cardWidth + gap);
-            
-            // Translate offset to center the active card perfectly
-            const translateOffset = activeCardOffset - (viewportWidth / 2) + (cardWidth / 2);
-            
-            track.style.transform = `translateX(-${translateOffset}px)`;
-
-            // Update buttons
-            prevBtn.disabled = activeIndex === 0;
-            nextBtn.disabled = activeIndex >= cards.length - 1;
-
-            // Update active dots
-            dots.forEach((dot, index) => {
+            cards.forEach((card, index) => {
                 if (index === activeIndex) {
-                    dot.classList.add('active');
+                    card.classList.add('active-card');
                 } else {
-                    dot.classList.remove('active');
+                    card.classList.remove('active-card');
                 }
             });
 
-            // Update paused state of card canvases: pause if showroom is not visible or card is not active
+            // Center active card
+            const activeCard = cards[activeIndex];
+            if (activeCard) {
+                const viewportWidth = showroomCarousel.clientWidth;
+                const cardWidth = activeCard.clientWidth;
+                const gap = 24;
+                const activeCardOffset = activeIndex * (cardWidth + gap);
+                const translateOffset = activeCardOffset - (viewportWidth / 2) + (cardWidth / 2);
+                track.style.transform = `translateX(-${translateOffset}px)`;
+            }
+
+            if (prevBtn) prevBtn.disabled = activeIndex === 0;
+            if (nextBtn) nextBtn.disabled = activeIndex >= cards.length - 1;
+
+            if (dotsContainer) {
+                const dots = Array.from(dotsContainer.children);
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === activeIndex);
+                });
+            }
+
+            // Pause/resume 3D rendering based on visibility
             cards.forEach((card, index) => {
                 const canvasContainer = card.querySelector('.card-canvas');
                 if (canvasContainer) {
-                    if (index === activeIndex && isShowroomVisible) {
-                        canvasContainer.dataset.paused = "false";
-                    } else {
-                        canvasContainer.dataset.paused = "true";
-                    }
+                    canvasContainer.dataset.paused = (index === activeIndex && isShowroomVisible) ? "false" : "true";
                 }
             });
         }
@@ -224,15 +175,9 @@ document.addEventListener('DOMContentLoaded', () => {
             updateCarousel();
         }
 
-        prevBtn.addEventListener('click', () => {
-            goToSlide(activeIndex - 1);
-        });
+        if (prevBtn) prevBtn.addEventListener('click', () => goToSlide(activeIndex - 1));
+        if (nextBtn) nextBtn.addEventListener('click', () => goToSlide(activeIndex + 1));
 
-        nextBtn.addEventListener('click', () => {
-            goToSlide(activeIndex + 1);
-        });
-
-        // Click on inactive card focuses it
         cards.forEach((card, index) => {
             card.addEventListener('click', (e) => {
                 if (!e.target.closest('.btn-showroom-action') && index !== activeIndex) {
@@ -241,11 +186,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // CASCADING STAGGERED INITIALIZATION OF ALL 5 3D SCENES
+        // Initialize 3D Scenes
         cards.forEach((card, index) => {
             const canvasContainer = card.querySelector('.card-canvas');
             if (!canvasContainer) return;
-            
+
             let modelType = '';
             if (canvasContainer.id.includes('refinery')) modelType = 'refinery';
             else if (canvasContainer.id.includes('bridge')) modelType = 'bridge';
@@ -253,42 +198,32 @@ document.addEventListener('DOMContentLoaded', () => {
             else if (canvasContainer.id.includes('separator')) modelType = 'separator';
             else if (canvasContainer.id.includes('energy')) modelType = 'energy';
 
-            // Stagger loading delay by 150ms per card to protect CPU from load spikes
+            // Stagger loading slightly to avoid GPU freezes
             setTimeout(() => {
-                if (modelType && initFunctions[modelType] && canvasContainer.innerHTML === '') {
+                const initFn = getInitFunction(modelType);
+                if (initFn && canvasContainer.innerHTML === '') {
                     canvasContainer.classList.add('webgl-active');
-                    // Default to paused state unless it is active and the showroom is visible
                     canvasContainer.dataset.paused = (index === activeIndex && isShowroomVisible) ? "false" : "true";
-                    
-                    const instance = initFunctions[modelType](canvasContainer);
-                    
-                    // Enable autoRotate inside card viewports for continuous dynamic preview
+
+                    const instance = initFn(canvasContainer);
                     if (instance && instance.controls) {
                         instance.controls.autoRotate = true;
-                        instance.controls.autoRotateSpeed = 1.5;
+                        instance.controls.autoRotateSpeed = 1.2;
                     }
-                    
-                    // Store instance reference
                     showroomInstances.set(index, instance);
                 }
-            }, index * 150);
+            }, index * 120);
 
-            // HOVER PREMIUM: Accelerate rotation on hover, decelerate on leave
             card.addEventListener('mouseenter', () => {
                 const inst = showroomInstances.get(index);
-                if (inst && inst.controls) {
-                    inst.controls.autoRotateSpeed = 4.5;
-                }
+                if (inst && inst.controls) inst.controls.autoRotateSpeed = 3.5;
             });
             card.addEventListener('mouseleave', () => {
                 const inst = showroomInstances.get(index);
-                if (inst && inst.controls) {
-                    inst.controls.autoRotateSpeed = 1.5;
-                }
+                if (inst && inst.controls) inst.controls.autoRotateSpeed = 1.2;
             });
         });
 
-        // Intersection Observer to monitor showroom visibility
         const showroomObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 isShowroomVisible = entry.isIntersecting;
@@ -297,23 +232,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { threshold: 0.1 });
 
         const showroomSection = document.getElementById('digital-twins-showroom');
-        if (showroomSection) {
-            showroomObserver.observe(showroomSection);
-        }
+        if (showroomSection) showroomObserver.observe(showroomSection);
 
         window.addEventListener('resize', updateCarousel);
-        
-        // Initial setup with a slight delay to ensure layouts are settled
-        setTimeout(updateCarousel, 200);
+        setTimeout(updateCarousel, 250);
     }
 
-
-    // ===== DCS SIMULATION FULL-SCREEN HOLOGRAM MODAL =====
+    // ===== 6. DCS FULL-SCREEN HOLOGRAM MODAL =====
     const modalOverlay = document.getElementById('hologram-modal');
     const modalTitle = document.getElementById('modal-title-text');
     const modalWebGLContainer = document.getElementById('modal-webgl-container');
     const modalConsole = document.getElementById('modal-console-logs');
-    
+
     let modal3DInstance = null;
     let modalTelemetryTimer = null;
     let modalLogsTimer = null;
@@ -321,70 +251,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.openHologramModal = function(type, titleText) {
         if (!modalOverlay || !modalWebGLContainer) return;
-        
-        if (modalTitle) {
-            modalTitle.innerText = titleText;
-        }
 
-        // Show modal overlay
+        if (modalTitle) modalTitle.innerText = titleText || 'Simulador SCADA / Gemelo Digital 3D';
         modalOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Lock background scroll
+        document.body.style.overflow = 'hidden';
 
-        // Clean WebGL container
         modalWebGLContainer.innerHTML = '';
 
-        // Initialize 3D Model in modal container
-        if (type && initFunctions[type]) {
-            modal3DInstance = initFunctions[type](modalWebGLContainer);
+        const initFn = getInitFunction(type);
+        if (initFn) {
+            modal3DInstance = initFn(modalWebGLContainer);
             if (modal3DInstance && modal3DInstance.controls) {
                 modal3DInstance.controls.autoRotate = isModalRotating;
                 modal3DInstance.controls.autoRotateSpeed = 1.0;
             }
         }
 
-        // Start telemetry and AI console logs loops
         startModalTelemetry();
         startModalLogs(type);
     };
 
     window.closeHologramModal = function() {
         if (!modalOverlay) return;
-        
         modalOverlay.classList.remove('active');
-        document.body.style.overflow = ''; // Unlock scroll
+        document.body.style.overflow = '';
 
-        // Clear WebGL container to trigger self-destruction in the model script
-        if (modalWebGLContainer) {
-            modalWebGLContainer.innerHTML = '';
-        }
+        if (modalWebGLContainer) modalWebGLContainer.innerHTML = '';
         modal3DInstance = null;
 
-        // Clear timers
         if (modalTelemetryTimer) cancelAnimationFrame(modalTelemetryTimer);
         if (modalLogsTimer) clearInterval(modalLogsTimer);
-        
-        if (modalConsole) {
-            modalConsole.innerHTML = '';
-        }
+        if (modalConsole) modalConsole.innerHTML = '';
     };
 
     window.toggleModalRotation = function() {
         if (!modal3DInstance || !modal3DInstance.controls) return;
         isModalRotating = !isModalRotating;
         modal3DInstance.controls.autoRotate = isModalRotating;
-        
         const btn = document.getElementById('btn-modal-rotate');
-        if (btn) {
-            btn.innerText = `Autorotación: ${isModalRotating ? 'ON' : 'OFF'}`;
-        }
+        if (btn) btn.innerText = `Autorotación: ${isModalRotating ? 'ON' : 'OFF'}`;
     };
 
     window.resetModalCamera = function() {
         if (!modal3DInstance || !modal3DInstance.controls || !modal3DInstance.camera) return;
-        
         modal3DInstance.controls.reset();
-        
-        // Restore defaults
         modal3DInstance.camera.position.set(-900, 700, 1100);
         modal3DInstance.controls.target.set(100, 0, -100);
         modal3DInstance.controls.update();
@@ -396,128 +306,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-
-    // ===== 2D CANVAS TELEMETRY GENERATOR =====
-    
-    // 1. Scroll-down sections mini charts
-    const miniCharts = document.querySelectorAll('.telemetry-mini-chart');
-    const miniChartsInstances = [];
-
-    miniCharts.forEach(canvas => {
-        const ctx = canvas.getContext('2d');
-        const type = canvas.dataset.type || 'bridge';
-        
-        function resizeCanvas() {
-            canvas.width = canvas.parentElement.clientWidth;
-            canvas.height = canvas.parentElement.clientHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        miniChartsInstances.push({
-            canvas: canvas,
-            ctx: ctx,
-            type: type,
-            offset: Math.random() * 100
-        });
-    });
-
-    let miniChartsFrame = null;
-    function animateMiniCharts(time) {
-        miniChartsInstances.forEach(item => {
-            const ctx = item.ctx;
-            const w = item.canvas.width;
-            const h = item.canvas.height;
-            if (w === 0 || h === 0) return;
-
-            ctx.clearRect(0, 0, w, h);
-            
-            // Draw grid lines
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
-            ctx.lineWidth = 1;
-            const gridSpacing = 20;
-            for (let x = 0; x < w; x += gridSpacing) {
-                ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, h);
-                ctx.stroke();
-            }
-            for (let y = 0; y < h; y += gridSpacing) {
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(w, y);
-                ctx.stroke();
-            }
-
-            // Draw data wave
-            ctx.beginPath();
-            ctx.lineWidth = 1.5;
-            
-            if (item.type === 'bridge') {
-                // Bridge: high-frequency small vibrations
-                ctx.strokeStyle = '#00e676'; // Emerald Green
-                ctx.shadowColor = '#00e676';
-                ctx.shadowBlur = 4;
-                for (let x = 0; x < w; x++) {
-                    const noise = Math.sin(x * 0.08 + time * 0.005) * 6 + Math.sin(x * 0.2 + time * 0.01) * 2;
-                    const y = h / 2 + noise;
-                    if (x === 0) ctx.moveTo(x, y);
-                    else ctx.lineTo(x, y);
-                }
-            } 
-            else if (item.type === 'warehouse') {
-                // Warehouse: step pulse shapes
-                ctx.strokeStyle = '#00f2fe'; // Cyan
-                ctx.shadowColor = '#00f2fe';
-                ctx.shadowBlur = 4;
-                for (let x = 0; x < w; x++) {
-                    const pulse = Math.sin(x * 0.02 + time * 0.003) > 0.6 ? 20 : 0;
-                    const noise = Math.sin(x * 0.1 + time * 0.01) * 2;
-                    const y = h / 2 - 10 + pulse + noise;
-                    if (x === 0) ctx.moveTo(x, y);
-                    else ctx.lineTo(x, y);
-                }
-            } 
-            else if (item.type === 'separator') {
-                // Separator: slow fluid level waves
-                ctx.strokeStyle = '#f97316'; // Orange
-                ctx.shadowColor = '#f97316';
-                ctx.shadowBlur = 4;
-                for (let x = 0; x < w; x++) {
-                    const wave = Math.sin(x * 0.01 + time * 0.001) * 12 + Math.cos(x * 0.03 + time * 0.002) * 4;
-                    const y = h / 2 + wave;
-                    if (x === 0) ctx.moveTo(x, y);
-                    else ctx.lineTo(x, y);
-                }
-            } 
-            else if (item.type === 'energy') {
-                // Energy: grid spikes
-                ctx.strokeStyle = '#10b981'; // Green
-                ctx.shadowColor = '#10b981';
-                ctx.shadowBlur = 4;
-                for (let x = 0; x < w; x++) {
-                    const cycle = Math.sin(x * 0.04 + time * 0.004) * 15 * Math.sin(time * 0.0005);
-                    const y = h / 2 + cycle;
-                    if (x === 0) ctx.moveTo(x, y);
-                    else ctx.lineTo(x, y);
-                }
-            }
-            
-            ctx.stroke();
-            ctx.shadowBlur = 0;
-        });
-        
-        miniChartsFrame = requestAnimationFrame(animateMiniCharts);
-    }
-    animateMiniCharts(0);
-
-
-    // 2. Modal Large Oscilloscope Chart
+    // ===== 7. MODAL TELEMETRY OSCILLOSCOPE =====
     function startModalTelemetry() {
         const canvas = document.getElementById('telemetry-chart-canvas');
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
-        
+
         function resize() {
             canvas.width = canvas.parentElement.clientWidth;
             canvas.height = canvas.parentElement.clientHeight || 170;
@@ -530,10 +324,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (w === 0 || h === 0) return;
             ctx.clearRect(0, 0, w, h);
 
-            // Draw grid lines
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)';
+            // Grid lines
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
             ctx.lineWidth = 1;
-            const spacing = 25;
+            const spacing = 24;
             for (let x = 0; x < w; x += spacing) {
                 ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
             }
@@ -541,30 +335,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
             }
 
-            // Draw Cyan wave (primary telemetry)
+            // Primary Cyan telemetry wave
             ctx.beginPath();
             ctx.strokeStyle = '#00f2fe';
             ctx.lineWidth = 2;
             ctx.shadowColor = '#00f2fe';
-            ctx.shadowBlur = 8;
+            ctx.shadowBlur = 6;
             for (let x = 0; x < w; x++) {
-                const primaryWave = Math.sin(x * 0.025 + timestamp * 0.004) * 25;
-                const secondaryNoise = Math.sin(x * 0.08 - timestamp * 0.008) * 6;
-                const y = h / 2 + primaryWave + secondaryNoise;
+                const primaryWave = Math.sin(x * 0.025 + timestamp * 0.0035) * 22;
+                const noise = Math.sin(x * 0.08 - timestamp * 0.007) * 5;
+                const y = h / 2 + primaryWave + noise;
                 if (x === 0) ctx.moveTo(x, y);
                 else ctx.lineTo(x, y);
             }
             ctx.stroke();
 
-            // Draw Emerald Green wave (AI model line)
+            // Secondary Green AI prediction wave
             ctx.beginPath();
-            ctx.strokeStyle = 'rgba(0, 230, 118, 0.75)';
+            ctx.strokeStyle = 'rgba(0, 230, 118, 0.8)';
             ctx.lineWidth = 1.5;
             ctx.shadowColor = '#00e676';
-            ctx.shadowBlur = 5;
+            ctx.shadowBlur = 4;
             for (let x = 0; x < w; x++) {
-                const wave = Math.sin(x * 0.015 + timestamp * 0.002) * 35 * Math.cos(x * 0.002 + timestamp * 0.0005);
-                const y = h / 2 - 10 + wave;
+                const wave = Math.sin(x * 0.015 + timestamp * 0.002) * 30 * Math.cos(x * 0.002 + timestamp * 0.0005);
+                const y = h / 2 - 8 + wave;
                 if (x === 0) ctx.moveTo(x, y);
                 else ctx.lineTo(x, y);
             }
@@ -576,8 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
         draw(0);
     }
 
-
-    // ===== SIMULATED AI DIAGNOSTIC LOGS ENGINE =====
+    // ===== 8. SIMULATED AI DIAGNOSTIC STREAM =====
     const logMessages = {
         'refinery': [
             { text: "INICIALIZANDO MOTOR TERMODINÁMICO DE REFINERÍA...", type: "info" },
@@ -587,54 +380,37 @@ document.addEventListener('DOMContentLoaded', () => {
             { text: "ALERTA: Incremento de temperatura sutil en columna 12", type: "warn" },
             { text: "EJECUTANDO ACCIÓN AUTOMÁTICA n8n: Mitigando válvula...", type: "info" },
             { text: "AGENTE IA INDUSTRIAL: Nivel de fluidos reajustado a 48.2%", type: "success" },
-            { text: "OPTIMIZACIÓN DE ENERGÍA COGENERADA EN PROCESO", type: "info" },
             { text: "REGISTRO: Eficiencia general reevaluada al 98.4%", type: "success" }
         ],
         'bridge': [
             { text: "CONECTANDO SENSORES DE TENSIÓN EN TIRANTES PUENTE...", type: "info" },
             { text: "RED LORA-WAN ONLINE: 32 nodos estructurales conectados", type: "success" },
             { text: "ANÁLISIS DE FATIGA SÍSMICA: Frecuencia 2.4 Hz detectada", type: "info" },
-            { text: "ALERTA: Racha de viento de 45 km/h ejerce flexión transversal", type: "warn" },
-            { text: "IA ESTRUCTURAL: Ajustando amortiguadores de masa sintonizados", type: "info" },
             { text: "DIAGNÓSTICO: Flexión estructural controlada, tolerancia 99.8%", type: "success" },
-            { text: "MONITOREO DE DESPLAZAMIENTO: Calzada dentro del rango seguro", type: "success" },
             { text: "TELEMETRÍA EN TIEMPO REAL: Tensión nominal estable", type: "info" }
         ],
         'warehouse': [
             { text: "INICIANDO MAPEO ESPACIAL DE ALMACÉN AUTÓNOMO...", type: "info" },
             { text: "SISTEMA WMS/ERP SINCRONIZADO: 14,200 ítems indexados", type: "success" },
             { text: "AMR DRIVERS ONLINE: 12 unidades terrestres operativas", type: "success" },
-            { text: "IA LOGÍSTICA: Trazando rutas óptimas para evadir colisiones", type: "info" },
-            { text: "ALERTA: Obstrucción detectada en pasillo B-04", type: "warn" },
-            { text: "REROUTING AUTOMÁTICO: AMR 04 reencaminado vía pasillo C-01", type: "info" },
-            { text: "DRONES DE EXTRACCIÓN: Batería promedio a 92.1%", type: "success" },
-            { text: "REGISTRO: Productividad logística incrementada +12%", type: "success" }
+            { text: "IA LOGÍSTICA: Trazando rutas óptimas de despacho", type: "info" }
         ],
         'separator': [
             { text: "CONECTANDO INGENIERÍA P&ID DE SEPARADOR QUÍMICO...", type: "info" },
-            { text: "MONITOR DE NIVEL: Válvula reguladora LV calibrada", type: "success" },
             { text: "MEDICIÓN DE PRESIÓN VASIJA: 3.2 bar (Rango Nominal)", type: "info" },
             { text: "IA QUÍMICA: Analizando interfase Agua / Aceite / Gas", type: "info" },
-            { text: "PREDICIENDO TIEMPO DE RESIDENCIA: Tolerancia normal", type: "success" },
-            { text: "ALERTA: Turbulencia leve detectada en entrada trifásica", type: "warn" },
-            { text: "MITIGACIÓN DE ESPUMA EN PROCESO: Adición antiespumante...", type: "info" },
             { text: "REGISTRO: Calidad de destilado final al 99.1%", type: "success" }
         ],
         'energy': [
             { text: "CONECTANDO AL CENTRO DE GESTIÓN SMART GRID...", type: "info" },
-            { text: "TURBINAS EÓLICAS: Generación eólica estable a 4.2 MW", type: "success" },
-            { text: "GRID SOLAR: Captación fotovoltaica normal a 2.8 MW", type: "success" },
-            { text: "BATERÍAS DE SUBESTACIÓN: Almacenado al 94.6%", type: "info" },
-            { text: "ALERTA: Fluctuación de demanda detectada en Nodo Este", type: "warn" },
-            { text: "REDISTRIBUCIÓN INTELIGENTE: Derivando carga excedente solar", type: "info" },
-            { text: "IA SMART GRID: Estabilidad de red mantenida con 98.1% de eficiencia", type: "success" }
+            { text: "GENERACIÓN TOTAL: 7.0 MW sincronizados a la red", type: "success" },
+            { text: "IA SMART GRID: Estabilidad de red mantenida al 99.4%", type: "success" }
         ]
     };
 
     function startModalLogs(type) {
         if (!modalConsole) return;
         modalConsole.innerHTML = '';
-        
         const logs = logMessages[type] || logMessages['refinery'];
         let logIndex = 0;
 
@@ -642,23 +418,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const log = logs[logIndex];
             const line = document.createElement('div');
             line.classList.add('console-line', log.type);
-            
             const timestamp = new Date().toLocaleTimeString();
             line.innerHTML = `<span class="timestamp">[${timestamp}]</span>${log.text}`;
-            
             modalConsole.appendChild(line);
             modalConsole.scrollTop = modalConsole.scrollHeight;
-
             logIndex = (logIndex + 1) % logs.length;
         }
 
-        // Add initial logs
-        for(let i = 0; i < 3; i++) {
+        for (let i = 0; i < 3; i++) {
             addLog();
         }
-
         modalLogsTimer = setInterval(addLog, 2800);
     }
-
-    console.log('%c⚡ kaironInnova.com (Impeccable Edition) loaded successfully', 'color: #f97316; font-size: 14px; font-weight: bold;');
 });
