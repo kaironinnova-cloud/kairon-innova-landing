@@ -221,27 +221,33 @@ a {
     align-items: center;
 }
 
+.nav-brand,
 .nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    text-decoration: none !important;
 }
 
+.logo-icon-wrap,
 .logo-k-svg-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 8px;
-    background: #0b1329;
-    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    border-radius: 8px !important;
+    background: #0b1329 !important;
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15) !important;
+    flex-shrink: 0 !important;
 }
 
 .logo-text-group {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.15;
+    display: flex !important;
+    flex-direction: column !important;
+    line-height: 1.15 !important;
+    justify-content: center !important;
 }
 
 .logo-brand {
