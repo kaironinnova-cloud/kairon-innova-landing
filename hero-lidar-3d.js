@@ -1,8 +1,8 @@
 // ==========================================================================
-// kaironInnova - 3D LiDAR Morphing Point Cloud Engine (Hero Section)
+// kaironInnova - 3D LiDAR Morphing Point Cloud Engine (Hero Floating Background)
 // Formations:
 // 1. Drilling Derrick / Oilfield Taladro
-// 2. Refinery Distillation Column & Storage Sphere
+// 2. Refinery Distillation Column & Spherical Tank (El Palito)
 // 3. Telecommunications Network & Satellite Core
 // ==========================================================================
 
@@ -10,19 +10,14 @@
     const canvas = document.getElementById('hero-lidar-canvas');
     if (!canvas) return;
 
-    const phaseBadge = document.getElementById('hero-lidar-phase-badge');
-    const nameLabel = document.getElementById('hero-lidar-name');
-    const coordsLabel = document.getElementById('hero-lidar-coords');
-    const pips = document.querySelectorAll('.lidar-phase-indicators .phase-pip');
-
-    const TOTAL_POINTS = 2800;
+    const TOTAL_POINTS = 3200;
 
     // --- THREE.JS SCENE SETUP ---
     const scene = new THREE.Scene();
     const container = canvas.parentElement;
 
     const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 1, 2000);
-    camera.position.set(0, 110, 410);
+    camera.position.set(0, 110, 360);
 
     const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
@@ -33,19 +28,17 @@
     if (typeof THREE.OrbitControls !== 'undefined') {
         controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
-        controls.dampingFactor = 0.06;
-        controls.enableZoom = false; // Keep hero layout rock-stable
+        controls.dampingFactor = 0.05;
+        controls.enableZoom = false; // Rock-stable Hero layout
         controls.enablePan = false;
         controls.autoRotate = true;
-        controls.autoRotateSpeed = 1.0;
+        controls.autoRotateSpeed = 1.3;
         controls.maxPolarAngle = Math.PI / 2 + 0.15;
         controls.minPolarAngle = Math.PI / 4;
-        controls.target.set(0, 40, 0);
+        controls.target.set(0, 50, 0);
     }
 
-    // --- GENERATE 3 DISTINCT 3D TARGET FORMATIONS ---
-
-    // 1. FORMATION: DRILLING DERRICK (Taladro de Perforación Petrolero)
+    // --- 1. FORMATION: DRILLING DERRICK (Taladro Petrolero) ---
     function generateDerrickTargets() {
         const targets = new Float32Array(TOTAL_POINTS * 3);
         let idx = 0;
@@ -57,20 +50,20 @@
             targets[idx++] = z;
         }
 
-        // Base platform & legs
-        const baseW = 100;
-        const baseH = 22;
-        for (let i = 0; i < 400; i++) {
+        // Base substructure
+        const baseW = 110;
+        const baseH = 24;
+        for (let i = 0; i < 450; i++) {
             const x = (Math.random() - 0.5) * baseW;
             const z = (Math.random() - 0.5) * baseW;
             const y = Math.random() * baseH;
             addPoint(x, y, z);
         }
 
-        // 4 Main corner legs tapering up
-        const towerH = 210;
-        const topW = 26;
-        const legPoints = 800;
+        // 4 Main corner legs
+        const towerH = 220;
+        const topW = 28;
+        const legPoints = 900;
         for (let i = 0; i < legPoints; i++) {
             const t = Math.random();
             const y = baseH + t * towerH;
@@ -93,7 +86,7 @@
             const w1 = (1 - l / braceLevels) * (baseW * 0.45) + (l / braceLevels) * (topW * 0.5);
             const w2 = (1 - (l + 1) / braceLevels) * (baseW * 0.45) + ((l + 1) / braceLevels) * (topW * 0.5);
 
-            for (let p = 0; p < 70; p++) {
+            for (let p = 0; p < 80; p++) {
                 const s = Math.random();
                 const y = y1 + s * (y2 - y1);
                 const side = Math.floor(Math.random() * 4);
@@ -108,32 +101,32 @@
         }
 
         // Central drill string
-        for (let i = 0; i < 350; i++) {
+        for (let i = 0; i < 400; i++) {
             const y = Math.random() * (towerH + baseH);
             const angle = Math.random() * Math.PI * 2;
-            const r = Math.random() * 4.5;
+            const r = Math.random() * 5;
             addPoint(Math.cos(angle) * r, y, Math.sin(angle) * r);
         }
 
         // Crown block at top
-        for (let i = 0; i < 300; i++) {
-            const x = (Math.random() - 0.5) * (topW + 8);
-            const z = (Math.random() - 0.5) * (topW + 8);
-            const y = baseH + towerH + Math.random() * 16;
+        for (let i = 0; i < 350; i++) {
+            const x = (Math.random() - 0.5) * (topW + 10);
+            const z = (Math.random() - 0.5) * (topW + 10);
+            const y = baseH + towerH + Math.random() * 18;
             addPoint(x, y, z);
         }
 
-        // Scanning ground ring
+        // Ground scanning ring
         while (idx < TOTAL_POINTS * 3) {
             const angle = Math.random() * Math.PI * 2;
-            const r = 40 + Math.random() * 100;
+            const r = 40 + Math.random() * 110;
             addPoint(Math.cos(angle) * r, 0, Math.sin(angle) * r);
         }
 
         return targets;
     }
 
-    // 2. FORMATION: REFINERY FRACTIONATION COLUMN & SPHERICAL TANK
+    // --- 2. FORMATION: REFINERY FRACTIONATION COLUMN & SPHERICAL TANK ---
     function generateRefineryTargets() {
         const targets = new Float32Array(TOTAL_POINTS * 3);
         let idx = 0;
@@ -145,11 +138,11 @@
             targets[idx++] = z;
         }
 
-        // Main Distillation Column (Left)
-        const colX = -45;
-        const colR = 26;
-        const colH = 220;
-        for (let i = 0; i < 1100; i++) {
+        // Distillation Column (Left)
+        const colX = -48;
+        const colR = 28;
+        const colH = 230;
+        for (let i = 0; i < 1300; i++) {
             const y = Math.random() * colH;
             const angle = Math.random() * Math.PI * 2;
             const isSurface = Math.random() > 0.25;
@@ -158,10 +151,10 @@
         }
 
         // Spherical LPG Tank (Right)
-        const sphereX = 55;
-        const sphereY = 60;
-        const sphereR = 46;
-        for (let i = 0; i < 900; i++) {
+        const sphereX = 58;
+        const sphereY = 65;
+        const sphereR = 50;
+        for (let i = 0; i < 1000; i++) {
             const u = Math.random();
             const v = Math.random();
             const theta = u * 2.0 * Math.PI;
@@ -174,39 +167,38 @@
             addPoint(x, y, z);
         }
 
-        // Support legs for sphere
+        // Legs for sphere
         for (let leg = 0; leg < 6; leg++) {
             const angle = (leg / 6) * Math.PI * 2;
             const lx = sphereX + Math.cos(angle) * (sphereR * 0.85);
             const lz = Math.sin(angle) * (sphereR * 0.85);
-            for (let p = 0; p < 40; p++) {
-                const y = (p / 40) * (sphereY * 0.9);
+            for (let p = 0; p < 45; p++) {
+                const y = (p / 45) * (sphereY * 0.9);
                 addPoint(lx, y, lz);
             }
         }
 
-        // Connecting Pipes
+        // Connecting pipe manifolds
         for (let pipe = 0; pipe < 3; pipe++) {
-            const py = 35 + pipe * 40;
-            for (let p = 0; p < 80; p++) {
-                const s = p / 80;
+            const py = 35 + pipe * 45;
+            for (let p = 0; p < 90; p++) {
+                const s = p / 90;
                 const px = colX + colR + s * (sphereX - sphereR - (colX + colR));
                 const pz = (Math.random() - 0.5) * 6;
-                addPoint(px, py + Math.sin(s * Math.PI) * 8, pz);
+                addPoint(px, py + Math.sin(s * Math.PI) * 9, pz);
             }
         }
 
-        // Fill remaining
         while (idx < TOTAL_POINTS * 3) {
-            const gx = (Math.random() - 0.5) * 220;
-            const gz = (Math.random() - 0.5) * 140;
+            const gx = (Math.random() - 0.5) * 240;
+            const gz = (Math.random() - 0.5) * 150;
             addPoint(gx, 0, gz);
         }
 
         return targets;
     }
 
-    // 3. FORMATION: TELECOM NETWORK MESH & SATELLITE CORE
+    // --- 3. FORMATION: TELECOM NETWORK MESH & SATELLITE CORE ---
     function generateTelecomMeshTargets() {
         const targets = new Float32Array(TOTAL_POINTS * 3);
         let idx = 0;
@@ -218,10 +210,10 @@
             targets[idx++] = z;
         }
 
-        // Central Planetary / Mesh Globe Core
-        const coreR = 68;
-        const coreY = 95;
-        for (let i = 0; i < 1100; i++) {
+        // Central Mesh Globe Core
+        const coreR = 72;
+        const coreY = 100;
+        for (let i = 0; i < 1300; i++) {
             const u = Math.random();
             const v = Math.random();
             const theta = u * 2.0 * Math.PI;
@@ -237,9 +229,9 @@
         }
 
         // 2 Orbiting Satellite / Fiber Relay Rings
-        const ring1R = 115;
-        for (let i = 0; i < 600; i++) {
-            const angle = (i / 600) * Math.PI * 2;
+        const ring1R = 120;
+        for (let i = 0; i < 700; i++) {
+            const angle = (i / 700) * Math.PI * 2;
             const rx = Math.cos(angle) * ring1R;
             const ry = Math.sin(angle) * ring1R * 0.45;
             const rz = Math.sin(angle) * ring1R * 0.85;
@@ -250,9 +242,9 @@
             addPoint(x + (Math.random() - 0.5) * 4, y + (Math.random() - 0.5) * 4, z);
         }
 
-        const ring2R = 128;
-        for (let i = 0; i < 500; i++) {
-            const angle = (i / 500) * Math.PI * 2;
+        const ring2R = 135;
+        for (let i = 0; i < 600; i++) {
+            const angle = (i / 600) * Math.PI * 2;
             const rx = Math.cos(angle) * ring2R;
             const ry = Math.sin(angle) * ring2R * 0.35;
             const rz = Math.sin(angle) * ring2R * 0.9;
@@ -264,22 +256,22 @@
         }
 
         // Radial beam pulses
-        for (let beam = 0; beam < 12; beam++) {
+        for (let beam = 0; beam < 14; beam++) {
             const phi = Math.random() * Math.PI;
             const theta = Math.random() * Math.PI * 2;
             const dirX = Math.sin(phi) * Math.cos(theta);
             const dirY = Math.sin(phi) * Math.sin(theta);
             const dirZ = Math.cos(phi);
             
-            for (let p = 0; p < 25; p++) {
-                const dist = coreR + (p / 25) * 75;
+            for (let p = 0; p < 28; p++) {
+                const dist = coreR + (p / 28) * 80;
                 addPoint(dirX * dist, coreY + dirY * dist, dirZ * dist);
             }
         }
 
         while (idx < TOTAL_POINTS * 3) {
-            const gx = (Math.random() - 0.5) * 180;
-            const gz = (Math.random() - 0.5) * 180;
+            const gx = (Math.random() - 0.5) * 200;
+            const gz = (Math.random() - 0.5) * 200;
             addPoint(gx, 0, gz);
         }
 
@@ -287,24 +279,9 @@
     }
 
     const formations = [
-        {
-            name: "Taladro de Perforación de Campo (Derrick)",
-            phase: "FASE 01/03",
-            coords: "COORD: 10.4806° N, 68.1258° W",
-            targets: generateDerrickTargets()
-        },
-        {
-            name: "Complejo de Refinería & Tanques (El Palito)",
-            phase: "FASE 02/03",
-            coords: "SECTOR: UNIDAD DE CRAQUEO & ALMACENAJE",
-            targets: generateRefineryTargets()
-        },
-        {
-            name: "Malla de Telecomunicaciones & Núcleo OT/IT",
-            phase: "FASE 03/03",
-            coords: "TOPOLOGÍA: RED MESH INDUSTRIAL & SATÉLITE",
-            targets: generateTelecomMeshTargets()
-        }
+        generateDerrickTargets(),
+        generateRefineryTargets(),
+        generateTelecomMeshTargets()
     ];
 
     // --- BUFFER GEOMETRY INITIALIZATION ---
@@ -312,19 +289,19 @@
     const currentPositions = new Float32Array(TOTAL_POINTS * 3);
     const colors = new Float32Array(TOTAL_POINTS * 3);
 
-    const initialTargets = formations[0].targets;
+    const initialTargets = formations[0];
     for (let i = 0; i < TOTAL_POINTS * 3; i++) {
         currentPositions[i] = initialTargets[i] + (Math.random() - 0.5) * 8;
     }
 
-    const colorBottom = new THREE.Color(0x00b074);
-    const colorTop = new THREE.Color(0x00f2fe);
+    const colorBottom = new THREE.Color(0x00e676); // Emerald Green
+    const colorTop = new THREE.Color(0x00f2fe);    // Electric Cyan
     const tempColor = new THREE.Color();
 
     function updateColors() {
         for (let i = 0; i < TOTAL_POINTS; i++) {
             const y = currentPositions[i * 3 + 1];
-            const t = Math.max(0, Math.min(1, y / 230));
+            const t = Math.max(0, Math.min(1, y / 240));
             tempColor.copy(colorBottom).lerp(colorTop, t);
             colors[i * 3] = tempColor.r;
             colors[i * 3 + 1] = tempColor.g;
@@ -345,8 +322,8 @@
 
         const grad = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
         grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
-        grad.addColorStop(0.3, 'rgba(0, 242, 254, 0.95)');
-        grad.addColorStop(0.7, 'rgba(0, 176, 116, 0.35)');
+        grad.addColorStop(0.25, 'rgba(0, 242, 254, 0.95)');
+        grad.addColorStop(0.65, 'rgba(0, 230, 118, 0.35)');
         grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
         ctx.fillStyle = grad;
@@ -356,11 +333,11 @@
     }
 
     const material = new THREE.PointsMaterial({
-        size: 4.5,
+        size: 4.6,
         vertexColors: true,
         map: createPointTexture(),
         transparent: true,
-        opacity: 0.92,
+        opacity: 0.95,
         blending: THREE.AdditiveBlending,
         depthWrite: false
     });
@@ -368,53 +345,24 @@
     const pointCloud = new THREE.Points(geometry, material);
     scene.add(pointCloud);
 
-    // --- MORPHING STATE MACHINE ---
+    // --- MORPHING ENGINE ---
     let currentFormationIndex = 0;
     let isMorphing = false;
     let sourcePositions = new Float32Array(TOTAL_POINTS * 3);
-    let targetPositions = formations[0].targets;
+    let targetPositions = formations[0];
     const morphDuration = 1.6;
     let morphStartTime = 0;
 
-    function triggerNextFormation(targetIndex) {
-        if (targetIndex !== undefined) {
-            currentFormationIndex = targetIndex % formations.length;
-        } else {
-            currentFormationIndex = (currentFormationIndex + 1) % formations.length;
-        }
-
-        const data = formations[currentFormationIndex];
-        
+    function triggerNextFormation() {
+        currentFormationIndex = (currentFormationIndex + 1) % formations.length;
         sourcePositions.set(currentPositions);
-        targetPositions = data.targets;
+        targetPositions = formations[currentFormationIndex];
         
         isMorphing = true;
         morphStartTime = performance.now();
-
-        if (phaseBadge) phaseBadge.innerText = data.phase;
-        if (nameLabel) {
-            nameLabel.style.opacity = '0';
-            setTimeout(() => {
-                nameLabel.innerText = data.name;
-                nameLabel.style.opacity = '1';
-            }, 180);
-        }
-        if (coordsLabel) coordsLabel.innerText = data.coords;
-
-        pips.forEach((pip, idx) => {
-            pip.classList.toggle('active', idx === currentFormationIndex);
-        });
     }
 
-    pips.forEach((pip, idx) => {
-        pip.addEventListener('click', () => {
-            triggerNextFormation(idx);
-        });
-    });
-
-    setInterval(() => {
-        triggerNextFormation();
-    }, 4800);
+    setInterval(triggerNextFormation, 4600);
 
     function easeInOutCubic(x) {
         return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
@@ -435,7 +383,7 @@
             const t = Math.min(1.0, elapsed);
             const easedT = easeInOutCubic(t);
 
-            const dispersionStrength = Math.sin(t * Math.PI) * 26.0;
+            const dispersionStrength = Math.sin(t * Math.PI) * 28.0;
 
             const posAttr = geometry.attributes.position;
             const arr = posAttr.array;
@@ -474,7 +422,7 @@
 
             for (let i = 0; i < TOTAL_POINTS; i += 4) {
                 const idx3 = i * 3;
-                arr[idx3 + 1] += Math.sin(time + i * 0.1) * 0.06;
+                arr[idx3 + 1] += Math.sin(time + i * 0.1) * 0.07;
             }
             posAttr.needsUpdate = true;
         }
@@ -498,5 +446,5 @@
     window.addEventListener('resize', handleResize);
     handleResize();
 
-    console.log("⚡ Hero LiDAR 3D Point Cloud Engine active & running smoothly.");
+    console.log("⚡ Hero Seamless 3D Point Cloud Engine active.");
 })();
