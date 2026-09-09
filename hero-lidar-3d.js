@@ -5,9 +5,25 @@
 // 3. Taladro de Perforación & Well Testing con Mechurrio de Llama Activa
 // ==========================================================================
 
+let isHeroLidarInitialized = false;
+
 function initHeroLidar() {
+    if (isHeroLidarInitialized) return;
+
+    if (typeof THREE === 'undefined') {
+        const checkTimer = setInterval(function() {
+            if (typeof THREE !== 'undefined' && !isHeroLidarInitialized) {
+                clearInterval(checkTimer);
+                initHeroLidar();
+            }
+        }, 50);
+        return;
+    }
+
     const canvas = document.getElementById('hero-lidar-canvas');
     if (!canvas) return;
+
+    isHeroLidarInitialized = true;
 
     const TOTAL_POINTS = 3800;
     const container = canvas.parentElement;
@@ -25,8 +41,7 @@ function initHeroLidar() {
     const renderer = new THREE.WebGLRenderer({ 
         canvas: canvas, 
         antialias: true, 
-        alpha: true,
-        premultipliedAlpha: false
+        alpha: true
     });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -338,6 +353,14 @@ function initHeroLidar() {
         generateWellTestingTargets()
     ];
 
+    // State variables declared BEFORE updateColors so TDZ never occurs!
+    let currentFormationIndex = 0;
+    let isMorphing = false;
+    let sourcePositions = new Float32Array(TOTAL_POINTS * 3);
+    let targetPositions = formations[0];
+    const morphDuration = 1.8;
+    let morphStartTime = 0;
+
     const geometry = new THREE.BufferGeometry();
     const currentPositions = new Float32Array(TOTAL_POINTS * 3);
     const colors = new Float32Array(TOTAL_POINTS * 3);
@@ -376,10 +399,10 @@ function initHeroLidar() {
     }
     updateColors(0);
 
-    geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(currentPositions), 3));
+    geometry.setAttribute('position', new THREE.BufferAttribute(currentPositions, 3));
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-    // High-visibility crisp circular particle texture
+    // Crisp circular glowing particle texture
     function createPointTexture() {
         const size = 64;
         const cv = document.createElement('canvas');
@@ -389,9 +412,9 @@ function initHeroLidar() {
 
         const grad = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
         grad.addColorStop(0, 'rgba(255, 255, 255, 1.0)');
-        grad.addColorStop(0.3, 'rgba(0, 242, 254, 1.0)');
-        grad.addColorStop(0.7, 'rgba(0, 230, 118, 0.8)');
-        grad.addColorStop(1.0, 'rgba(0, 230, 118, 0.0)');
+        grad.addColorStop(0.25, 'rgba(0, 242, 254, 0.95)');
+        grad.addColorStop(0.65, 'rgba(0, 230, 118, 0.4)');
+        grad.addColorStop(1.0, 'rgba(0, 0, 0, 0.0)');
 
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, size, size);
@@ -399,26 +422,19 @@ function initHeroLidar() {
         return new THREE.CanvasTexture(cv);
     }
 
-    // NORMAL BLENDING ensures the WebGL canvas writes solid alpha pixels to the HTML compositor!
+    // AdditiveBlending ensures vivid glowing particles against the dark hero background!
     const material = new THREE.PointsMaterial({
-        size: 5.8,
+        size: 5.2,
         vertexColors: true,
         map: createPointTexture(),
         transparent: true,
-        opacity: 1.0,
-        blending: THREE.NormalBlending,
+        opacity: 0.95,
+        blending: THREE.AdditiveBlending,
         depthWrite: false
     });
 
     const pointCloud = new THREE.Points(geometry, material);
     scene.add(pointCloud);
-
-    let currentFormationIndex = 0;
-    let isMorphing = false;
-    let sourcePositions = new Float32Array(TOTAL_POINTS * 3);
-    let targetPositions = formations[0];
-    const morphDuration = 1.8;
-    let morphStartTime = 0;
 
     function triggerNextFormation() {
         currentFormationIndex = (currentFormationIndex + 1) % formations.length;
@@ -548,3 +564,4 @@ if (document.readyState === 'loading') {
 } else {
     initHeroLidar();
 }
+window.addEventListener('load', initHeroLidar);

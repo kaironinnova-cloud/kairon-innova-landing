@@ -1,5 +1,5 @@
 window.initRefinery3D = function(container) {
-    console.log("🚀 Iniciando Motor 3D Inmersivo (El Palito - Zona 1 Alta Fidelidad)...");
+    console.log("🚀 Iniciando Motor 3D Inmersivo (Complejo Petroquímico & Refinería - Zona 1)...");
     if (!container) return;
 
     // --- SCENE SETUP ---

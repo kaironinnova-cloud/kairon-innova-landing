@@ -253,6 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!modalOverlay || !modalWebGLContainer) return;
 
         if (modalTitle) modalTitle.innerText = titleText || 'Simulador SCADA / Gemelo Digital 3D';
+        modalOverlay.style.display = 'flex';
         modalOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
 
@@ -274,6 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.closeHologramModal = function() {
         if (!modalOverlay) return;
         modalOverlay.classList.remove('active');
+        modalOverlay.style.display = 'none';
         document.body.style.overflow = '';
 
         if (modalWebGLContainer) modalWebGLContainer.innerHTML = '';
@@ -374,7 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const logMessages = {
         'refinery': [
             { text: "INICIALIZANDO MOTOR TERMODINÁMICO DE REFINERÍA...", type: "info" },
-            { text: "CONEXIÓN ESTABLECIDA CON PLC SCADA EN EL PALITO", type: "success" },
+            { text: "CONEXIÓN ESTABLECIDA CON PLC SCADA EN COMPLEJO PETROQUÍMICO", type: "success" },
             { text: "INGESTA SENSOR DE FLUJO: 140 MBD DETECTADO", type: "info" },
             { text: "PREDICCIÓN IA: Presión nominal estable en zona de tanques", type: "success" },
             { text: "ALERTA: Incremento de temperatura sutil en columna 12", type: "warn" },
